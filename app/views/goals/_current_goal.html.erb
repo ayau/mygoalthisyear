@@ -1,0 +1,21 @@
+<li class='goal'>
+    <div class='badge' style='background-image: url(http://www.resonantenergies.com/library/images/book_icon.png)'>
+        <div class='overlay'></div>
+    </div>
+    <h3 class='goal-name'><%= goal.name %></h3>
+    <span>+<%= goal.points %>pts</span>
+    <!-- <% if goal.completed %>Completed<% else %>Incomplete<% end %> -->
+    <% if @events[goal.id] %>
+        Completed <%= @events[goal.id] %> times (<%= @events[goal.id] * goal.points %>)
+    <% end %>
+    Edit
+    <!-- Can't remove if already completed -->
+    <% if goal.completed %>
+        <%= link_to 'Uncomplete', make_incomplete_goal_path(goal), method: :put %>
+        <p class='completed'>+ <%= goal.points %></p>
+    <% else %>
+        <%= link_to 'Complete', complete_goal_path(goal), method: :put %> |
+        <%= link_to 'Remove from month', remove_goal_month_path(@month, :goal_id => goal.id), method: :put %>
+        <%= render :partial => 'events/form', :locals => {:goal => goal} %>
+    <% end %>
+</li>

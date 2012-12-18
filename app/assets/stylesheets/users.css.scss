@@ -1,0 +1,26 @@
+// Place all the styles related to the Users controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+@import "default";
+
+.avatar {
+    height: 100px;
+    width: 100px;
+    border-radius: 50px;
+    background-size: 100%;
+    box-shadow: 0px 0px 3px rgba(0,0,0,0.5);
+    border: 3px solid white;
+    margin-right: 20px;
+    float: left;
+}
+
+.user-header {
+    margin-left: -10px;
+    overflow: auto;
+    padding: 5px;
+    // border-bottom: 1px solid $scolor;
+    section {
+        float: left;
+    }
+}

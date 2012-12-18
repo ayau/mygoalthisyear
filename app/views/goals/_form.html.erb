@@ -1,0 +1,28 @@
+<%= form_for(@goal) do |f| %>
+    <% if @goal.errors.any? %>
+        <div id="error_explanation">
+            <h2><%= pluralize(@goal.errors.count, "error") %> prohibited this goal from being saved:</h2>
+
+            <ul>
+            <% @goal.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+            </ul>
+        </div>
+    <% end %>
+    <%= f.hidden_field :parent_id %>
+
+    <div class="field">
+        <%= f.label :name, 'New goal' %><br />
+        <%= f.text_field :name, :autofocus => true %>
+    </div>
+
+    <div class="field">
+        <%= f.label :points %><br />
+        <%= f.number_field :points, :value => 10 %>
+    </div>
+    
+    <div class="actions">
+        <%= f.submit :disable_with => "Please Wait.." %>
+    </div>
+<% end %>

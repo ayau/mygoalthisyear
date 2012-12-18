@@ -1,0 +1,57 @@
+<!-- <span id="notice"><%= notice %></span> -->
+
+<header class='user-header'>
+    <div class='avatar' style='background-image: url(http://sphotos-c.ak.fbcdn.net/hphotos-ak-ash4/429576_10151389166230437_1533271187_n.jpg)'></div>
+
+    <section>
+        <h2><%= @user.name %></h2>
+        <h3><span>Level 10</span> <%= @points %>pts</h3>
+    </section>
+</header>
+
+<%= render 'goals/quickform' %>
+
+
+<h3>Points this month: <%= @points_this_month %></h3>
+
+<!-- 
+<p>Large goals vs small(quick) ones?</p>
+<p>+ 5 points for completing</p>
+<p>+ 5 points per 'event' <- indicating ongoing (+ 5 points for everytime you do it)</p>
+<p>+ 5 points per 'week' <- impose a limit (Will let you click achieve for 12/7 - 12/14)</p>
+<p>Time limit? Before May 1st</p>
+
+<br />
+<p>Go to the gym twice per week</p>
+<p>Give 3 compliments</p>
+<p>Write 5 papers (divide progress by five? NLP?)</p> -->
+
+<section class='current'>
+    <h2>My goals this month (<%= @month.created_at.strftime("%b %Y") %>)</h2>
+    <%= link_to 'Show all months', months_path %>
+
+    <ul>
+        <%= render :partial => 'goals/current_goal', :collection => @month.goals, :as => :goal %> <!--|| 'There are no products available.'-->
+    </ul>
+
+    <p>Add goal to this month:</p>
+    <%= form_for @month, :url => add_goal_month_path(@month), :html => { :method => :put} do |f| %>  
+        <%= f.number_field :goal_id, :value => 0 %> 
+        <%= f.submit 'submit' %>  
+    <% end %>
+</section>
+
+<br />
+<!-- 
+<h3>Achievements Unlocked - 3 (100pts)</h3>
+<%= nested_goals @completed.arrange(:order => :created_at) %> -->
+<br />
+
+<section class='bucket'>
+    <h2>In my bucket</h2>
+    <ul>
+        <%= nested_goals @bucket.arrange(:order => :created_at) %>
+    </ul>
+</section>
+
+<br /><br />

@@ -1,0 +1,7 @@
+<%= form_for(Event.new) do |f| %>
+    
+    <%= f.hidden_field :goal_id, :value => goal.id %>
+    
+    <%= f.submit 'Event' %>
+    
+<% end %>

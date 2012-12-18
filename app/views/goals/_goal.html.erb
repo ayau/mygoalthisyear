@@ -1,0 +1,18 @@
+<li class='goal'>
+    <% if !goal.parent_id %>
+        <div class='badge' style='background-image: url(http://www.resonantenergies.com/library/images/book_icon.png)'></div>
+    <% else %>
+        <div class='nested-arrow'></div>
+    <% end %>
+    <h3><%= goal.name %> (<%= goal.id %>)</h3>
+    Points: <%= goal.points %>
+    <%= link_to 'Add sub goal', new_goal_path(:parent_id => goal.id) %>
+    <%= link_to 'Destroy', goal, method: :delete, data: { confirm: 'Are you sure?' } %>
+    <% if goal.completed %>
+        Completed at: <%= goal.completed_at.to_date %>
+        <%= link_to 'Uncomplete', make_incomplete_goal_path(goal), method: :put %>
+    <% else %>
+        <%= link_to 'Complete', complete_goal_path(goal), method: :put %>
+        <%= render :partial => 'events/form', :locals => {:goal => goal} %>
+    <% end %>
+</li>

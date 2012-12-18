@@ -1,0 +1,89 @@
+// Place all the styles related to the Goals controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+@import "default";
+
+#goal_points {
+    width: 50px;
+    font-size: 13px;
+}
+
+#goal_name {
+    width: 300px;
+    font-size: 13px;
+}
+
+.badge {
+    height: 80px;
+    width: 80px;
+    border-radius: 40px;
+    background-size: 100%;
+    box-shadow: 0px 0px 3px rgba(0,0,0,0.5);
+    border: 3px solid white;
+    margin: 2px 20px 2px 2px;
+    float: left;
+
+}
+
+.goal {
+    position: relative;
+    overflow: auto;
+    padding: 10px 0px 0px;
+}
+
+.completed {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    font-size: 30px;
+    color: #49D169;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    -webkit-transform: rotate(-10deg); 
+}
+
+.nested_goals {
+    margin-left: 70px;
+    h3 {
+        margin-top: 0px;
+    }
+}
+
+.nested-arrow {
+    margin: 0px 25px 30px 10px;
+    height: 30px;
+    width: 30px;
+    border-bottom-left-radius: 5px;
+    border-left: 3px solid $scolor;
+    border-bottom: 3px solid $scolor;
+    float: left;
+}
+
+// In my bucket
+.bucket{
+    ul {
+        margin: 0px;
+        padding: 0px;
+    }
+}
+
+
+// Quick add form
+.new_goal{
+    float: right;
+
+    // Label for 'Add a goal'
+    .goal_name {
+        font-size: 1.17em;
+        font-weight: bold;
+    }
+
+    input[type='submit'] {
+        margin-left: 10px;
+        margin-right: 0px;
+        margin-top: 3px;
+        float: right;
+    }
+}
+

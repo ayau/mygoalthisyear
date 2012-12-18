@@ -1,0 +1,21 @@
+
+
+<% @months.each do |month| %>
+    <h3><%= month.created_at.strftime("%B %Y") %></h3>
+    <% month.goals.each do |goal| %>
+        <p>
+            Goal: <%= goal.name %>
+            Completed: <%= goal.completed %>
+        </p>
+    <% end %>
+    <!-- <tr>
+        <td><%= month.user.name %></td>
+        <td><%= month.created_at.to_date %></td>
+        <td><%= link_to 'Show', month %></td>
+    </tr> -->
+<% end %>
+
+<br />
+<!-- 
+<%= link_to 'New Month', new_month_path %>
+ -->
