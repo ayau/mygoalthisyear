@@ -24,7 +24,7 @@ html, body {
 
 body {
     background: url('linedpaper.png');
-    color: #333;
+    color: $fcolor;
     font-family: verdana, arial, helvetica, sans-serif;
     font-size: 13px;
     padding: 0px;
@@ -120,5 +120,11 @@ a {
 
 ul {
     list-style: none;
+}
+
+// When an a tag is selected
+.selected {
+    text-decoration: underline;
+    font-weight: bold;
 }
 

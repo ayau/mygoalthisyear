@@ -22,6 +22,8 @@ end
 
 gem 'jquery-rails'
 
+gem 'jquery-ui-rails'
+
 gem 'omniauth-facebook'
 
 gem 'ancestry'

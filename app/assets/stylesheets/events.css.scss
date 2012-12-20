@@ -4,6 +4,8 @@
 
 .new_event {
     float: left;
-    // display: inline;
-    display: none;
+    
+    input[type='submit'] {
+        margin: 10px 10px 0px 0px;
+    }
 }

@@ -30,12 +30,22 @@ class UsersController < ApplicationController
         # create a new month if current time > last month
         @month = getMonth(@user)
 
-        @points_this_month = @month.goals.where(:completed => true).reduce(0) do |sum, goal|
+        @current_goals = @month.goals.order('completed ASC, created_at DESC')
+
+        # Calculating points this month
+        points_this_month = @month.goals.where(:completed => true).reduce(0) do |sum, goal|
             sum + goal.points
         end
 
         # hash of goal_id vs number of events in that month
         month_time = @month.created_at.beginning_of_month()
+
+        events_this_month = @user.events.where("created_at > ?", month_time)
+        @points_this_month = events_this_month.reduce(points_this_month) do |sum, event|
+            sum + event.goal.points
+        end
+
+
         @events = @user.events.where("created_at > ?", month_time).group(:goal_id).count 
 
         # new goal
