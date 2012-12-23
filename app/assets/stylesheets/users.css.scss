@@ -20,7 +20,36 @@
     overflow: auto;
     padding: 5px;
     // border-bottom: 1px solid $scolor;
+
+
     section {
         float: left;
+    }
+
+    ul {
+        float: right;
+        margin: 28px 0px 0px 0px;
+        padding: 0px;
+    }
+
+    li {
+        float: left;
+        text-align: left;
+        min-width: 80px;
+        padding: 0px 20px;
+
+        &:first-child {
+            border-right: 2px solid $scolor;
+        }
+
+        h3{
+            color: black;
+            font-size: 20px;
+            margin: 0px;
+        }
+        p{
+            color: black;
+            margin: 5px 0px 0px;
+        }
     }
 }

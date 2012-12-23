@@ -11,10 +11,13 @@
         </header>
 
         <div class='actions'>
-            +<%= goal.points %>pts
-            <%= link_to 'Add sub goal', new_goal_path(:parent_id => goal.id) %> |
-            <%= link_to 'Destroy', goal, method: :delete, data: { confirm: 'Are you sure?' } %>
+            <span class='points'><%= goal.points %> points</span>
             
+            <% if false %>
+                <%= link_to 'Add sub goal', new_goal_path(:parent_id => goal.id) %> |
+                <%= link_to 'Destroy', goal, method: :delete, data: { confirm: 'Are you sure?' } %>
+            <% end %>
+
             <% if false %>
                 <% if goal.completed %>
                     Completed at: <%= goal.completed_at.to_date %>

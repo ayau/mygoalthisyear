@@ -1,0 +1,11 @@
+<%= form_for :event, :url => add_details_events_path, :html => {:class => 'event-details'} do |f| %>
+    <div class='wrap'>
+        <input type='button' value='I did it!' disabled />
+        <span>contratulations!</span>
+        <span class='close'>close</span>
+        <%= f.text_area :post, :placeholder => 'Say a few words about your achievement', :rows => '5' %>
+        <%= f.hidden_field :goal_id, :value => -1 %>
+        <!-- <input type='submit' value='Add a photo' style='margin: 2px 4px 4px'/> -->
+        <%= f.submit 'submit', :disable_with => "submitting.." %>
+    </div>
+<% end %>

@@ -13,7 +13,7 @@
         <p class='completed'>+<%= goal.points %></p>
     <% end %>
 
-    <% if @events[goal.id] %>
+    <% if @events[goal.id] && @events[goal.id] > 1 %>
         <p class='evented'><%= @events[goal.id] %></p>
     <% end %>
     
@@ -24,10 +24,11 @@
         </header>
 
         <% if !goal.completed %>
-            <%= render :partial => 'events/form', :locals => {:goal => goal} %>
+            <%= render :partial => 'events/form', :locals => {:goal => goal, :again => @events[goal.id]} %>
         <% end %>
 
         <div class='actions'>
+            <!-- <span class='points'>+<%= goal.points %></span> -->
             <!-- Can't remove if already completed -->
             <% if goal.completed %>
                 <span>completed <%= time_ago_in_words(goal.completed_at) %> ago</span> · 
@@ -37,7 +38,6 @@
                 <!-- <p class='completed-placeholder'>complete</p> -->
                 <%= link_to 'Give up', remove_goal_month_path(@month, :goal_id => goal.id), method: :put %>
             <% end %>
-
         </div>
     </article>
 </li>

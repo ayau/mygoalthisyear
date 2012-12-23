@@ -1,4 +1,5 @@
 class GoalsController < ApplicationController
+
     # GET /goals
     # GET /goals.json
     def index
@@ -44,10 +45,23 @@ class GoalsController < ApplicationController
 
         goal = params[:goal]
         goal['user_id'] = current_user.id
+        
+        # Saving auto_add preference
+        current_user.update_attributes(params[:goal][:user])
+
+        auto_add = params[:goal][:user][:auto_add]
+
+        goal.delete('user')
         @goal = Goal.new(goal)
 
         respond_to do |format|
             if @goal.save
+
+                # automatically add to month
+                if auto_add
+                    current_user.get_month.add_goal(@goal)
+                end
+
                 format.html { redirect_to user_path(current_user), notice: 'Goal was successfully created.' }
                 format.json { render json: @goal, status: :created, location: @goal }
             else

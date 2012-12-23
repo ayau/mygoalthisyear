@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+    
     # GET /users
     # GET /users.json
     def index
@@ -19,8 +20,9 @@ class UsersController < ApplicationController
         @completed = @user.goals.where(:completed => true)
         @bucket = @user.goals.where(:completed => false)
 
+        # Don't over-count evented + completed goals
         points = @completed.reduce(0) do |sum, goal|
-            sum + goal.points
+            sum += goal.events.count > 0 ? goal.points : 0
         end
 
         @points = @user.events.reduce(points) do |sum, event|
@@ -28,13 +30,13 @@ class UsersController < ApplicationController
         end
 
         # create a new month if current time > last month
-        @month = getMonth(@user)
+        @month = @user.get_month
 
-        @current_goals = @month.goals.order('completed ASC, created_at DESC')
+        @current_goals = @month.goals.order('created_at DESC')
 
         # Calculating points this month
         points_this_month = @month.goals.where(:completed => true).reduce(0) do |sum, goal|
-            sum + goal.points
+            sum += goal.events.count > 0 ? goal.points : 0
         end
 
         # hash of goal_id vs number of events in that month
@@ -121,26 +123,6 @@ class UsersController < ApplicationController
     def timeline
         @user = User.find(params[:id])
 
-    end
-
-
-
-
-    private
-
-    # Retrieves current month object. Creates one if doesn't exist
-    def getMonth(user)
-        months = user.months.order("created_at desc").limit(1)
-        month = months[0]
-        if !month || month.created_at.beginning_of_month() < Time.now.utc.beginning_of_month()
-            param = {
-                'user_id' => current_user.id
-            }
-            month = Month.new(param)
-            month.save    
-        end
-
-        month
     end
 
 end

@@ -95,4 +95,18 @@ class EventsController < ApplicationController
             format.json { head :no_content }
         end
     end
+
+    # POST /events/add_details
+    # add_details_events
+    def add_details
+        goal = Goal.find(params[:event][:goal_id])
+
+        event = goal.events.last
+
+        event.update_attributes(params[:event])
+
+        redirect_to event.user
+
+    end
+
 end

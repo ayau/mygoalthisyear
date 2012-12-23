@@ -1,4 +1,5 @@
 class MonthsController < ApplicationController
+    
     # GET /months
     # GET /months.json
     def index
@@ -82,28 +83,26 @@ class MonthsController < ApplicationController
     end
 
     # Adding a goal to a month
+    # PUT /months/:id/add_goal
+    # add_goal_path
+    # params {
+    #     id: month id
+    #     month:
+    #         goal_id: goal id
+    # }   
+
     def add_goal
         month = Month.find(params[:id])
-
+        goal_id = params[:month]['goal_id']
+        goal = Goal.find_by_id(goal_id)
+        
         # authenticate?
         if month.user != current_user
             redirect_to month.user
         end
 
-        goal_id = params[:month]['goal_id']
-        goal = Goal.find_by_id(goal_id)
+        month.add_goal(goal)
         
-        if goal && !month.goals.include?(goal)
-            month.goals << goal
-        end
-
-        # Adding descendants to month
-        for d in goal.descendants
-            unless month.goals.include?(d)
-                month.goals << d
-            end
-        end
-
         redirect_to month.user
     end
 

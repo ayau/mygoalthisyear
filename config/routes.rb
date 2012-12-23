@@ -1,7 +1,5 @@
 Bucketlist::Application.routes.draw do
 
-  resources :events
-
     root to: 'pages#home'
     
     match "/auth/:provider/callback" => "sessions#create" 
@@ -26,6 +24,12 @@ Bucketlist::Application.routes.draw do
     resources :users do
         member do
             get 'timeline'
+        end
+    end
+
+    resources :events do
+        collection do
+            post 'add_details'
         end
     end
 

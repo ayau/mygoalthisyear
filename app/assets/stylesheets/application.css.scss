@@ -37,25 +37,46 @@ body {
     background: #FAFAFA;
     margin-bottom: 10px;
     border-bottom: 1px solid $scolor;
+    
     h1 {
         font-size: 13px;
         display: inline;
+        padding: 5px 10px;
     }
+
     section {
         width: 960px;
         margin: auto;
-        padding: 0px 10px;
+        padding: 0px 10px 0px 0px;
     }
-}
 
-.user-links{
-    float: right;
-    margin: 0px;
+    nav {
+        float: right;
+        margin: 0px;
+    }
+
+    ul {
+        margin: 0px;
+    }
+
     li {
         float: left;
         margin-left: 10px;
     }
 }
+
+.title {
+    color: $fcolor;
+    -webkit-transition: color .25s linear;
+    transition: color .25s linear;
+    &:hover {
+        text-decoration: none;
+        color: $lcolor;
+        -webkit-transition: color .25s linear;
+        transition: color .25s linear;
+    }
+}
+
 
 .footer {
     margin: 0px 50px;
@@ -94,23 +115,32 @@ body {
     }
 }
 
-input {
+input, textarea {
     padding: 5px;
     border: 1px solid $scolor;
     border-radius: 2px;
     background: white;
 }
 
-input[type='submit'] {
+textarea {
+    resize: none;
+    font-size: 13px;
+}
+
+input[type='submit'], input[type='button'] {
     background: #F0F0F0;
     &:hover {
         cursor: pointer;
         background: darken(#F0F0F0, 5);
     }
+    &:disabled:hover {
+        background: #F0F0F0;
+        cursor: default;
+    }
 }
 
 a {
-    color: #4183C4;
+    color: $lcolor;
     text-decoration: none;
     &:hover {
         text-decoration: underline;
@@ -124,7 +154,14 @@ ul {
 
 // When an a tag is selected
 .selected {
-    text-decoration: underline;
+    text-decoration: none;
     font-weight: bold;
+    &:hover {
+        text-decoration: none;
+        cursor: default;
+    }
 }
 
+section[role='main'] {
+    position: relative;
+}

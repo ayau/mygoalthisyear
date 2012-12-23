@@ -1,20 +1,103 @@
-<p id="notice"><%= notice %></p>
+<section role='main'>
 
-<p>
-  <b>Name:</b>
-  <%= @goal.name %>
-</p>
+    <p id="notice"><%= notice %></p>
 
-<p>
-  <b>User:</b>
-  <%= @goal.user %>
-</p>
+    <section class='goal'>
 
-<p>
-  <b>Completed:</b>
-  <%= @goal.completed %>
-</p>
+        <div class='goal-wrap'>
+            <div class='badge' style='background-image: url(http://www.resonantenergies.com/library/images/book_icon.png)'>
+            </div>
+            
+            <section>
+                <header>
+                    <h3><%= @goal.name %></h2>
+                    <%= link_to 'Edit', edit_goal_path(@goal) %>
+                     · 
+                    <%= link_to 'Destroy', @goal, method: :delete, data: { confirm: 'Are you sure?' } %>
+                </header>
+
+                <div class='actions'>
+                    <span class='points'>+<%= @goal.points %></span>
+                    <span> · in progress</span> <!-- vs in bucket -->
+                    <span> · created by <%= link_to @goal.user.name, @goal.user %> <%= time_ago_in_words(@goal.created_at) %> ago</span>
+                </div>
+            </section>
+
+            <!-- <ul>
+                <li>
+                    <h3>3</h3>
+                    <p>this month</p>
+                </li>
+                <li>
+                    <h3>10</h3>
+                    <p>completed</p>
+                </li>
+            </ul> -->
+
+        </div>
+
+        <!-- <p>Total points: 100 (30 this month)</p>
+                <p>Completed 10 times (3 times this month)</p> -->
 
 
-<%= link_to 'Edit', edit_goal_path(@goal) %> |
-<%= link_to 'Back', goals_path %>
+        <!-- Ancestry looks ugly. Fix it -->
+        <!-- Put completed back -->
+        <!-- Do add sub goal (make it a lot easier and intuitive) -->
+        
+        <!-- (Fix subgoal first) Work out logic for adding and removing things (for everything) -->
+        
+        <!-- More options -->
+
+        <!-- Events and stuff -->
+        
+        <!-- Info -->
+        <!-- Sharing and friends -->
+        <!-- Release! -->
+
+        <ul style='margin-left: 25px'>
+            <%= nested_goals @goal.descendants.arrange %>
+        </ul>
+
+        <p>How to display subgoals? (add subgoal should not be a link? or maybe link to edit page with ?subgoal=true)</p>
+        <%= link_to 'Add sub goal', new_goal_path(:parent_id => @goal.id) %>
+
+        
+        <h3>Description</h3>
+        <% if @goal.description.length > 0 %>
+            <p><%= @goal.description %></p>
+        <% else %>
+            <p style='color: #CCC'>No description</p>
+        <% end %>
+
+        <% if @goal.has_deadline %>
+            <h3>Deadline</h3>
+            <p><%= @goal.deadline.strftime('%e %b %y') %></p>
+        <% else %>
+            <p>No deadline set</p>
+        <% end %>
+
+        <p>Completed at:</p>
+
+        <h3>Shared with</h3>
+        <a>Invite your friends to join you</a>
+        <p>Stuffs</p>
+
+        <p>Maybe show other people's progress</p>
+
+    </section>
+
+    <section class='events'>
+        <h3>Timeline</h3>
+        <p><a class='selected'>All</a> | <a>Dec</a> | <a>Nov</a> | <a>Oct</a></p>
+        <p>Created at <%= @goal.created_at.strftime('%e %b %y') %></p>
+        <ul>
+            <%= render :partial => 'events/event', :collection => @goal.events, :as => :event %>
+        </ul>
+        <% if @goal.completed %>
+            <p>Completed at <%= @goal.completed_at.strftime('%e %b %y') %></p>
+        <% end %>
+    </section>
+
+    <%= link_to 'Back', goals_path %>
+
+</section>

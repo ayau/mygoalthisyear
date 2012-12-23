@@ -2,10 +2,85 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+@import "default";
+
 .new_event {
     float: left;
     
     input[type='submit'] {
         margin: 10px 10px 0px 0px;
+    }
+}
+
+.event-details{
+    overflow: hidden;
+    z-index: 5;
+    display: none;
+    width: 420px; 
+    border-radius: 2px; 
+    left: 132px; 
+    position: absolute; 
+    border: 1px solid #CCC; 
+    padding: 5px; 
+    background: white;
+
+    .wrap {
+        width: 410px;
+    }
+
+    input {
+        margin: 4px;
+
+        &[type='submit'] {
+            margin-top: 2px;
+        }
+    }
+
+    .close {
+        float: right; 
+        margin-right: 4px;
+        color: $lcolor;
+        cursor: pointer;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    textarea {
+        margin: 4px; 
+        width:400px; 
+        font-size: 13px;
+    }
+}
+
+.event {
+    width: 100%;
+    padding: 10px;
+    border-radius: 2px;
+    border-top: 1px solid $scolor;
+    overflow: hidden;
+
+    &:hover {
+        background: #F0F0F0;
+    }
+
+    div {
+        float: left;
+    }
+
+    .day {
+        font-size: 32px; 
+        padding: 10px; 
+        margin-right: 20px;
+        color: $scolor;
+    }
+}
+
+.events {
+    ul {
+        width: 750px;
+        margin: auto;
+        padding: 0px;
     }
 }

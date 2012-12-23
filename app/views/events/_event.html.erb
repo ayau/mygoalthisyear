@@ -1,0 +1,16 @@
+<li class='event'>
+    <div class='day'>
+        <%= event.created_at.day %>
+    </div>
+    <div>
+        <p><%= event.post %></p>
+        <p>completed <%= event.created_at.strftime('%l:%M %p - %B %e, %Y') %></p>
+        <% if event.post.length == 0 %>
+            <%= link_to 'Add comment', edit_event_path(event) %>
+        <% else %>    
+            <%= link_to 'Edit', edit_event_path(event) %>
+        <% end %>
+         |
+        <%= link_to 'Remove', event, method: :delete, data: { confirm: 'Are you sure?' } %>
+    </div>
+</li>

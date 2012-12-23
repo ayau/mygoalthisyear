@@ -37,7 +37,7 @@
     // container for header and actions
     article{
         float: left;
-        width: 700px;
+        max-width: 700px;
     }
 
     // header for goal
@@ -47,9 +47,11 @@
 
 
     .points {
-        font-size: 16px;
-        font-weight: bold;
-        color: darken(#49D169, 10);
+        // font-size: 16px;
+        // font-weight: bold;
+        color: black;
+        // color: $scolor;
+        // color: darken(#49D169, 10);
     }
 
     // name of goal
@@ -65,6 +67,7 @@
     .actions {
         margin-top: 15px;
         margin-bottom: 10px;
+        float: left;
     }
 
 
@@ -110,7 +113,7 @@
 
 
 .nested_goals {
-    margin-left: 70px;
+    margin-left: 40px;
     .goal {
         margin-top: 0px;
     }
@@ -118,8 +121,10 @@
 
 .nested-arrow {
     margin: 0px 25px 30px 10px;
-    height: 30px;
+    height: 22px;
     width: 30px;
+    position: relative;
+    top: 8px;
     border-bottom-left-radius: 5px;
     border-left: 3px solid $scolor;
     border-bottom: 3px solid $scolor;
@@ -149,8 +154,7 @@
     background: white;
     padding: 10px;
     box-shadow: -1px 1px 3px 0px rgba(0,0,0,0.2);
-    right: 200px;
-    top: 1000px;
+    left: 682px;
 
     h3 {
         margin: 0px;
@@ -176,8 +180,15 @@
 
 
 // Quick add form
-.new_goal{
-    float: right;
+.quick_goal_form{
+    position: absolute;
+    right: 0px;
+    top: 115px;
+    width: 330px;
+    border: 1px solid rgba(255,255,255,0);
+    padding: 15px;
+    border-radius: 2px;
+    z-index: 5;
 
     // Label for 'Add a goal'
     .goal_name {
@@ -192,6 +203,42 @@
         float: right;
         width: 75px;
     }
+
+    .more-options {
+        display: block; 
+        clear:both; 
+        text-align: right;
+    }
+
+    input[type='text'], textarea {
+        width: 300px;
+    }
+
+    .extra-options {
+        display: none;
+    }
+
+    // // fading border
+    -webkit-transition: border .25s linear;
+    transition: border .25s linear;   
+
+    &.extended {
+        border: 1px solid $scolor;
+        background: white;
+        // box-shadow: -4px 4px 12px 2px rgba(0,0,0,0.05);
+        -webkit-transition: border .25s linear;
+        transition: border .25s linear;
+    }
+
+    .deadline-form {
+        display: none;
+    }
+
+    .checkbox-label {
+        position: relative;
+        padding-left: 10px;
+        left: -10px;
+    }
 }
 
 #goal_points {
@@ -200,8 +247,50 @@
 }
 
 #goal_name {
-    width: 300px;
     font-size: 13px;
     margin-bottom: 5px;
 }
 
+
+// Goal details
+.goal-wrap {
+    overflow: auto;
+
+    // The following (h2, section, ul, li) is the same as one in user.css. Consider refactoring.
+    h3 {
+        display: inline;
+        margin-right: 10px;
+        margin-bottom: 0px;
+    }
+
+    section {
+        float: left;
+        max-width: 790px;
+        // max-width: 590px;
+    }
+    ul {
+        float: right;
+        margin: 23px 0px 0px 0px;
+        padding: 0px;
+    }
+    li {
+        float: left;
+        min-width: 80px;
+        padding-left: 20px;
+
+        &:first-child {
+            border-right: 2px solid $scolor;
+            padding-right: 20px;
+        }
+
+        h3 {
+            font-size: 20px;
+            margin: 0px;
+        }
+
+        p {
+            margin: 5px 0px 0px;
+        }
+    }
+
+}
