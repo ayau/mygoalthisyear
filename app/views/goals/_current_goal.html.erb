@@ -1,41 +1,44 @@
-<li class='goal'>
-    
-    <div class='badge' style='background-image: url(http://www.resonantenergies.com/library/images/book_icon.png)'>
-    </div>
+<% if goal.completed %>
+    <li class='goal completed'>
+<% else %>
+    <li class='goal'>
+<% end %>
+<!-- 
+        <div class='badge' style='background-image: url(http://www.resonantenergies.com/library/images/book_icon.png)'>
+        </div> -->
 
-    <% if goal.completed %>
+        <!-- <img class='badge' src='/assets/badges/guitar.svg' /> -->
         <div class='badge overlay'></div>
-    <% end %>
+        <embed class='badge' src='/assets/badges/guitar.svg' />
+        <!-- <filter id="h200" x="0" y="0" width="1" height="1">
+            <feColorMatrix type="hueRotate" values="200"/>
+        </filter> -->
+        <!-- <div class='badge' style='background-image: url("/assets/badges/guitar.svg")'></div> -->
 
-    <% if @events[goal.id] %>
-        <p class='completed'>+<%= @events[goal.id] * goal.points %></p>
-    <% elsif goal.completed %>
-        <p class='completed'>+<%= goal.points %></p>
-    <% end %>
+        <p class='points'>+<%= goal.points %></p>
 
-    <% if @events[goal.id] && @events[goal.id] > 1 %>
-        <p class='evented'><%= @events[goal.id] %></p>
-    <% end %>
-    
+        <% if @events[goal.id] && @events[goal.id] > 1 %>
+            <p class='evented'><%= @events[goal.id] %></p>
+        <% end %> 
+        
     <article>
         <header>
             <%= link_to goal.name, goal, :class => 'goal-name', :title => 'view goal details' %>
             <%= link_to 'Edit', edit_goal_path(goal) %>
         </header>
-
+    
         <% if !goal.completed %>
             <%= render :partial => 'events/form', :locals => {:goal => goal, :again => @events[goal.id]} %>
         <% end %>
 
         <div class='actions'>
-            <!-- <span class='points'>+<%= goal.points %></span> -->
             <!-- Can't remove if already completed -->
             <% if goal.completed %>
-                <span>completed <%= time_ago_in_words(goal.completed_at) %> ago</span> · 
+                <!-- <span>completed <%= time_ago_in_words(goal.completed_at) %> ago</span> · -->
+                <span class='achievement-unlocked'>ACHIEVEMENT UNLOCKED</span>
                 <%= link_to "jk I didn't complete this yet", make_incomplete_goal_path(goal), method: :put %>
             <% else %>
                 <%= link_to 'Complete', complete_goal_path(goal), method: :put %> |
-                <!-- <p class='completed-placeholder'>complete</p> -->
                 <%= link_to 'Give up', remove_goal_month_path(@month, :goal_id => goal.id), method: :put %>
             <% end %>
         </div>

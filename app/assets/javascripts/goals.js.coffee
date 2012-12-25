@@ -144,3 +144,34 @@ $ ->
     # Don't hide if form filled in
         if eventExtended
             $('.close').click()
+
+
+    # Badges ----------------------------------------------
+    # # wait until all the resources are loaded
+    # window.addEventListener("load", findSVGElements, false)
+    
+    # # fetches the document for the given embedding_element
+    # getSubDocument = (embedding_element) ->
+    #     if (embedding_element.contentDocument) 
+    #         return embedding_element.contentDocument
+    #     else
+    #         subdoc = null
+    #         try 
+    #             subdoc = embedding_element.getSVGDocument()
+    #         catch e 
+    #             console.log e
+    #         return subdoc
+
+            
+    # findSVGElements = () ->
+    #     console.log 'here'
+    #     elements = document.querySelectorAll("embed");
+    #     console.log elements
+    #     for elem in elements
+    #         subdoc = getSubDocument(elem)
+    #         if (subdoc)
+    #             subdoc.getElementById("svgbar").setAttribute("fill", "lime")
+        
+    # findSVGElements()
+
+    

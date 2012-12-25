@@ -75,6 +75,24 @@
         margin-right: 20px;
         color: $scolor;
     }
+
+    // CREATED and ACHIEVEMENT UNLOCKED
+    &.special {
+        h3{
+            color: #CCC; 
+            font-weight: normal; 
+            font-size: 32px; 
+            margin: 10px 0px; 
+            padding: 0px;
+        }
+
+        p {
+            margin-bottom: 0px;
+        }
+        .badge {
+            float: right;
+        }
+    }
 }
 
 .events {
@@ -82,5 +100,7 @@
         width: 750px;
         margin: auto;
         padding: 0px;
+        margin-top: 20px;
+        margin-bottom: 30px;
     }
 }
