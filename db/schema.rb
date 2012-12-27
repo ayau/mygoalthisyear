@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121223082602) do
+ActiveRecord::Schema.define(:version => 20121226111851) do
 
   create_table "events", :force => true do |t|
     t.integer  "user_id"
@@ -36,6 +36,8 @@ ActiveRecord::Schema.define(:version => 20121223082602) do
     t.text     "description",  :default => ""
     t.date     "deadline"
     t.boolean  "has_deadline", :default => false
+    t.string   "badge"
+    t.string   "color"
   end
 
   add_index "goals", ["ancestry"], :name => "index_goals_on_ancestry"

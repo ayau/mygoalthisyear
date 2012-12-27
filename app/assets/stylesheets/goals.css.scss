@@ -13,22 +13,16 @@
     border: 3px solid white;
     margin: 2px 20px 2px 2px;
     float: left;
-    z-index: 2;
 
-        position: absolute;
-
-    &.overlay {
-        position: relative;
-        box-shadow: none;
-        // border: none;
-        z-index: 1;
-        // background: rgba(0,0,0,0.4);
-        background: #FF0000;
+    .logo {
+        // sqrt(2)
+        height: 70%;
+        width: 70%;
+        margin: 15%;
     }
 }
 
 .draggable {
-    // cursor: move;
     cursor: url(https://mail.google.com/mail/images/2/openhand.cur), default !important;
 }
 
@@ -127,10 +121,9 @@
 }
 
 // Current goals
-.current {
-    ul {
-        padding-left: 30px;
-    }
+
+.current-goals {
+    padding-left: 30px;
     li {
         padding: 0px 20px;
     }
@@ -188,7 +181,7 @@
 .quick_goal_form{
     position: absolute;
     right: 0px;
-    top: 115px;
+    top: -13px;
     width: 330px;
     border: 1px solid rgba(255,255,255,0);
     padding: 15px;
@@ -246,6 +239,39 @@
     }
 }
 
+.badge-select {
+    display: none;
+    padding: 0px; 
+    position: absolute; 
+    padding: 10px;
+    width: 300px;
+    height: 280px;
+    overflow-y: scroll;
+    top: 130px; 
+    z-index: 10; 
+    left: -180px; 
+    background: white; 
+    border-radius: 2px;  
+    border: 1px solid #CCC; 
+    box-shadow: -1px 1px 6px 1px rgba(0,0,0,0.2);
+
+    li {
+        overflow: auto;
+        float: left;
+        border: 2px solid white;
+        border-radius: 2px;
+        &.selected {
+            border: 2px solid $scolor;
+        }
+    }
+
+    img {
+        height:50px; 
+        float: left; 
+        padding: 5px;
+    }
+}
+
 #goal_points {
     width: 50px;
     font-size: 13px;
@@ -254,6 +280,25 @@
 #goal_name {
     font-size: 13px;
     margin-bottom: 5px;
+}
+
+.achievements {
+    margin: 20px 0px 30px;
+    border-bottom: 1px solid $scolor;
+
+    h3 {
+        display: inline;
+        margin-right: 10px;
+    }
+
+    .slider {
+        overflow: auto;
+        margin: 10px 0px;
+    }
+
+    &.hidden {
+        border-bottom: 1px solid white;
+    }
 }
 
 

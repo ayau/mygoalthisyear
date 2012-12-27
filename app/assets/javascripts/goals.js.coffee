@@ -9,7 +9,7 @@ $ ->
     bhelper = $('.bucket-helper')
 
     # Jquery draggable and droppable
-    $(".bucket .badge").draggable({
+    $(".draggable").draggable({
         appendTo: "body"
         scroll: 'false'
         helper: "clone"
@@ -75,13 +75,60 @@ $ ->
 
     # Intercept click event
     $('.quick_goal_form').live 'click', (e) ->
-        e.stopPropagation()
-
+        if !badgeOpened
+            e.stopPropagation()
+        
     $('.has-deadline').live 'click', ->
         if $('#goal_has_deadline').is(':checked')
             $('.deadline-form').slideDown('fast')
         else
             $('.deadline-form').slideUp('fast')
+
+
+    # repeated code
+    $('#goal_name').focus () ->
+        if not optionsExtended
+            $('.quick_goal_form').addClass('extended')
+            $('.extra-options').fadeIn()
+            $('.more-options').text('- less options')
+            # Description add focus
+            optionsExtended = !optionsExtended
+
+    # Badge stuff
+    badge = $('.badge-preview')
+    badgeLogo = badge.find('img')
+    badgeOpened = false
+
+    badge.live 'click', () ->
+        $('.badge-select').fadeIn 'slow', () ->
+            badgeOpened = true
+        
+    $('.badge-select li').live 'click', () ->
+        $('.badge-select .selected').removeClass('selected')
+        $(this).addClass('selected')
+
+        id = $(this).find('img').attr('src')
+        color = $('#goal_badge').attr('badge_color')
+        url = id + '?color=' + color
+
+        badgeLogo.attr('src', url)
+        $('#goal_badge').val(url)
+        $('#goal_badge').attr('badge_url', id)
+
+    $('.badge-select').live 'click', (e) ->
+        e.stopPropagation()
+
+
+    # Achievements ---------------------------------------
+    
+    $('.hide-achievements').live 'click', ->
+        $('.slider').slideToggle 'slow', () ->
+            if $('.achievements').hasClass('hidden')
+                $('.achievements').removeClass('hidden')
+                $('.hide-achievements').text('hide')
+            else
+                $('.achievements').addClass('hidden')
+                $('.hide-achievements').text('show')
 
 
     # Event details form ---------------------------------
@@ -136,6 +183,10 @@ $ ->
 
     # Document click event -------------------------------
     $(document).live 'click', ->
+        if badgeOpened
+            $('.badge-select').fadeOut()
+            badgeOpened = false
+            return      
         # Automatically hides more options of add a goal
     # Don't hide if stuff's been filled in?
         if optionsExtended
@@ -144,34 +195,3 @@ $ ->
     # Don't hide if form filled in
         if eventExtended
             $('.close').click()
-
-
-    # Badges ----------------------------------------------
-    # # wait until all the resources are loaded
-    # window.addEventListener("load", findSVGElements, false)
-    
-    # # fetches the document for the given embedding_element
-    # getSubDocument = (embedding_element) ->
-    #     if (embedding_element.contentDocument) 
-    #         return embedding_element.contentDocument
-    #     else
-    #         subdoc = null
-    #         try 
-    #             subdoc = embedding_element.getSVGDocument()
-    #         catch e 
-    #             console.log e
-    #         return subdoc
-
-            
-    # findSVGElements = () ->
-    #     console.log 'here'
-    #     elements = document.querySelectorAll("embed");
-    #     console.log elements
-    #     for elem in elements
-    #         subdoc = getSubDocument(elem)
-    #         if (subdoc)
-    #             subdoc.getElementById("svgbar").setAttribute("fill", "lime")
-        
-    # findSVGElements()
-
-    

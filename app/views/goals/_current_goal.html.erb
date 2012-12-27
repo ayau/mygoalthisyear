@@ -3,17 +3,13 @@
 <% else %>
     <li class='goal'>
 <% end %>
-<!-- 
-        <div class='badge' style='background-image: url(http://www.resonantenergies.com/library/images/book_icon.png)'>
-        </div> -->
+        
+        <% goal.color ||= 'fbcc91' %>
+        <% goal.badge ||= 'star.svg?color=4d2d74' %>
 
-        <!-- <img class='badge' src='/assets/badges/guitar.svg' /> -->
-        <div class='badge overlay'></div>
-        <embed class='badge' src='/assets/badges/guitar.svg' />
-        <!-- <filter id="h200" x="0" y="0" width="1" height="1">
-            <feColorMatrix type="hueRotate" values="200"/>
-        </filter> -->
-        <!-- <div class='badge' style='background-image: url("/assets/badges/guitar.svg")'></div> -->
+        <div style='background: #<%= goal.color %>' class='badge'>
+            <img class='logo' src='/svg/<%= goal.badge %>' />
+        </div>
 
         <p class='points'>+<%= goal.points %></p>
 

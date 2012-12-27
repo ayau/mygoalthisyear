@@ -1,6 +1,13 @@
 <li class='goal'>
     <% if !goal.parent_id %>
-        <div id='<%= goal.id %>' class='badge draggable' style='background-image: url(http://www.resonantenergies.com/library/images/book_icon.png)'></div>
+        
+        <% goal.color ||= 'fbcc91' %>
+        <% goal.badge ||= 'star.svg?color=4d2d74' %>
+
+        <div id='<%= goal.id %>' style='background: #<%= goal.color %>' class='badge draggable'>
+            <img class='logo' src='/svg/<%= goal.badge %>' />
+        </div>
+
     <% else %>
         <div class='nested-arrow'></div>
     <% end %>

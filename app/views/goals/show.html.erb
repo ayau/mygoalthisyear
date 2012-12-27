@@ -5,9 +5,13 @@
     <section class='goal'>
 
         <div class='goal-wrap'>
-            <div class='badge' style='background-image: url(http://www.resonantenergies.com/library/images/book_icon.png)'>
+            <% @goal.color ||= 'fbcc91' %>
+            <% @goal.badge ||= 'star.svg?color=4d2d74' %>
+
+            <div id='<%= @goal.id %>' style='background: #<%= @goal.color %>' class='badge draggable'>
+                <img class='logo' src='/svg/<%= @goal.badge %>' />
             </div>
-            
+
             <section>
                 <header>
                     <h3><%= @goal.name %></h2>
@@ -48,14 +52,16 @@
 
         <!-- Ancestry looks ugly. Fix it -->
         <!-- Do add sub goal (make it a lot easier and intuitive) -->
-        
         <!-- (Fix subgoal first) Work out logic for adding and removing things (for everything) -->
         
 
         <!-- Achievements + badge view -->
+
+        <!-- Badges + color picker -->
+
         <!-- Info -->
+        
         <!-- Sharing and friends -->
-        <!-- Release! -->
 
         <ul style='margin-left: 25px'>
             <%= nested_goals @goal.descendants.arrange %>
@@ -110,7 +116,7 @@
                     <p><%= @goal.created_at.strftime('%l:%M %p - %B %e, %Y') %></p>
                 </div>
             </li>
-            
+
             <%= render :partial => 'events/event', :collection => @goal.events, :as => :event %>
 
             <% if @goal.completed %>
@@ -122,8 +128,12 @@
                         <h3>ACHIEVEMENT UNLOCKED</h3>
                         <p><%= @goal.completed_at.strftime('%l:%M %p - %B %e, %Y') %></p>
                     </div>
-                    <div class='badge' style='background-image: url(http://www.resonantenergies.com/library/images/book_icon.png)'>
+                    
+                    <div id='<%= @goal.id %>' style='background: #<%= @goal.color %>' class='badge draggable'>
+                        <img class='logo' src='/svg/<%= @goal.badge %>' />
                     </div>
+
+
                 </li>
             <% end %>
         </ul>

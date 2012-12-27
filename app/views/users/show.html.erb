@@ -5,7 +5,7 @@
         
         <div class='avatar' style='background-image: url(http://sphotos-c.ak.fbcdn.net/hphotos-ak-ash4/429576_10151389166230437_1533271187_n.jpg)'></div>
 
-        <!-- Add max with to this guy -->
+        <!-- Add max width to this guy -->
         <section>
             <h2><%= @user.name %></h2>
             <h3>Level 10</h3>
@@ -24,28 +24,24 @@
 
     </header>
 
-    <div style='margin: 30px 0px 50px; height: 100px; width: 100%; background #CCC'>
-        <h3>Achievements</h3>
-        <div class='badge' style='background-image: url(http://www.resonantenergies.com/library/images/book_icon.png)'>
-        </div>
-        <div class='badge' style='background-image: url(http://www.resonantenergies.com/library/images/book_icon.png)'>
-        </div>
-        <div class='badge' style='background-image: url(http://www.resonantenergies.com/library/images/book_icon.png)'>
-        </div>
-        <div class='badge' style='background-image: url(http://www.resonantenergies.com/library/images/book_icon.png)'>
-        </div>
-        <div class='badge' style='background-image: url(http://www.resonantenergies.com/library/images/book_icon.png)'>
-        </div>
-        <div class='badge' style='background-image: url(http://www.resonantenergies.com/library/images/book_icon.png)'>
-        </div>
-        <div class='badge' style='background-image: url(http://www.resonantenergies.com/library/images/book_icon.png)'>
-        </div>
-        <div class='badge' style='background-image: url(http://www.resonantenergies.com/library/images/book_icon.png)'>
-        </div>
-    </div>
+    <section class='achievements'>
+        <h3>Achievements</h3><a class='hide-achievements'>hide</a>
+        <div class='slider'>
+            <% badges = Dir.glob("app/assets/images/badges/*") %>
+            <% for i in 1..8 do %>
+                <% badge_url = badges.sample.gsub('app/assets/images/badges/', '') %>
+                <% fg = "%06x" % (rand * 0xffffff) %>
+                <% bg = "%06x" % (rand * 0xffffff) %>
+            
+                <div style='background: #<%= bg %>' class='badge'>
+                    <img class='logo' src='/svg/<%= badge_url %>?color=<%= fg %>' />
+                </div>
 
-    <%= render 'goals/quickform' %>
+            <% end %>
+        </div>
+    </section>
 
+    
     <!-- 
     <p>Large goals vs small(quick) ones?</p>
     <p>+ 5 points for completing</p>
@@ -58,14 +54,15 @@
     <p>Give 3 compliments</p>
     <p>Write 5 papers (divide progress by five? NLP?)</p> -->
 
-    <section class='current'>
+    <section style='position: relative' class='current'>
+        <%= render 'goals/quickform' %>
         <h2>My goals this month</h2>
         <h3><%= @month.created_at.strftime("%B %Y") %> (Day <%= Time.now().day %> of <%= Time.now().end_of_month.day%>)</h3>
         <%= link_to 'Show all months', months_path %>
         <br /><br />
 
         <!-- Add padding left and right to ul, instead of em -->
-        <ul>
+        <ul class='current-goals'>
             <%= render :partial => 'goals/current_goal', :collection => @current_goals, :as => :goal %> <!--|| 'There are no products available.'-->
         </ul>
 

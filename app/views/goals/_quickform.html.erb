@@ -34,6 +34,36 @@
             <%= f.text_area :description, :placeholder => 'Enter a description', :rows => 3 %>
         </div>
 
+        <div style='margin-top: 10px'>
+            <%= f.label :badge, 'Choose your badge', :style => 'float: left; margin-right: 10px' %>
+
+            <% color = 'fbcc91' %>
+            <% badge_url = 'star.svg?color=4d2d74' %>
+            
+            <div style='background: #<%= color %>' class='badge badge-preview'>
+                <img class='logo' src='/svg/<%= badge_url %>' />
+            </div>
+            <%= f.hidden_field :badge, :value => '/svg/star.svg?color=4d2d74', :badge_color => '4d2d74', :badge_id => '/svg/star.svg' %>
+            <%= f.label :color %>
+            <%= f.hidden_field :color, :value => 'fbcc91' %>
+            <p>Color</p>
+        </div>
+
+        <ul class='badge-select'>
+            <% badges = Dir.glob("app/assets/images/badges/*") %>
+            <% for b in badges do %>
+                <% url = b.sub('app/assets/images/badges/', '') %>
+                <% if url == 'star.svg' %>
+                    <li class='selected'>
+                <% else %>
+                    <li>
+                <% end %>
+                    <img src='/svg/<%= url %>' />
+                </li>
+            <% end %>
+        </ul>
+        
+        <div style='clear:both'></div>
 
         <div class='has-deadline'>
             <br />
