@@ -48,14 +48,7 @@ class EventsController < ApplicationController
         @event = Event.new(event)
 
         # Duplicate code in multiple places. Consider refactoring
-        # Add goal to current month if not already in there
-        month = current_user.months.find(:first, :order=>'created_at desc')
         goal = Goal.find(params[:event][:goal_id])
-
-        unless month.goals.include?(goal)
-            month.goals << goal
-        end
-        # end here
 
         respond_to do |format|
             if @event.save

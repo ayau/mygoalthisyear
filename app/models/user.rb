@@ -1,7 +1,20 @@
 class User < ActiveRecord::Base
-    has_many :goals
+    
+    has_many :commitments
+    has_many :goals, :through => :commitments, :uniq => true,
+             :select => 'goals.*, commitments.completed_at as completed_at,
+                        commitments.completed as completed,
+                        commitments.is_current as is_current'
+
+    # has_many    :current_goals,
+    #             :through => :commitments,
+    #             :class_name => 'Goal',
+    #             :source => :goal,
+    #             :conditions => {'commitments.completed = ?', true}
+
+
     has_many :events
-    has_many :months
+
     attr_accessible :email, :name, :uid, :token, :remember_token, :auto_add
 
     before_save :create_remember_token
@@ -15,20 +28,21 @@ class User < ActiveRecord::Base
         end 
     end
 
-    # Retrieves current month object. Creates one if doesn't exist
-    def get_month
+    def commit_to_goal (goal, auto_add)
 
-        months = self.months.order("created_at desc").limit(1)
-        month = months[0]
-        if !month || month.created_at.beginning_of_month() < Time.now.utc.beginning_of_month()
-            param = {
-                'user_id' => current_user.id
-            }
-            month = Month.new(param)
-            month.save    
-        end
+        self.commitments.create(:goal_id => goal.id, :is_current => auto_add)
 
-        month
+        # if goal && !self.goals.include?(goal)
+        #     self.goals << goal
+        # end
+
+        # Adding descendants to month
+        # for d in goal.descendants
+        #     unless self.goals.include?(d)
+        #         self.goals << d
+        #     end
+        # end
+        
     end
 
 

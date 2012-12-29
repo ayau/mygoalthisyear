@@ -17,8 +17,11 @@ class UsersController < ApplicationController
         uid = params[:id] || current_user
 
         @user = User.find(uid)
-        @completed = @user.goals.where(:completed => true)
-        @bucket = @user.goals.where(:completed => false)
+        @completed = @user.goals.where('completed = ?', 1)
+        @bucket = @user.goals.where('is_current = ?', 0)
+
+        # @completed = @user.goals.where(:completed => true)
+        # @bucket = @user.goals.where(:completed => false)
 
         # Don't over-count evented + completed goals
         points = @completed.reduce(0) do |sum, goal|
@@ -30,23 +33,24 @@ class UsersController < ApplicationController
         end
 
         # create a new month if current time > last month
-        @month = @user.get_month
+        # @month = @user.get_month
 
-        @current_goals = @month.goals.order('created_at DESC')
+        # @current_goals = @month.goals.order('created_at DESC')
+        @current_goals = @user.goals.where('is_current = ?', 1).order('commitments.created_at DESC')
 
         # Calculating points this month
-        points_this_month = @month.goals.where(:completed => true).reduce(0) do |sum, goal|
-            sum += goal.events.count > 0 ? goal.points : 0
-        end
+        # points_this_month = @month.goals.where(:completed => true).reduce(0) do |sum, goal|
+        #     sum += goal.events.count > 0 ? goal.points : 0
+        # end
 
         # hash of goal_id vs number of events in that month
-        month_time = @month.created_at.beginning_of_month()
+        month_time = Time.now.beginning_of_month()
 
-        events_this_month = @user.events.where("created_at > ?", month_time)
-        @points_this_month = events_this_month.reduce(points_this_month) do |sum, event|
-            sum + event.goal.points
-        end
-
+        # events_this_month = @user.events.where("created_at > ?", month_time)
+        # @points_this_month = events_this_month.reduce(points_this_month) do |sum, event|
+        #     sum + event.goal.points
+        # end
+        @points_this_month = 0
 
         @events = @user.events.where("created_at > ?", month_time).group(:goal_id).count 
 
@@ -123,6 +127,27 @@ class UsersController < ApplicationController
     def timeline
         @user = User.find(params[:id])
 
+    end
+
+
+    def add_goal
+        goal_id = params[:user][:goal_id]
+        commitment = Commitment.find_by_user_id_and_goal_id(current_user.id, goal_id)
+
+        # need to check if commitment is valid
+        commitment.update_attributes(:is_current => 1)
+        
+        redirect_to current_user
+    end
+
+    def remove_goal
+        goal_id = params[:goal_id]
+        commitment = Commitment.find_by_user_id_and_goal_id(current_user.id, goal_id)
+
+        # need to check if commitment is valid
+        commitment.update_attributes(:is_current => 0)
+        
+        redirect_to current_user
     end
 
 end

@@ -11,7 +11,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121226111851) do
+ActiveRecord::Schema.define(:version => 20121229100257) do
+
+  create_table "commitments", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "goal_id"
+    t.integer  "is_current"
+    t.integer  "completed",    :default => 0
+    t.datetime "completed_at", :default => '2012-12-29 10:07:17'
+    t.datetime "created_at",                                      :null => false
+    t.datetime "updated_at",                                      :null => false
+  end
 
   create_table "events", :force => true do |t|
     t.integer  "user_id"
@@ -26,47 +36,30 @@ ActiveRecord::Schema.define(:version => 20121226111851) do
 
   create_table "goals", :force => true do |t|
     t.string   "name"
-    t.integer  "user_id"
-    t.boolean  "completed",    :default => false
-    t.datetime "created_at",                                      :null => false
-    t.datetime "updated_at",                                      :null => false
-    t.datetime "completed_at", :default => '2012-12-09 03:13:46', :null => false
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
     t.integer  "points",       :default => 0
     t.string   "ancestry"
     t.text     "description",  :default => ""
     t.date     "deadline"
-    t.boolean  "has_deadline", :default => false
+    t.integer  "has_deadline", :default => 0
     t.string   "badge"
     t.string   "color"
+    t.integer  "owner_id"
   end
 
   add_index "goals", ["ancestry"], :name => "index_goals_on_ancestry"
-  add_index "goals", ["user_id"], :name => "index_goals_on_user_id"
-
-  create_table "goalsinmonths", :force => true do |t|
-    t.integer  "month_id"
-    t.integer  "goal_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  create_table "months", :force => true do |t|
-    t.integer  "user_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "months", ["user_id"], :name => "index_months_on_user_id"
+  add_index "goals", ["owner_id"], :name => "index_goals_on_owner_id"
 
   create_table "users", :force => true do |t|
     t.string   "name"
     t.string   "email"
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
     t.integer  "uid"
     t.string   "token"
     t.string   "remember_token"
-    t.boolean  "auto_add",       :default => false
+    t.integer  "auto_add",       :default => 0
   end
 
 end

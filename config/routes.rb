@@ -14,16 +14,11 @@ Bucketlist::Application.routes.draw do
         end
     end
 
-    resources :months do
-        member do
-            put 'add_goal'
-            put 'remove_goal'
-        end
-    end
-
     resources :users do
         member do
             get 'timeline'
+            put 'add_goal'
+            put 'remove_goal'
         end
     end
 

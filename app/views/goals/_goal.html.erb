@@ -2,10 +2,10 @@
     <% if !goal.parent_id %>
         
         <% goal.color ||= 'fbcc91' %>
-        <% goal.badge ||= 'star.svg?color=4d2d74' %>
+        <% goal.badge ||= '/svg/star.svg?color=4d2d74' %>
 
         <div id='<%= goal.id %>' style='background: #<%= goal.color %>' class='badge draggable'>
-            <img class='logo' src='/svg/<%= goal.badge %>' />
+            <img class='logo' src='<%= goal.badge %>' />
         </div>
 
     <% else %>

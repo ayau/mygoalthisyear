@@ -15,6 +15,10 @@ class GoalsController < ApplicationController
     # GET /goals/1.json
     def show
         @goal = Goal.find(params[:id])
+        commitment = Commitment.find_by_user_id_and_goal_id(current_user.id, @goal.id)
+
+        @goal['completed'] = commitment.completed
+        @goal['completed_at'] = commitment.completed_at
 
         respond_to do |format|
             format.html # show.html.erb
@@ -44,24 +48,18 @@ class GoalsController < ApplicationController
         # validate that current_user exists
 
         goal = params[:goal]
-        goal['user_id'] = current_user.id
+        goal['owner_id'] = current_user.id
         
         # Saving auto_add preference
         current_user.update_attributes(params[:goal][:user])
 
-        auto_add = params[:goal][:user][:auto_add]
+        # auto_add = params[:goal][:user][:auto_add]
 
         goal.delete('user')
         @goal = Goal.new(goal)
 
         respond_to do |format|
             if @goal.save
-
-                # automatically add to month
-                if auto_add
-                    current_user.get_month.add_goal(@goal)
-                end
-
                 format.html { redirect_to user_path(current_user), notice: 'Goal was successfully created.' }
                 format.json { render json: @goal, status: :created, location: @goal }
             else
@@ -102,32 +100,30 @@ class GoalsController < ApplicationController
     # Mark a goal as complete and adds goal to month (if not already in month)
     # If the goal contains subgoals, subgoals are marked as completed (and added to month)
     def complete
-        @goal = Goal.find(params[:id])
-        @goal.update_attributes(:completed => true, :completed_at => Time.now)
+        goal_id = params[:id]
+        
+        commitment = Commitment.find_by_user_id_and_goal_id(current_user.id, goal_id)
+        commitment.update_attributes(:completed => true, :completed_at => Time.now)
 
-        # Add goal to current month if not already in there
-        month = current_user.months.find(:first, :order=>'created_at desc')
+        # incomplete_descendants = @goal.descendants.where(:completed => false)
 
-        unless month.goals.include?(@goal)
-            month.goals << @goal
-        end
 
-        incomplete_descendants = @goal.descendants.where(:completed => false)
-
-        for d in incomplete_descendants
-            # logger.debug "Incomplete descendants completed #{d.name}"
-            d.update_attributes(:completed => true, :completed_at => Time.now)
-            unless month.goals.include?(d)
-                month.goals << d
-            end
-        end
+        # for d in incomplete_descendants
+        #     # logger.debug "Incomplete descendants completed #{d.name}"
+        #     d.update_attributes(:completed => true, :completed_at => Time.now)
+        #     unless month.goals.include?(d)
+        #         month.goals << d
+        #     end
+        # end
 
         redirect_to user_path(current_user)
     end
 
     def make_incomplete
-        @goal = Goal.find(params[:id])
-        @goal.update_attributes(:completed => false)
+        goal_id = params[:id]
+        
+        commitment = Commitment.find_by_user_id_and_goal_id(current_user.id, goal_id)
+        commitment.update_attributes(:completed => false)
 
         redirect_to user_path(current_user)
     end

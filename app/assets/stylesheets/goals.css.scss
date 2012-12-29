@@ -16,8 +16,8 @@
 
     .logo {
         // sqrt(2)
-        height: 70%;
-        width: 70%;
+        // height: 70%;
+        // width: 70%;
         margin: 15%;
     }
 }
@@ -49,7 +49,7 @@
         font-size: 32px; 
         text-align:right; 
         color: #CCC; 
-        margin: 12px 0px;
+        margin: 20px 0px;
     }
 
     // name of goal
@@ -121,7 +121,6 @@
 }
 
 // Current goals
-
 .current-goals {
     padding-left: 30px;
     li {
@@ -131,7 +130,11 @@
 
 // In my bucket
 .bucket{
+    margin-top: 67px;
+    min-height: 450px;
+
     ul {
+        margin-top: 25px;
         padding: 0px;
     }
 
@@ -260,6 +263,8 @@
         float: left;
         border: 2px solid white;
         border-radius: 2px;
+        cursor: pointer;
+
         &.selected {
             border: 2px solid $scolor;
         }
@@ -270,6 +275,34 @@
         float: left; 
         padding: 5px;
     }
+}
+
+.badge-preview {
+    cursor: pointer;
+}
+
+.color-picker {
+    display: none;
+    border-radius: 2px;
+    border: 1px solid $scolor;
+    box-shadow: -1px 1px 6px 1px rgba(0,0,0,0.2);
+    background: white;
+    position: absolute;
+    z-index: 10;
+    top: 300px;
+    left: -200px;
+    padding: 20px;
+}
+
+.cp-icon {
+    border: 3px solid white;
+    border-radius: 2px;
+    height: 30px;
+    width: 30px;
+    margin: 5px 0px;
+    box-shadow: 0px 0px 0px 1px $scolor;
+    float: right;
+    cursor: pointer;
 }
 
 #goal_points {

@@ -41,7 +41,6 @@
         </div>
     </section>
 
-    
     <!-- 
     <p>Large goals vs small(quick) ones?</p>
     <p>+ 5 points for completing</p>
@@ -57,31 +56,23 @@
     <section style='position: relative' class='current'>
         <%= render 'goals/quickform' %>
         <h2>My goals this month</h2>
-        <h3><%= @month.created_at.strftime("%B %Y") %> (Day <%= Time.now().day %> of <%= Time.now().end_of_month.day%>)</h3>
-        <%= link_to 'Show all months', months_path %>
+        <h3><%= Time.now.strftime("%B %Y") %> (Day <%= Time.now().day %> of <%= Time.now().end_of_month.day%>)</h3>
+        <%= link_to 'Show all months', current_user %> <!-- change this -->
         <br /><br />
 
-        <!-- Add padding left and right to ul, instead of em -->
         <ul class='current-goals'>
-            <%= render :partial => 'goals/current_goal', :collection => @current_goals, :as => :goal %> <!--|| 'There are no products available.'-->
+            <%= render :partial => 'goals/current_goal', :collection => @current_goals, :as => :goal %>
         </ul>
 
         <div style='display: none'>
-            <p>Add goal to this month:</p>
-            <%= form_for @month, :url => add_goal_month_path(@month), :html => { :method => :put} do |f| %>  
+            <%= form_for current_user, :url => add_goal_user_path(current_user), :html => { :method => :put} do |f| %>  
                 <%= f.number_field :goal_id, :value => 0 %> 
-                <%= f.submit 'submit' %>  
+                <%= f.submit 'submit' %>
             <% end %>
         </div>
     </section>
 
     <%= render 'events/details_form' %>
-
-    <br />
-    <!-- 
-    <h3>Achievements Unlocked - 3 (100pts)</h3>
-    <%= nested_goals @completed.arrange(:order => :created_at) %> -->
-    <br />
 
     <section class='bucket'>
         <h2>In my bucket</h2>
@@ -102,46 +93,12 @@
             <h3>Add goal to current month</h3>
             <span>(Drag to add)</span>
             <div class='placeholder-badge'>
-                <div class='snapped-badge'></div>
+                <div class='snapped-badge'>
+                    <img class='logo' src='' />
+                </div>
             </div>
         </center>
     </section>
 
     <br /><br />
 </section>
-<!-- 
-<script>
-//<![CDATA[
-        
-    // wait until all the resources are loaded
-    window.addEventListener("load", findSVGElements, false);
-    
-    // fetches the document for the given embedding_element
-    function getSubDocument(embedding_element)
-    {
-        if (embedding_element.contentDocument) 
-        {
-            return embedding_element.contentDocument;
-        } 
-        else 
-        {
-            var subdoc = null;
-            try {
-                subdoc = embedding_element.getSVGDocument();
-            } catch(e) {}
-            return subdoc;
-        }
-    }
-            
-    function findSVGElements()
-    {
-        var elms = document.querySelectorAll("embed");
-        for (var i = 0; i < elms.length; i++)
-        {
-            var subdoc = getSubDocument(elms[i])
-            if (subdoc)
-                subdoc.getElementById("svgbar").setAttribute("fill", "lime");
-        }
-    }
-    //]]>
-</script> -->

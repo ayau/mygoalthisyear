@@ -28,8 +28,8 @@ class SvgController < ApplicationController
         end
 
         # Using regex to replace the width and height
-        svg = svg.sub(/width="[0-9.]+px"/, 'width="100px"')
-        svg = svg.sub(/height="[0-9.]+px"/, 'height="100px"')
+        svg = svg.sub(/width="[0-9.]+px"/, 'width="53px"')
+        svg = svg.sub(/height="[0-9.]+px"/, 'height="53px"')
         
         render :inline => svg
     end

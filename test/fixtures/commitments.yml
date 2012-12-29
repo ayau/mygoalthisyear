@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  user_id: 1
+  goal_id: 1
+  is_current: false
+  completed: false
+  completed_at: 2012-12-29 15:45:16
+
+two:
+  user_id: 1
+  goal_id: 1
+  is_current: false
+  completed: false
+  completed_at: 2012-12-29 15:45:16

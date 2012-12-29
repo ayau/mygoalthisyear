@@ -6,10 +6,10 @@
 
         <div class='goal-wrap'>
             <% @goal.color ||= 'fbcc91' %>
-            <% @goal.badge ||= 'star.svg?color=4d2d74' %>
+            <% @goal.badge ||= '/svg/star.svg?color=4d2d74' %>
 
             <div id='<%= @goal.id %>' style='background: #<%= @goal.color %>' class='badge draggable'>
-                <img class='logo' src='/svg/<%= @goal.badge %>' />
+                <img class='logo' src='<%= @goal.badge %>' />
             </div>
 
             <section>
@@ -22,14 +22,14 @@
 
                 <div class='actions'>
                     <span><%= @goal.points %> points</span>
-                    <% if @goal.completed %>
+                    <% if @goal.completed == 1 %>
                         <span> · completed</span>
                     <% else %>
                         <span> · in progress</span>
                     <% end %>
                      <!-- vs in bucket -->
 
-                    <span> · created by <%= link_to @goal.user.name, @goal.user %> <%= time_ago_in_words(@goal.created_at) %> ago</span>
+                    <span> · created by <%= link_to @goal.owner.name, @goal.owner %> <%= time_ago_in_words(@goal.created_at) %> ago</span>
                 </div>
             </section>
 
@@ -99,9 +99,9 @@
         <h3>Timeline</h3>
         <p> <!-- change to ol -->
             <a class='selected'>All</a>
-            <% @goal.months.each do |m| %>
+            <% [Time.now].each do |m| %>
                 <span> | </span>
-                <a><%= m.created_at.strftime('%b') %></a>
+                <a><%= m.strftime('%b') %></a>
             <% end %>
         </p>
 
@@ -119,7 +119,7 @@
 
             <%= render :partial => 'events/event', :collection => @goal.events, :as => :event %>
 
-            <% if @goal.completed %>
+            <% if @goal.completed == 1 %>
                 <li class='event special'>
                     <div class='day'>
                         <%= @goal.created_at.day %>
@@ -130,7 +130,7 @@
                     </div>
                     
                     <div id='<%= @goal.id %>' style='background: #<%= @goal.color %>' class='badge draggable'>
-                        <img class='logo' src='/svg/<%= @goal.badge %>' />
+                        <img class='logo' src='<%= @goal.badge %>' />
                     </div>
 
 
@@ -140,6 +140,6 @@
 
     </section>
 
-    <%= link_to 'Back', @goal.user %>
+    <%= link_to 'Back', current_user %>
 
 </section>

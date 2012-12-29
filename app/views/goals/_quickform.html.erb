@@ -35,18 +35,25 @@
         </div>
 
         <div style='margin-top: 10px'>
-            <%= f.label :badge, 'Choose your badge', :style => 'float: left; margin-right: 10px' %>
+            <%= f.label :badge, 'Choose your badge', :style => 'float: left; margin-right: 36px; margin-top: 36px' %>
 
             <% color = 'fbcc91' %>
-            <% badge_url = 'star.svg?color=4d2d74' %>
+            <% badge_url = '/svg/star.svg?color=4d2d74' %>
             
             <div style='background: #<%= color %>' class='badge badge-preview'>
-                <img class='logo' src='/svg/<%= badge_url %>' />
+                <img class='logo' src='<%= badge_url %>' />
             </div>
-            <%= f.hidden_field :badge, :value => '/svg/star.svg?color=4d2d74', :badge_color => '4d2d74', :badge_id => '/svg/star.svg' %>
-            <%= f.label :color %>
-            <%= f.hidden_field :color, :value => 'fbcc91' %>
-            <p>Color</p>
+            
+            <%= f.hidden_field :badge, :value => badge_url, :badge_color => '4d2d74', :badge_id => '/svg/star.svg' %>
+            <%= f.hidden_field :color, :value => color %>
+
+            <div class='cp-icon fg-color' style='background: #<%= "4d2d74" %>'></div>
+            <div class='cp-icon bg-color' style='background: #<%= color %>'></div>
+            
+        </div>
+        
+        <div class='color-picker'>
+            <div id="colourPicker"></div>
         </div>
 
         <ul class='badge-select'>
