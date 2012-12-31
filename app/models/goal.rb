@@ -22,6 +22,32 @@ class Goal < ActiveRecord::Base
 
     # Before save -> need to make sure name not duplicate in the same scope
 
+    # Permissions
+    def self.listable_by?(user)
+        # no one can see list of goals
+        false
+    end
+
+    def creatable_by?(user)
+        # anybody can create a goal
+        true
+    end
+
+    def destroyable_by?(user)
+        self.owner_id == user.id
+    end
+
+    def updatable_by?(user)
+        !user.nil? && !Commitment.find_by_user_id_and_goal_id(user.id, self.id).nil?
+    end
+
+    def viewable_by?(user)
+        !user.nil? && !Commitment.find_by_user_id_and_goal_id(user.id, self.id).nil?
+    end
+
+    def owned_by?(user)
+        user = self.owner_id
+    end
 
 
     private

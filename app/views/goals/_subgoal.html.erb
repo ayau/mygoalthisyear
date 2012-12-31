@@ -1,4 +1,4 @@
-<% completed = goal.users.find(current_user.id).completed %>
+<% completed = goal.users.find(@user.id).completed %>
 <% if completed == 1 %>
     <li class='sub goal completed'>
 <% else %>

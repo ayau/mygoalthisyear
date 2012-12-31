@@ -1,0 +1,7 @@
+<h3>You do not have permission to view this page</h3>
+<% if current_user %>
+    <p><%= link_to 'Back to your page', current_user %></p>
+<% else %>
+    <p>Please sign in</p>
+    <p><%= link_to "Sign in with facebook", "/auth/facebook" %></p>  
+<% end %>

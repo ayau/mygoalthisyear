@@ -239,12 +239,7 @@ $ ->
 
     # Intercept click event
     eventDetails.live 'click', (e) ->
-        e.stopPropagation()
-    
-    # Choose subgoal -------------------------------------
-
-    $('.choose-subgoal').live 'click', () ->
-            
+        e.stopPropagation()    
 
     # Document click event -------------------------------
     $(document).live 'click', ->

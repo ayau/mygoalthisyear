@@ -1,22 +1,29 @@
 class ApplicationController < ActionController::Base
+
+    require 'has_restful_permissions'
+
     protect_from_forgery
     include SessionsHelper
 
-    before_filter :authenticate
+    # before_filter :authenticate
 
-    def authenticate
-        if(current_user.nil?)
+    # def authenticate
+    #     if(current_user.nil?)
             # redirect_to root_path 
 
     #         if(request.env['PATH_INFO'] != loggedout_path && request.env['PATH_INFO'].index('/auth/facebook') != 0 && request.env['PATH_INFO'] != donthackmebro_path)
-            if(request.env['PATH_INFO'] != root_path)
-                redirect_to(loggedout_path)
-            end
+            # if(request.env['PATH_INFO'] != root_path && request.env['PATH_INFO'].index('/auth/facebook') != 0 && request.env['PATH_INFO'] != donthackmebro_path)
+            #     redirect_to(root_path)
+            # end
     #       else
     #            redirect_to('/401.html')
     #       end
     #     end
-        end
+    #     end
+    # end
+
+    rescue_from PermissionViolation do |exception|
+        render 'pages/permission_denied'
     end
 
     helper_method :current_user

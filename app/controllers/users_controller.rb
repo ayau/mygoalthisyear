@@ -3,6 +3,8 @@ class UsersController < ApplicationController
     # GET /users
     # GET /users.json
     def index
+        raise PermissionViolation unless User.listable_by?(current_user)
+
         @users = User.all
 
         respond_to do |format|
@@ -14,9 +16,13 @@ class UsersController < ApplicationController
     # GET /users/1
     # GET /users/1.json
     def show
-        uid = params[:id] || current_user
 
+        uid = params[:id] || current_user
         @user = User.find(uid)
+
+        raise PermissionViolation unless @user.viewable_by?(current_user)
+
+
         @completed = @user.goals.where('completed = ?', 1)
         @bucket = @user.goals.where('is_current = ?', 0)
 
@@ -73,24 +79,26 @@ class UsersController < ApplicationController
 
     # GET /users/new
     # GET /users/new.json
-    def new
-        @user = User.new
+    # def new
+    #     @user = User.new
 
-        respond_to do |format|
-            format.html # new.html.erb
-            format.json { render json: @user }
-        end
-    end
+    #     respond_to do |format|
+    #         format.html # new.html.erb
+    #         format.json { render json: @user }
+    #     end
+    # end
 
     # GET /users/1/edit
     def edit
         @user = User.find(params[:id])
+        raise PermissionViolation unless @user.updatable_by?(current_user)
     end
 
     # POST /users
     # POST /users.json
     def create
         @user = User.new(params[:user])
+        raise PermissionViolation unless @user.creatable_by?(current_user)
 
         respond_to do |format|
             if @user.save
@@ -107,6 +115,7 @@ class UsersController < ApplicationController
     # PUT /users/1.json
     def update
         @user = User.find(params[:id])
+        raise PermissionViolation unless @user.updatable_by?(current_user)
 
         respond_to do |format|
             if @user.update_attributes(params[:user])
@@ -123,6 +132,8 @@ class UsersController < ApplicationController
     # DELETE /users/1.json
     def destroy
         @user = User.find(params[:id])
+        raise PermissionViolation unless @user.destroyable_by?(current_user)
+
         @user.destroy
 
         respond_to do |format|
@@ -134,11 +145,13 @@ class UsersController < ApplicationController
     # GET /users/:id/timeline
     def timeline
         @user = User.find(params[:id])
-
     end
 
 
     def add_goal
+        @user = User.find(params[:id])
+        raise PermissionViolation unless @user.updatable_by?(current_user)
+
         goal_id = params[:user][:goal_id]
         commitment = Commitment.find_by_user_id_and_goal_id(current_user.id, goal_id)
 
@@ -149,6 +162,9 @@ class UsersController < ApplicationController
     end
 
     def remove_goal
+        @user = User.find(params[:id])
+        raise PermissionViolation unless @user.updatable_by?(current_user)
+
         goal_id = params[:goal_id]
         commitment = Commitment.find_by_user_id_and_goal_id(current_user.id, goal_id)
 

@@ -1,6 +1,9 @@
 class User < ActiveRecord::Base
+
+    # has_restful_permissions
     
     has_many :commitments
+
     has_many :goals, :through => :commitments, :uniq => true,
              :conditions => {:parent_id => 0},
              :select => 'goals.*, commitments.completed_at as completed_at,
@@ -12,13 +15,6 @@ class User < ActiveRecord::Base
              :select => 'goals.*, commitments.completed_at as completed_at,
                         commitments.completed as completed,
                         commitments.is_current as is_current'
-
-    # has_many    :current_goals,
-    #             :through => :commitments,
-    #             :class_name => 'Goal',
-    #             :source => :goal,
-    #             :conditions => {'commitments.completed = ?', true}
-
 
     has_many :events
 
@@ -50,6 +46,35 @@ class User < ActiveRecord::Base
         #     end
         # end
         
+    end
+
+
+    # Permissions
+    def self.listable_by?(user)
+        # no one can see list of users
+        false
+    end
+
+    def creatable_by?(user)
+        # anybody can create an account
+        true
+    end
+
+    def destroyable_by?(user)
+        # no deleting of users at this point
+        false
+    end
+
+    def updatable_by?(user)
+        user == self
+    end
+
+    def viewable_by?(user)
+        user == self
+    end
+
+    def owned_by?(user)
+        user == self
     end
 
 
