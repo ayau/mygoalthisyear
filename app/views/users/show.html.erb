@@ -78,7 +78,7 @@
         <h2>In my bucket</h2>
         <a class='selected'>Details</a> | <a>Badges</a>
         <ul>
-            <%= nested_goals @bucket.arrange(:order => :created_at) %>
+            <%= render :partial => 'goals/goal', :collection => @bucket, :as => :goal %>
         </ul>
     </section>
 
@@ -101,4 +101,7 @@
     </section>
 
     <br /><br />
+
 </section>
+
+<%= javascript_include_tag 'users_show' %>

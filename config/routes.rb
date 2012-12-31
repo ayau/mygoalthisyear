@@ -11,6 +11,9 @@ Bucketlist::Application.routes.draw do
         member do
             put 'complete'
             put 'make_incomplete'
+            post 'subgoals'
+            get 'choose_subgoal'
+            post 'set_subgoal'
         end
     end
 

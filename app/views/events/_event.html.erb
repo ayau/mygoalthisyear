@@ -3,10 +3,10 @@
         <%= event.created_at.day %>
     </div>
     <div>
+        <u><%= event.goal.name %></u>
         <% if event.post.length > 0 %>
             <p><%= event.post %></p>
         <% end %>
-        
         <p>completed <%= event.created_at.strftime('%l:%M %p - %B %e, %Y') %></p>
         
         <% if event.post.length == 0 %>

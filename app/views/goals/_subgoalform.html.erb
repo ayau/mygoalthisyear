@@ -1,0 +1,53 @@
+<%= form_for @subgoal, :url => {:action => 'subgoals'}, :html => {:class => 'sub_goal_form'} do |f| %>
+    <% if @subgoal.errors.any? %>
+        <div id="error_explanation">
+            <h2><%= pluralize(@subgoal.errors.count, "error") %> prohibited this goal from being saved:</h2>
+
+            <ul>
+            <% @subgoal.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+            </ul>
+        </div>
+    <% end %>
+
+    <%= f.hidden_field :parent_id, :value => @goal.id %>
+
+    <div style='float:left'>
+        <%= f.label :name, 'Add a sub-goal', :class => 'goal_name' %><br />
+        <%= f.text_field :name, :placeholder => 'Sub Goal' %>
+    </div>
+
+    <div class='inline-field' style='margin-top: 15px; margin-left: 10px;'>
+        <%= f.label :points %>
+        <%= f.text_field :points, :value => 10, :maxlength => 4 %>
+    </div>
+
+    <%= f.submit :disable_with => "creating.." %>
+
+    <% if false %>
+    <section class='extra-options' >
+        <br />
+        <br />
+        
+
+        <div>
+            <%= f.label :description, 'Description' %>
+            <%= f.text_area :description, :placeholder => 'Enter a description', :rows => 3 %>
+        </div>
+
+        <div class='has-deadline'>
+            <br />
+            <%= f.check_box :has_deadline %>
+            <%= f.label :has_deadline, 'Add a deadline', :class => 'checkbox-label' %>
+        </div>
+
+        <div class='deadline-form'>
+            <%= f.label :deadline, 'Deadline' %> 
+            <div>
+                <%= f.date_select :deadline, :placeholder => 'Enter a description' %>
+            </div>
+        </div>
+    </section>
+    <% end %>
+<% end %>

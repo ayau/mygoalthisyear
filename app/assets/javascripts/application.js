@@ -16,4 +16,4 @@
 //= require jquery.ui.droppable
 //= require Colour.compressed.js
 //= require ColorPicker.js
-//= require_tree .
+//= require_tree ./global

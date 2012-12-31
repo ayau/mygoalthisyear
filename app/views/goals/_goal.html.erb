@@ -1,5 +1,5 @@
 <li class='goal'>
-    <% if !goal.parent_id %>
+    <% if goal.parent_id == 0 %>
         
         <% goal.color ||= 'fbcc91' %>
         <% goal.badge ||= '/svg/star.svg?color=4d2d74' %>
@@ -7,9 +7,6 @@
         <div id='<%= goal.id %>' style='background: #<%= goal.color %>' class='badge draggable'>
             <img class='logo' src='<%= goal.badge %>' />
         </div>
-
-    <% else %>
-        <div class='nested-arrow'></div>
     <% end %>
     <article>
         <header>
@@ -19,7 +16,9 @@
 
         <div class='actions'>
             <span><%= goal.points %> points</span>
-            
+            <% if goal.subgoals.count > 0 %>
+                <span> · <%= goal.subgoals.count %> subgoal <% if goal.subgoals.count > 1 %>s<% end %></span>
+            <% end %>
             <% if false %>
                 <%= link_to 'Add sub goal', new_goal_path(:parent_id => goal.id) %> |
                 <%= link_to 'Destroy', goal, method: :delete, data: { confirm: 'Are you sure?' } %>

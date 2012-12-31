@@ -92,6 +92,17 @@
         // -webkit-transform: rotate(10deg);    
     }
 
+    &.sub {
+        article {
+            margin-left: 40px;
+        }
+        .evented {
+            left: 0px;
+            top: 18px;
+            border: none;
+            box-shadow: none;
+        }
+    }
 }
 
 
@@ -101,24 +112,23 @@
 }
 
 
-.nested_goals {
-    margin-left: 40px;
+// .nested_goals {
+//     margin-left: 100px;
+//     .goal {
+//         margin-top: 0px;
+//     }
+// }
+
+.subgoals {
+    clear: both;
+    margin-left: 45px;
+
     .goal {
-        margin-top: 0px;
+        margin: 0px;
+        padding: 0px;
     }
 }
 
-.nested-arrow {
-    margin: 0px 25px 30px 10px;
-    height: 22px;
-    width: 30px;
-    position: relative;
-    top: 8px;
-    border-bottom-left-radius: 5px;
-    border-left: 3px solid $scolor;
-    border-bottom: 3px solid $scolor;
-    float: left;
-}
 
 // Current goals
 .current-goals {
@@ -376,5 +386,29 @@
         }
     }
 
+}
+
+// Subgoal form
+// Kinda repeated code
+.sub_goal_form {
+    // width: 300px;
+    margin-left: 80px;
+
+
+    input[type=text], textarea {
+        width: 300px;
+    }
+
+    input[type=submit] {
+        margin-left: 0px;
+        margin-right: 0px;
+        margin-top: 18px;
+        float: left;
+        width: 75px;
+    }
+
+    .deadline-form {
+        display: none;
+    }
 }
 

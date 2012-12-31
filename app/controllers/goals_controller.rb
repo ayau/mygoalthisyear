@@ -15,10 +15,19 @@ class GoalsController < ApplicationController
     # GET /goals/1.json
     def show
         @goal = Goal.find(params[:id])
+
         commitment = Commitment.find_by_user_id_and_goal_id(current_user.id, @goal.id)
 
         @goal['completed'] = commitment.completed
         @goal['completed_at'] = commitment.completed_at
+
+        @subgoal = Goal.new
+
+        @subgoals = @goal.subgoals
+
+        @events = Event.where(:goal_id => @subgoals.group(:id).append(@goal.id))
+
+        @events_count = @events.group(:goal_id).count 
 
         respond_to do |format|
             format.html # show.html.erb
@@ -127,4 +136,50 @@ class GoalsController < ApplicationController
 
         redirect_to user_path(current_user)
     end
+
+    def subgoals
+        # validate that parent and current_user exist
+
+        goal = params[:goal]
+        goal['owner_id'] = current_user.id
+        
+        parent = Goal.find(goal[:parent_id])
+
+        @goal = Goal.new(goal)
+
+        respond_to do |format|
+            if @goal.save
+                format.html { redirect_to parent, notice: 'Goal was successfully created.' }
+                format.json { render json: @goal, status: :created, location: @goal }
+            else
+                format.html { render action: "new" }
+                format.json { render json: @goal.errors, status: :unprocessable_entity }
+            end
+        end
+    end
+
+    def choose_subgoal
+        @goal = Goal.find(params[:id])
+
+        @subgoals = current_user.subgoals.find_all_by_parent_id(@goal.id)
+    end
+
+    def set_subgoal
+        goal = Goal.find(params[:id])
+
+        subgoals = current_user.subgoals.find_all_by_parent_id(goal.id)
+
+        selected_subgoals = params[:subgoals] || []
+
+        for subgoal in subgoals
+            id = subgoal.id
+            is_current = selected_subgoals.include?(id.to_s) ? 1 : 0
+            commitment = Commitment.find_by_user_id_and_goal_id(current_user.id, id)
+            commitment.update_attributes(:is_current => is_current)
+            logger.info commitment.is_current
+        end
+        
+        redirect_to current_user
+    end
+
 end

@@ -1,0 +1,16 @@
+<h1><%= @goal.name %></h1>
+<h3>Choose subgoals for this month</h3>
+
+<%= form_tag set_subgoal_goal_path do %>
+    
+    <ul>
+    <% @subgoals.each do |subgoal| %>
+        <li>
+            <%= check_box_tag 'subgoals[]', subgoal.id, subgoal.is_current == 1 %>
+            <%= label_tag subgoal.name %>
+        </li>
+    <% end %>
+    </ul>
+
+    <%= submit_tag 'Submit' %>
+<% end %>

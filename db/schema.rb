@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121229100257) do
+ActiveRecord::Schema.define(:version => 20121231045611) do
 
   create_table "commitments", :force => true do |t|
     t.integer  "user_id"
@@ -39,16 +39,15 @@ ActiveRecord::Schema.define(:version => 20121229100257) do
     t.datetime "created_at",                   :null => false
     t.datetime "updated_at",                   :null => false
     t.integer  "points",       :default => 0
-    t.string   "ancestry"
     t.text     "description",  :default => ""
     t.date     "deadline"
     t.integer  "has_deadline", :default => 0
     t.string   "badge"
     t.string   "color"
     t.integer  "owner_id"
+    t.integer  "parent_id",    :default => 0
   end
 
-  add_index "goals", ["ancestry"], :name => "index_goals_on_ancestry"
   add_index "goals", ["owner_id"], :name => "index_goals_on_owner_id"
 
   create_table "users", :force => true do |t|

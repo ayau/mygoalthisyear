@@ -9,8 +9,9 @@ class ApplicationController < ActionController::Base
             # redirect_to root_path 
 
     #         if(request.env['PATH_INFO'] != loggedout_path && request.env['PATH_INFO'].index('/auth/facebook') != 0 && request.env['PATH_INFO'] != donthackmebro_path)
-    #         if(request.env['PATH_INFO'] == root_path)
-    #          redirect_to(loggedout_path)
+            if(request.env['PATH_INFO'] != root_path)
+                redirect_to(loggedout_path)
+            end
     #       else
     #            redirect_to('/401.html')
     #       end

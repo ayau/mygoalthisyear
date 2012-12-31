@@ -1,0 +1,36 @@
+<% completed = goal.users.find(current_user.id).completed %>
+<% if completed == 1 %>
+    <li class='sub goal completed'>
+<% else %>
+    <li class='sub goal'>
+<% end %>
+    
+    <p class='points'>+<%= goal.points %></p>
+
+    <% if @events_count[goal.id] && @events_count[goal.id] > 0 %>
+        <p class='evented'><%= @events_count[goal.id] %></p>
+    <% end %> 
+            
+    <article>
+        <header>
+            <%= link_to goal.name, goal, :class => 'goal-name', :title => 'view goal details' %>
+            <%= link_to 'Edit', edit_goal_path(goal) %> |
+            <%= link_to 'Destroy', goal, method: :delete, data: { confirm: 'Are you sure?' } %> 
+        </header>
+    
+        <% if completed == 0 %>
+            <%= render :partial => 'events/form', :locals => {:goal => goal, :again => @events_count[goal.id]} %>
+        <% end %>
+
+        <div class='actions'>
+            <!-- Can't remove if already completed -->
+            <% if completed == 1 %>
+                <!-- <span>completed <%= time_ago_in_words(goal.completed_at) %> ago</span> · -->
+                <span class='achievement-unlocked'>ACHIEVEMENT UNLOCKED</span>
+                <%= link_to "jk I didn't complete this yet", make_incomplete_goal_path(goal), method: :put %>
+            <% else %>
+                <%= link_to 'Complete', complete_goal_path(goal), method: :put %>
+            <% end %>
+        </div>
+    </article>
+</li>

@@ -50,8 +50,6 @@
                 <p>Completed 10 times (3 times this month)</p> -->
 
 
-        <!-- Ancestry looks ugly. Fix it -->
-        <!-- Do add sub goal (make it a lot easier and intuitive) -->
         <!-- (Fix subgoal first) Work out logic for adding and removing things (for everything) -->
         
 
@@ -63,13 +61,6 @@
         
         <!-- Sharing and friends -->
 
-        <ul style='margin-left: 25px'>
-            <%= nested_goals @goal.descendants.arrange %>
-        </ul>
-
-        <p>How to display subgoals? (add subgoal should not be a link? or maybe link to edit page with ?subgoal=true)</p>
-        <%= link_to 'Add sub goal', new_goal_path(:parent_id => @goal.id) %>
-
         <% if @goal.description.length > 0 %>
             <h4>Description</h4>
             <p><%= @goal.description %></p>
@@ -77,6 +68,21 @@
             <p style='color: #CCC'>No description</p>
         <% end %>
 
+
+
+        <!-- <%= link_to 'Add sub goal', new_goal_path(:parent_id => @goal.id) %> -->
+        <% if @goal.parent_id == 0 %>
+            <%= render 'goals/subgoalform' %>
+
+            <ul class='subgoals'>
+                <%= render :partial => 'subgoal', :collection => @subgoals, :as => :goal %>
+            </ul>
+        <% else %>
+            <p>This is a subgoal of <%= link_to Goal.find(@goal.parent_id).name, Goal.find(@goal.parent_id) %></p>
+        <% end %>
+
+        <!-- <p>How to display subgoals? (add subgoal should not be a link? or maybe link to edit page with ?subgoal=true)</p> -->
+        
         <% if @goal.has_deadline %>
             <h4>Deadline</h4>
             <p><%= @goal.deadline.strftime('%e %b %y') %></p>
@@ -117,7 +123,7 @@
                 </div>
             </li>
 
-            <%= render :partial => 'events/event', :collection => @goal.events, :as => :event %>
+            <%= render :partial => 'events/event', :collection => @events, :as => :event %>
 
             <% if @goal.completed == 1 %>
                 <li class='event special'>
@@ -143,3 +149,5 @@
     <%= link_to 'Back', current_user %>
 
 </section>
+
+<%= javascript_include_tag 'goals_show' %>
