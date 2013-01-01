@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121231045611) do
+ActiveRecord::Schema.define(:version => 20130101161253) do
 
   create_table "commitments", :force => true do |t|
     t.integer  "user_id"
@@ -59,6 +59,8 @@ ActiveRecord::Schema.define(:version => 20121231045611) do
     t.string   "token"
     t.string   "remember_token"
     t.integer  "auto_add",       :default => 0
+    t.text     "avatar"
+    t.string   "timezone"
   end
 
 end

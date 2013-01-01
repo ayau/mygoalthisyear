@@ -25,7 +25,6 @@
         <div class='actions'>
             <!-- Can't remove if already completed -->
             <% if completed == 1 %>
-                <!-- <span>completed <%= time_ago_in_words(goal.completed_at) %> ago</span> · -->
                 <span class='achievement-unlocked'>ACHIEVEMENT UNLOCKED</span>
                 <%= link_to "jk I didn't complete this yet", make_incomplete_goal_path(goal), method: :put %>
             <% else %>

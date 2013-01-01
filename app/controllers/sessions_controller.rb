@@ -5,6 +5,7 @@ class SessionsController < ApplicationController
         user = User.find_by_uid(auth["uid"]) || User.create_with_omniauth(auth)
         session[:user_id] = user.id
         if user
+            user.update_facebook(auth)
             sign_in user
             redirect_to user
         else

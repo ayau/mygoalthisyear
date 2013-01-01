@@ -140,7 +140,7 @@ class GoalsController < ApplicationController
         #     end
         # end
 
-        redirect_to user_path(current_user)
+        redirect_to :back
     end
 
     def make_incomplete
@@ -152,7 +152,7 @@ class GoalsController < ApplicationController
         commitment = Commitment.find_by_user_id_and_goal_id(current_user.id, goal_id)
         commitment.update_attributes(:completed => false)
 
-        redirect_to user_path(current_user)
+        redirect_to :back
     end
 
     def subgoals

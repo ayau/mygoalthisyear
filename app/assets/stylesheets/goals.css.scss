@@ -50,6 +50,7 @@
         text-align:right; 
         color: #CCC; 
         margin: 20px 0px;
+        padding-right: 20px;
     }
 
     // name of goal
@@ -100,6 +101,7 @@
             left: 0px;
             top: 18px;
             border: none;
+            background: none;
             box-shadow: none;
         }
     }
@@ -134,7 +136,7 @@
 .current-goals {
     padding-left: 30px;
     li {
-        padding: 0px 20px;
+        padding: 0px 0px 0px 20px;
     }
 }
 
@@ -411,4 +413,14 @@
         display: none;
     }
 }
+
+
+// Full goal edit form
+.edit_goal {
+    .quick_goal_form {
+        position: relative;
+        margin: 0 auto;
+    }
+}
+
 

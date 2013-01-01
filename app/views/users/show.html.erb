@@ -2,8 +2,8 @@
 <section role='main'>
 
     <header class='user-header'>
-        
-        <div class='avatar' style='background-image: url(http://sphotos-c.ak.fbcdn.net/hphotos-ak-ash4/429576_10151389166230437_1533271187_n.jpg)'></div>
+        <% avatar = @user.avatar || 'http://www.ohmyhandmade.com/wp-content/uploads/2011/12/twitter-egg.jpg' %>
+        <div class='avatar' style='background-image: url(<%= avatar %>)'></div>
 
         <!-- Add max width to this guy -->
         <section>
@@ -27,6 +27,12 @@
     <section class='achievements'>
         <h3>Achievements</h3><a class='hide-achievements'>hide</a>
         <div class='slider'>
+           <!--  <% @completed.each do |goal| %>
+                <div style='background: #<%= goal.color %>' class='badge'>
+                    <img class='logo' src='<%= goal.badge %>' />
+                </div>
+            <% end %>     -->
+
             <% badges = Dir.glob("app/assets/images/badges/*") %>
             <% for i in 1..8 do %>
                 <% badge_url = badges.sample.gsub('app/assets/images/badges/', '') %>
@@ -57,7 +63,9 @@
         <%= render 'goals/quickform' %>
         <h2>My goals this month</h2>
         <h3><%= Time.now.strftime("%B %Y") %> (Day <%= Time.now().day %> of <%= Time.now().end_of_month.day%>)</h3>
+        
         <%= link_to 'Show all months', current_user %> <!-- change this -->
+        
         <br /><br />
 
         <ul class='current-goals'>

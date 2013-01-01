@@ -1,5 +1,18 @@
-<h1>Editing event</h1>
+<section role='main'>
+    <h1><%= @event.goal.name %></h1>
+    <p>completed <%= @event.created_at.strftime('%l:%M %p - %B %e, %Y') %></p>
+
+    <%= form_for @event do |f| %>
+        
+        <%= f.text_area :post, :placeholder => 'Say a few words about your achievement', :rows => '5' %>
+        <%= f.hidden_field :goal_id %>
+        <br />
+        <%= f.submit 'submit', :disable_with => "submitting.." %>
+    
+    <% end %>
+
+    <br />
 
 
-<%= link_to 'Show', @event %> |
-<%= link_to 'Back', events_path %>
+    <%= link_to 'Back', :back %>
+</section>

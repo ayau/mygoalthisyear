@@ -6,7 +6,7 @@
     <ul>
     <% @subgoals.each do |subgoal| %>
         <li>
-            <%= check_box_tag 'subgoals[]', subgoal.id, subgoal.is_current == 1 %>
+            <%= check_box_tag subgoal.name, subgoal.id, subgoal.is_current == 1, :name => 'subgoals[]' %>
             <%= label_tag subgoal.name %>
         </li>
     <% end %>

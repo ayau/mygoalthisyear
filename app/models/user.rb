@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
 
-    # has_restful_permissions
+    require 'uri'
     
     has_many :commitments
 
@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
 
     has_many :events
 
-    attr_accessible :email, :name, :uid, :token, :remember_token, :auto_add
+    attr_accessible :email, :name, :uid, :token, :remember_token, :auto_add, :avatar, :timezone
 
     before_save :create_remember_token
 
@@ -29,6 +29,18 @@ class User < ActiveRecord::Base
             user.name = auth["info"]["name"]
             user.email = auth["info"]["email"]
         end 
+    end
+
+    def update_facebook (auth)
+
+        avatar = /^(.*?)\?(.*?)$/.match(auth['info']['image']){$1} + '?type=large'
+
+        timezone = auth['extra']['raw_info']['timezone']
+
+        rails_timezone = ActiveSupport::TimeZone[timezone]
+
+        self.update_attributes({:avatar => avatar, :timezone => rails_timezone.name})
+
     end
 
     def commit_to_goal (goal, auto_add)

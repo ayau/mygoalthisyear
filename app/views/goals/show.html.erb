@@ -1,6 +1,6 @@
 <section role='main'>
 
-    <p id="notice"><%= notice %></p>
+    <!-- <p id="notice"><%= notice %></p> -->
 
     <section class='goal'>
 
@@ -8,7 +8,7 @@
             <% @goal.color ||= 'fbcc91' %>
             <% @goal.badge ||= '/svg/star.svg?color=4d2d74' %>
 
-            <div id='<%= @goal.id %>' style='background: #<%= @goal.color %>' class='badge draggable'>
+            <div id='<%= @goal.id %>' style='background: #<%= @goal.color %>' class='badge'>
                 <img class='logo' src='<%= @goal.badge %>' />
             </div>
 
@@ -62,15 +62,18 @@
         <!-- Sharing and friends -->
 
         <% if @goal.description.length > 0 %>
-            <h4>Description</h4>
+            <!-- <h4>Description</h4> -->
             <p><%= @goal.description %></p>
         <% else %>
             <p style='color: #CCC'>No description</p>
         <% end %>
 
+        <% if @goal.has_deadline && @goal.deadline %>
+            <h4>Deadline 
+                <span style='font-weight: normal'><%= @goal.deadline.strftime('%e %b %y') %></span>
+            </h4>
+        <% end %>
 
-
-        <!-- <%= link_to 'Add sub goal', new_goal_path(:parent_id => @goal.id) %> -->
         <% if @goal.parent_id == 0 %>
             <%= render 'goals/subgoalform' %>
 
@@ -80,26 +83,26 @@
         <% else %>
             <p>This is a subgoal of <%= link_to Goal.find(@goal.parent_id).name, Goal.find(@goal.parent_id) %></p>
         <% end %>
-
-        <!-- <p>How to display subgoals? (add subgoal should not be a link? or maybe link to edit page with ?subgoal=true)</p> -->
         
-        <% if @goal.has_deadline %>
-            <h4>Deadline</h4>
-            <p><%= @goal.deadline.strftime('%e %b %y') %></p>
-        <% else %>
-            <p style='color: #CCC'>No deadline set</p>
-        <% end %>
-
-        <!-- <p>Completed at:</p> -->
+        <br />
 
         <h3>Shared with</h3>
         <p style='color:#CCC'>No one</p>
         <a>Invite your friends to join you</a>
-        <!-- <p>Stuffs</p>
 
-        <p>Maybe show other people's progress</p> -->
+        <%= form_tag users_path, :method => 'get' do %>
+            <p>
+                <%= text_field_tag :search, params[:search], :placeholder => "your friend's name", :style => 'width: 200px' %>
+                <%= submit_tag "Search", :name => nil %>
+            </p>
+        <% end %>
+
+
+        <!-- <p>Maybe show other people's progress</p> -->
 
     </section>
+    
+    <br />
 
     <section class='events'>
         <h3>Timeline</h3>
@@ -138,15 +141,13 @@
                     <div id='<%= @goal.id %>' style='background: #<%= @goal.color %>' class='badge draggable'>
                         <img class='logo' src='<%= @goal.badge %>' />
                     </div>
-
-
                 </li>
             <% end %>
         </ul>
 
     </section>
 
-    <%= link_to 'Back', current_user %>
+    <%= link_to 'Back', :back %>
 
 </section>
 

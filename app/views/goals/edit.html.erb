@@ -1,6 +1,17 @@
-<h1>Editing goal</h1>
 
-<%= render 'form' %>
+<section class='edit_goal' role='main'>
 
-<%= link_to 'Show', @goal %> |
-<%= link_to 'Back', goals_path %>
+    <center>
+        <h1>Edit - <%= @goal.name %></h1>
+        <% if @goal.parent_id > 0 %>
+            <p>This is a subgoal of <%= link_to Goal.find(@goal.parent_id).name, Goal.find(@goal.parent_id) %></p>
+        <% end %>
+    </center>
+
+    <%= render 'form' %>
+
+    <%= link_to 'Back', :back %>
+    
+</section>
+
+<%= javascript_include_tag 'goal_form' %>

@@ -13,14 +13,12 @@ class Goal < ActiveRecord::Base
 
     after_create :create_commitment
 
-    # has_many :months, :through => :goalsinmonths, :uniq => true
-
     attr_accessible :name, :owner_id, :points, :parent_id, :description, :has_deadline, :deadline, :badge, :color
 
     validates_presence_of :owner_id, :name
 
 
-    # Before save -> need to make sure name not duplicate in the same scope
+    # Before save -> need to make sure name not duplicate in the same scope, including subgoals
 
     # Permissions
     def self.listable_by?(user)

@@ -1,40 +1,41 @@
 class EventsController < ApplicationController
     # GET /events
     # GET /events.json
-    def index
-        @events = Event.all
+    # def index        
+    #     @events = Event.all
 
-        respond_to do |format|
-            format.html # index.html.erb
-            format.json { render json: @events }
-        end
-    end
+    #     respond_to do |format|
+    #         format.html # index.html.erb
+    #         format.json { render json: @events }
+    #     end
+    # end
 
     # GET /events/1
     # GET /events/1.json
-    def show
-        @event = Event.find(params[:id])
+    # def show
+    #     @event = Event.find(params[:id])
 
-        respond_to do |format|
-            format.html # show.html.erb
-            format.json { render json: @event }
-        end
-    end
+    #     respond_to do |format|
+    #         format.html # show.html.erb
+    #         format.json { render json: @event }
+    #     end
+    # end
 
     # GET /events/new
     # GET /events/new.json
-    def new
-        @event = Event.new
+    # def new
+    #     @event = Event.new
 
-        respond_to do |format|
-            format.html # new.html.erb
-            format.json { render json: @event }
-        end
-    end
+    #     respond_to do |format|
+    #         format.html # new.html.erb
+    #         format.json { render json: @event }
+    #     end
+    # end
 
     # GET /events/1/edit
     def edit
         @event = Event.find(params[:id])
+        raise PermissionViolation unless @event.updatable_by?(current_user)
     end
 
     # POST /events
@@ -47,8 +48,7 @@ class EventsController < ApplicationController
 
         @event = Event.new(event)
 
-        # Duplicate code in multiple places. Consider refactoring
-        goal = Goal.find(params[:event][:goal_id])
+        raise PermissionViolation unless @event.creatable_by?(current_user)
 
         respond_to do |format|
             if @event.save
@@ -66,9 +66,11 @@ class EventsController < ApplicationController
     def update
         @event = Event.find(params[:id])
 
+        raise PermissionViolation unless @event.updatable_by?(current_user)
+
         respond_to do |format|
             if @event.update_attributes(params[:event])
-                format.html { redirect_to @event, notice: 'Event was successfully updated.' }
+                format.html { redirect_to @event.goal, notice: 'Event was successfully updated.' }
                 format.json { head :no_content }
             else
                 format.html { render action: "edit" }
@@ -83,6 +85,8 @@ class EventsController < ApplicationController
         @event = Event.find(params[:id])
         @event.destroy
 
+        raise PermissionViolation unless @event.destroyable_by?(current_user)
+
         respond_to do |format|
             format.html { redirect_to events_url }
             format.json { head :no_content }
@@ -92,14 +96,13 @@ class EventsController < ApplicationController
     # POST /events/add_details
     # add_details_events
     def add_details
-        goal = Goal.find(params[:event][:goal_id])
+        event = Event.find_all_by_user_id_and_goal_id(current_user.id, params[:event][:goal_id]).last
 
-        event = goal.events.last
+        raise PermissionViolation unless event.updatable_by?(current_user)
 
         event.update_attributes(params[:event])
 
         redirect_to event.user
-
     end
 
 end

@@ -26,9 +26,6 @@ class UsersController < ApplicationController
         @completed = @user.goals.where('completed = ?', 1)
         @bucket = @user.goals.where('is_current = ?', 0)
 
-        # @completed = @user.goals.where(:completed => true)
-        # @bucket = @user.goals.where(:completed => false)
-
         # Don't over-count evented + completed goals
         points = @completed.reduce(0) do |sum, goal|
             sum += goal.events.count > 0 ? goal.points : 0
@@ -155,8 +152,8 @@ class UsersController < ApplicationController
         goal_id = params[:user][:goal_id]
         commitment = Commitment.find_by_user_id_and_goal_id(current_user.id, goal_id)
 
-        # need to check if commitment is valid
-        commitment.update_attributes(:is_current => 1)
+        # update created at for ordering
+        commitment.update_attributes({:is_current => 1, :created_at => Time.now})
         
         redirect_to current_user
     end

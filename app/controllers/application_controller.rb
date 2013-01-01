@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
     protect_from_forgery
     include SessionsHelper
 
+    around_filter :set_user_time_zone
+
     # before_filter :authenticate
 
     # def authenticate
@@ -26,6 +28,10 @@ class ApplicationController < ActionController::Base
         render 'pages/permission_denied'
     end
 
+    rescue_from ActiveRecord::RecordNotFound do |exception|
+        render 'pages/permission_denied'
+    end
+
     helper_method :current_user
 
     private
@@ -33,4 +39,13 @@ class ApplicationController < ActionController::Base
     def current_user
         @current_user ||= User.find(session[:user_id]) if session[:user_id]
     end
+
+    def set_user_time_zone
+        old_time_zone = Time.zone
+        Time.zone = current_user.timezone if current_user
+        yield
+    ensure
+        Time.zone = old_time_zone
+    end
+
 end
