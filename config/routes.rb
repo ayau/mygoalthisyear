@@ -17,6 +17,8 @@ Bucketlist::Application.routes.draw do
             post 'subgoals'
             get 'choose_subgoal'
             post 'set_subgoal'
+            put 'invite'
+            put 'accept_invite'
         end
     end
 
@@ -25,6 +27,10 @@ Bucketlist::Application.routes.draw do
             get 'timeline'
             put 'add_goal'
             put 'remove_goal'
+        end
+
+        collection do
+            get 'search'
         end
     end
 

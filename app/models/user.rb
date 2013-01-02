@@ -4,6 +4,8 @@ class User < ActiveRecord::Base
     
     has_many :commitments
 
+    has_many :notifications
+
     has_many :goals, :through => :commitments, :uniq => true,
              :conditions => {:parent_id => 0},
              :select => 'goals.*, commitments.completed_at as completed_at,
@@ -43,21 +45,15 @@ class User < ActiveRecord::Base
 
     end
 
+    # Commit to goal and all its subgoals
     def commit_to_goal (goal, auto_add)
 
         self.commitments.create(:goal_id => goal.id, :is_current => auto_add)
 
-        # if goal && !self.goals.include?(goal)
-        #     self.goals << goal
-        # end
+        goal.subgoals.each do |subgoal|
+            self.commitments.create(:goal_id => subgoal.id, :is_current => auto_add)
+        end
 
-        # Adding descendants to month
-        # for d in goal.descendants
-        #     unless self.goals.include?(d)
-        #         self.goals << d
-        #     end
-        # end
-        
     end
 
 

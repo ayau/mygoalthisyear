@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  goal: 
+  user: 
+  sender: 
+  message: MyText
+  read: 1
+
+two:
+  goal: 
+  user: 
+  sender: 
+  message: MyText
+  read: 1

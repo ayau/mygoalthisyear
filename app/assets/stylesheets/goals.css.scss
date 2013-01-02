@@ -105,6 +105,10 @@
             box-shadow: none;
         }
     }
+
+    &.show {
+        position: static;
+    }
 }
 
 
@@ -423,4 +427,46 @@
     }
 }
 
+
+// Users search form in goals_show
+.search_users {
+    display: block;
+    margin-top: 10px;
+    width: 200px;
+    font-size: 13px;
+}
+
+.search {
+    width: 200px;
+}
+
+#search_results {
+    position: absolute;
+    background: white;
+    width: 200px;
+    border-radius: 2px;
+    border: 1px solid $scolor;
+    display: none;
+    margin: 0px;
+    padding: 0px;
+    box-shadow: -1px 1px 8px 0px rgba(0,0,0,0.2);
+
+    li {
+        border-bottom: 1px solid $scolor;
+        overflow: auto;
+        &:hover {
+            background: #F5F5F5;
+        }
+    }
+
+    p {
+        margin: 15px;
+    }
+
+    a {
+        padding: 10px 15px;
+        overflow: auto;
+        display: block;
+    }
+}
 

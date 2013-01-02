@@ -2,7 +2,7 @@
 
     <!-- <p id="notice"><%= notice %></p> -->
 
-    <section class='goal'>
+    <section class='goal show'>
 
         <div class='goal-wrap'>
             <% @goal.color ||= 'fbcc91' %>
@@ -90,13 +90,16 @@
         <p style='color:#CCC'>No one</p>
         <a>Invite your friends to join you</a>
 
-        <%= form_tag users_path, :method => 'get' do %>
-            <p>
-                <%= text_field_tag :search, params[:search], :placeholder => "your friend's name", :style => 'width: 200px' %>
-                <%= submit_tag "Search", :name => nil %>
-            </p>
-        <% end %>
+        <div class='search'>
+            <%= text_field_tag :search, params[:search], :class => 'search_users', :placeholder => "your friend's name" %>
+            
+            <ul id='search_results'></ul>
+            
+            <%= form_tag invite_goal_path(@goal), :method => :put, :class => 'invite_form' do %>
+                <%= hidden_field_tag :user_id %>
+            <% end %>
 
+        </div>
 
         <!-- <p>Maybe show other people's progress</p> -->
 

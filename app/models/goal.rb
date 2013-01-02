@@ -1,6 +1,9 @@
 class Goal < ActiveRecord::Base
     belongs_to :owner, :class_name => 'User', :foreign_key => 'owner_id'
+    
     has_many :commitments
+
+    has_many :notifications
 
     has_many :events, :dependent => :destroy
 

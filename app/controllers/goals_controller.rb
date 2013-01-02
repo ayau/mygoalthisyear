@@ -26,14 +26,13 @@ class GoalsController < ApplicationController
         @goal['completed'] = commitment.completed
         @goal['completed_at'] = commitment.completed_at
 
-
         @subgoal = Goal.new
 
         @subgoals = @goal.subgoals
 
         @events = Event.where(:goal_id => @subgoals.group(:id).append(@goal.id))
 
-        @events_count = @events.group(:goal_id).count 
+        @events_count = @events.where(:user_id => current_user.id).group(:goal_id).count 
 
         respond_to do |format|
             format.html # show.html.erb
@@ -205,6 +204,32 @@ class GoalsController < ApplicationController
         end
         
         redirect_to current_user
+    end
+
+    def invite
+        goal = Goal.find(params[:id])
+        raise PermissionViolation unless goal.updatable_by?(current_user)
+        
+        notification = Notification.find_or_create_by_goal_id_and_user_id_and_sender_id(goal.id, params[:user_id], current_user.id)
+        notification.update_attributes({
+            :notification_type => 'invite',
+            :message => "<p><a href='/users/" + current_user.id.to_s() + "'>" + current_user.name + "</a> just invited you to participate in <b>" + goal.name + "</b></p><a href='/goals/" + goal.id.to_s() + "/accept_invite' data-method='put' style='float: right'>Accept</a>"
+        })
+
+        redirect_to :back
+    end
+
+    def accept_invite
+        goal = Goal.find(params[:id])
+
+        notification = Notification.find_by_goal_id_and_user_id(goal.id, current_user.id)
+
+        raise PermissionViolation unless !notification.nil?
+
+        current_user.commit_to_goal(goal, 1)
+
+        redirect_to goal
+        
     end
 
 end

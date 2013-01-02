@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130101161253) do
+ActiveRecord::Schema.define(:version => 20130102054001) do
 
   create_table "commitments", :force => true do |t|
     t.integer  "user_id"
@@ -49,6 +49,20 @@ ActiveRecord::Schema.define(:version => 20130101161253) do
   end
 
   add_index "goals", ["owner_id"], :name => "index_goals_on_owner_id"
+
+  create_table "notifications", :force => true do |t|
+    t.integer  "goal_id"
+    t.integer  "user_id"
+    t.integer  "sender_id"
+    t.string   "notification_type"
+    t.text     "message"
+    t.integer  "read",              :default => 0
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
+  end
+
+  add_index "notifications", ["goal_id"], :name => "index_notifications_on_goal_id"
+  add_index "notifications", ["user_id"], :name => "index_notifications_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "name"

@@ -171,4 +171,19 @@ class UsersController < ApplicationController
         redirect_to current_user
     end
 
+    def search
+        search = params[:search]
+        
+        if search
+            results = User.find(:all, :select => 'id, name, avatar', :conditions => ['name LIKE ?', "%#{search}%"])
+        else
+            results = []
+        end
+
+        respond_to do |format|
+            format.json { render json: results }
+        end
+
+    end
+
 end

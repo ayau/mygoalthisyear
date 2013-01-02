@@ -17,4 +17,8 @@
          |
         <%= link_to 'Remove', event, method: :delete, data: { confirm: 'Are you sure?' } %>
     </div>
+    
+    <% avatar = event.user.avatar || 'http://www.ohmyhandmade.com/wp-content/uploads/2011/12/twitter-egg.jpg' %>
+    <div class='avatar mini' style='float:right; background-image: url(<%= avatar %>)'></div>
+
 </li>

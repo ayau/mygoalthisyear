@@ -21,7 +21,14 @@
                         <% else %>
                             <li><%= link_to current_user.name, user_path(:id => current_user.id) %></li>
                             <li> | </li>
-                            <li><%= link_to 'Edit', edit_user_path(current_user) %></li>
+                            <li>
+                                <%= link_to 'Edit', edit_user_path(current_user) %>
+                                <ol class='notifications'>
+                                    <% current_user.notifications.each do |n| %>
+                                        <li><%= render :inline => n.message %></li>
+                                    <% end %>
+                                </ol>
+                            </li>
                             <li> | </li>
                             <li><%= link_to "Sign out", "/signout" %></li>
                         <% end %>
@@ -29,7 +36,7 @@
                 </nav>
             </section>
         </header>
-        
+
         <div class='container'>
             <%= yield %>
         </div>
