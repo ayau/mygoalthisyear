@@ -49,17 +49,9 @@
         <!-- <p>Total points: 100 (30 this month)</p>
                 <p>Completed 10 times (3 times this month)</p> -->
 
-
-        <!-- (Fix subgoal first) Work out logic for adding and removing things (for everything) -->
-        
-
         <!-- Achievements + badge view -->
 
-        <!-- Badges + color picker -->
-
         <!-- Info -->
-        
-        <!-- Sharing and friends -->
 
         <% if @goal.description.length > 0 %>
             <!-- <h4>Description</h4> -->
@@ -87,7 +79,24 @@
         <br />
 
         <h3>Shared with</h3>
-        <p style='color:#CCC'>No one</p>
+        <% if @shared.length + @goal.invited_users.length > 0 %>
+            <div style='overflow:auto; margin-bottom: 10px;'>
+                <% @shared.each do |user| %>
+                    <% avatar = user.avatar || 'http://www.ohmyhandmade.com/wp-content/uploads/2011/12/twitter-egg.jpg' %>
+                    <div class='avatar mini' style='background-image: url(<%= avatar %>)'></div>
+                <% end %>
+
+                <% @goal.invited_users.each do |user| %>            
+                    <% avatar = user.avatar || 'http://www.ohmyhandmade.com/wp-content/uploads/2011/12/twitter-egg.jpg' %>
+                    <div class='avatar mini' style='float:left; background-image: url(<%= avatar %>)'></div>
+                    <p>Invited</p>
+                <% end %>
+            </div>
+
+        <% else %>
+            <p style='color:#CCC'>No one</p>
+        <% end %>
+
         <a>Invite your friends to join you</a>
 
         <div class='search'>

@@ -23,11 +23,13 @@
                             <li> | </li>
                             <li>
                                 <%= link_to 'Edit', edit_user_path(current_user) %>
-                                <ol class='notifications'>
-                                    <% current_user.notifications.each do |n| %>
-                                        <li><%= render :inline => n.message %></li>
-                                    <% end %>
-                                </ol>
+                                <% if current_user.notifications.length > 0 %>
+                                    <ol class='notifications'>
+                                        <% current_user.notifications.each do |n| %>
+                                            <li><%= render :inline => n.message %></li>
+                                        <% end %>
+                                    </ol>
+                                <% end %>
                             </li>
                             <li> | </li>
                             <li><%= link_to "Sign out", "/signout" %></li>

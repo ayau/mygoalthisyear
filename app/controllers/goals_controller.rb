@@ -30,6 +30,8 @@ class GoalsController < ApplicationController
 
         @subgoals = @goal.subgoals
 
+        @shared = @goal.users
+
         @events = Event.where(:goal_id => @subgoals.group(:id).append(@goal.id))
 
         @events_count = @events.where(:user_id => current_user.id).group(:goal_id).count 
@@ -227,6 +229,8 @@ class GoalsController < ApplicationController
         raise PermissionViolation unless !notification.nil?
 
         current_user.commit_to_goal(goal, 1)
+
+        notification.destroy
 
         redirect_to goal
         

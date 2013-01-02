@@ -14,6 +14,8 @@ class Goal < ActiveRecord::Base
 
     has_many :subgoals, :class_name => 'Goal', :foreign_key => 'parent_id'
 
+    has_many :invited_users, :through => :notifications, :source => :user, :uniq => true
+
     after_create :create_commitment
 
     attr_accessible :name, :owner_id, :points, :parent_id, :description, :has_deadline, :deadline, :badge, :color

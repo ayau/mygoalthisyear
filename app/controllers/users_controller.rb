@@ -175,7 +175,7 @@ class UsersController < ApplicationController
         search = params[:search]
         
         if search
-            results = User.find(:all, :select => 'id, name, avatar', :conditions => ['name LIKE ?', "%#{search}%"])
+            results = User.find(:all, :select => 'id, name, avatar', :conditions => ['name LIKE ? AND id != ?', "%#{search}%", current_user.id])
         else
             results = []
         end

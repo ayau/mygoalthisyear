@@ -28,9 +28,9 @@ class ApplicationController < ActionController::Base
         render 'pages/permission_denied'
     end
 
-    # rescue_from ActiveRecord::RecordNotFound do |exception|
-    #     render 'pages/permission_denied'
-    # end
+    rescue_from ActiveRecord::RecordNotFound do |exception|
+        render 'pages/permission_denied'
+    end
 
     helper_method :current_user
 
