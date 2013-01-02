@@ -30,7 +30,7 @@ class GoalsController < ApplicationController
 
         @subgoals = @goal.subgoals
 
-        @shared = @goal.users
+        @shared = @goal.users.where(['user_id <> ?', current_user.id])
 
         @events = Event.where(:goal_id => @subgoals.group(:id).append(@goal.id))
 
@@ -211,11 +211,15 @@ class GoalsController < ApplicationController
     def invite
         goal = Goal.find(params[:id])
         raise PermissionViolation unless goal.updatable_by?(current_user)
+
+        if goal.users.where(:user_id => params[:user_id])
+            return redirect_to :back
+        end
         
         notification = Notification.find_or_create_by_goal_id_and_user_id_and_sender_id(goal.id, params[:user_id], current_user.id)
         notification.update_attributes({
             :notification_type => 'invite',
-            :message => "<p><a href='/users/" + current_user.id.to_s() + "'>" + current_user.name + "</a> just invited you to participate in <b>" + goal.name + "</b></p><a href='/goals/" + goal.id.to_s() + "/accept_invite' data-method='put' style='float: right'>Accept</a>"
+            :message => "<p><a href='/users/" + current_user.id.to_s() + "'>" + current_user.name + "</a> just invited you to participate in <b>" + goal.name + "</b></p><a href='/goals/" + goal.id.to_s() + "/decline_invite' data-method='put' style='float: right'>Decline</a><span> | </span><a href='/goals/" + goal.id.to_s() + "/accept_invite' data-method='put' style='float: right'>Accept</a>"
         })
 
         redirect_to :back
@@ -233,6 +237,17 @@ class GoalsController < ApplicationController
         notification.destroy
 
         redirect_to goal
+        
+    end
+
+    def decline_invite
+        goal = Goal.find(params[:id])
+
+        notification = Notification.find_by_goal_id_and_user_id(goal.id, current_user.id)
+
+        notification.destroy
+
+        redirect_to :back
         
     end
 

@@ -88,8 +88,9 @@
 
                 <% @goal.invited_users.each do |user| %>            
                     <% avatar = user.avatar || 'http://www.ohmyhandmade.com/wp-content/uploads/2011/12/twitter-egg.jpg' %>
-                    <div class='avatar mini' style='float:left; background-image: url(<%= avatar %>)'></div>
-                    <p>Invited</p>
+                    <div class='avatar mini' style='float:left; background-image: url(<%= avatar %>)'>
+                        <p>Invited</p>
+                    </div>
                 <% end %>
             </div>
 

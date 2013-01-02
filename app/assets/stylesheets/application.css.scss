@@ -172,7 +172,7 @@ section[role='main'] {
     background: #D1EAD2;
     width: 250px;
     margin-left: -135px;
-    padding: 10px 20px;
+    padding: 10px 10px;
     border: 1px solid #BBD2BC;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
@@ -182,8 +182,14 @@ section[role='main'] {
 
     p{
         margin: 0px;
+        margin-bottom: 10px;
     }
     li {
         padding: 5px 0px;
+    }
+
+    span {
+        margin: 0px 10px;
+        float: right;
     }
 }

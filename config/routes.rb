@@ -19,6 +19,7 @@ Bucketlist::Application.routes.draw do
             post 'set_subgoal'
             put 'invite'
             put 'accept_invite'
+            put 'decline_invite'
         end
     end
 
