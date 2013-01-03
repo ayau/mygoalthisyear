@@ -3,11 +3,11 @@
         <%= event.created_at.day %>
     </div>
     <div>
-        <u><%= event.goal.name %></u>
+        <span><b><%= event.goal.name %></b> - completed</span>
         <% if event.post.length > 0 %>
-            <p><%= event.post %></p>
+            <p style='margin-left: 20px;'> > <%= event.post %></p>
         <% end %>
-        <p>completed <%= event.created_at.strftime('%l:%M %p - %B %e, %Y') %></p>
+        <p><%= event.created_at.strftime('%l:%M %p - %B %e, %Y') %></p>
         
         <% if event.post.length == 0 %>
             <%= link_to 'Add comment', edit_event_path(event) %>

@@ -102,7 +102,10 @@ class EventsController < ApplicationController
 
         event.update_attributes(params[:event])
 
-        redirect_to event.user
+        # since is now able to submit from both pages
+        redirect_to :back
+
+        # redirect_to event.user
     end
 
 end

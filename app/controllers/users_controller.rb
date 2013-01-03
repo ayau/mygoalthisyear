@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+
+    include SvgHelper
     
     # GET /users
     # GET /users.json
@@ -27,11 +29,7 @@ class UsersController < ApplicationController
         @bucket = @user.goals.where('is_current = ?', 0)
 
         # Don't over-count evented + completed goals
-        points = @completed.reduce(0) do |sum, goal|
-            sum += goal.events.count > 0 ? goal.points : 0
-        end
-
-        @points = @user.events.reduce(points) do |sum, event|
+        @points = @user.events.reduce(0) do |sum, event|
             sum + event.goal.points
         end
 
@@ -41,20 +39,15 @@ class UsersController < ApplicationController
         # @current_goals = @month.goals.order('created_at DESC')
         @current_goals = @user.goals.where('is_current = ?', 1).order('commitments.created_at DESC')
 
-        # Calculating points this month
-        # points_this_month = @month.goals.where(:completed => true).reduce(0) do |sum, goal|
-        #     sum += goal.events.count > 0 ? goal.points : 0
-        # end
-
-        # hash of goal_id vs number of events in that month
         month_time = Time.now.beginning_of_month()
 
-        # events_this_month = @user.events.where("created_at > ?", month_time)
-        # @points_this_month = events_this_month.reduce(points_this_month) do |sum, event|
-        #     sum + event.goal.points
-        # end
-        @points_this_month = 0
+        # Calculating points this month
+        events_this_month = @user.events.where("created_at > ?", month_time)
+        @points_this_month = events_this_month.reduce(0) do |sum, event|
+            sum + event.goal.points
+        end
 
+        # hash of goal_id vs number of events in that month
         @events_count = @user.events.where("created_at > ?", month_time).group(:goal_id).count
 
         # appending subgoals to goals
@@ -67,6 +60,9 @@ class UsersController < ApplicationController
 
         # new goal
         @goal = Goal.new
+
+        @bg_color = "%06x" % (rand * 0xffffff)
+        @fg_color = generate_color(@bg_color)
 
         respond_to do |format|
             format.html # show.html.erb

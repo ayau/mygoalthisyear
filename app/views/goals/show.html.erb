@@ -24,10 +24,11 @@
                     <span><%= @goal.points %> points</span>
                     <% if @goal.completed == 1 %>
                         <span> · completed</span>
-                    <% else %>
+                    <% elsif @goal.is_current == 1 %>
                         <span> · in progress</span>
+                    <% else %>
+                        <span> · in bucket</span>
                     <% end %>
-                     <!-- vs in bucket -->
 
                     <span> · created by <%= link_to @goal.owner.name, @goal.owner %> <%= time_ago_in_words(@goal.created_at) %> ago</span>
                 </div>
@@ -35,11 +36,11 @@
 
             <ul>
                 <li>
-                    <h3>10</h3>
+                    <h3><%= @completed_total %></h3>
                     <p>completed</p>
                 </li>
                 <li>
-                    <h3>3</h3>
+                    <h3><%= @completed_this_month %></h3>
                     <p>this month</p>
                 </li>
             </ul>
@@ -78,7 +79,7 @@
         
         <br />
 
-        <h3>Shared with</h3>
+        <h3 style='margin-bottom: 5px;'>Shared with</h3>
         <% if @shared.length + @goal.invited_users.length > 0 %>
             <div style='overflow:auto; margin-bottom: 10px;'>
                 <% @shared.each do |user| %>
@@ -160,8 +161,11 @@
 
     </section>
 
+    <%= render 'events/details_form' %>
+
     <%= link_to 'Back', :back %>
 
 </section>
 
 <%= javascript_include_tag 'goals_show' %>
+<%= javascript_include_tag 'event_form' %>

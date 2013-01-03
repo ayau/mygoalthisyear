@@ -38,17 +38,18 @@
         <div style='margin-top: 10px'>
             <%= f.label :badge, 'Choose your badge', :style => 'float: left; margin-right: 36px; margin-top: 36px' %>
 
-            <% color = 'fbcc91' %>
-            <% badge_url = '/svg/star.svg?color=4d2d74' %>
+            <% color = @bg_color || 'fbcc91' %>
+            <% fg = @fg_color || '4d2d74' %>
+            <% badge_url = '/svg/star.svg?color=' + fg %>
             
             <div style='background: #<%= color %>' class='badge badge-preview'>
                 <img class='logo' src='<%= badge_url %>' />
             </div>
             
-            <%= f.hidden_field :badge, :value => badge_url, :badge_color => '4d2d74', :badge_id => '/svg/star.svg' %>
+            <%= f.hidden_field :badge, :value => badge_url, :badge_color => fg, :badge_id => '/svg/star.svg' %>
             <%= f.hidden_field :color, :value => color %>
 
-            <div class='cp-icon fg-color' style='background: #<%= "4d2d74" %>'></div>
+            <div class='cp-icon fg-color' style='background: #<%= fg %>'></div>
             <div class='cp-icon bg-color' style='background: #<%= color %>'></div>
             
         </div>

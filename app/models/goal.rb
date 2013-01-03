@@ -1,9 +1,9 @@
 class Goal < ActiveRecord::Base
     belongs_to :owner, :class_name => 'User', :foreign_key => 'owner_id'
     
-    has_many :commitments
+    has_many :commitments, :dependent => :destroy
 
-    has_many :notifications
+    has_many :notifications, :dependent => :destroy
 
     has_many :events, :dependent => :destroy
 
@@ -37,7 +37,8 @@ class Goal < ActiveRecord::Base
     end
 
     def destroyable_by?(user)
-        self.owner_id == user.id
+        # self.owner_id == user.id
+        !user.nil? && !Commitment.find_by_user_id_and_goal_id(user.id, self.id).nil?
     end
 
     def updatable_by?(user)

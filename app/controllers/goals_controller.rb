@@ -25,6 +25,7 @@ class GoalsController < ApplicationController
         @user = current_user
         @goal['completed'] = commitment.completed
         @goal['completed_at'] = commitment.completed_at
+        @goal['is_current'] = commitment.is_current
 
         @subgoal = Goal.new
 
@@ -35,6 +36,12 @@ class GoalsController < ApplicationController
         @events = Event.where(:goal_id => @subgoals.group(:id).append(@goal.id))
 
         @events_count = @events.where(:user_id => current_user.id).group(:goal_id).count 
+
+        month_time = Time.now.beginning_of_month()
+
+        @completed_total = @goal.events.where("user_id == ?", current_user.id).count
+
+        @completed_this_month = @goal.events.where("user_id == ? AND created_at > ?", current_user.id, month_time).count
 
         respond_to do |format|
             format.html # show.html.erb
@@ -156,6 +163,7 @@ class GoalsController < ApplicationController
         redirect_to :back
     end
 
+    # creating subgoals
     def subgoals
         # validate that parent and current_user exist
         goal = params[:goal]
@@ -171,6 +179,12 @@ class GoalsController < ApplicationController
 
         respond_to do |format|
             if @goal.save
+
+                # subscribe all other users in the same goal
+                parent.users.where(['user_id <> ?', current_user.id]).each do |user|
+                    user.commit_to_goal(@goal, 0)
+                end
+
                 format.html { redirect_to parent, notice: 'Goal was successfully created.' }
                 format.json { render json: @goal, status: :created, location: @goal }
             else
