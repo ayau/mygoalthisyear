@@ -1,0 +1,32 @@
+
+<h1>Achievements</h1>
+
+<ul style='overflow: auto'>
+    <% @completed.each do |goal| %>
+
+        <li class='goal'>
+            <div id='<%= goal.id %>' style='background: #<%= goal.color %>' class='badge draggable'>
+                <img class='logo' src='<%= goal.badge %>' />
+            </div>
+
+            <article>
+                <header>
+                    <%= link_to goal.name, goal, :class => 'goal-name', :title => 'view goal details' %>
+                    <%= link_to 'Edit', edit_goal_path(goal) %>
+                </header>
+
+                <div class='actions'>
+                    <span><%= goal.points %> points</span>
+                    <% if goal.subgoals.count > 0 %>
+                        <span> · <%= goal.subgoals.count %> subgoal <% if goal.subgoals.count > 1 %>s<% end %></span>
+                    <% end %>
+
+                    <span> · completed <%= time_ago_in_words(goal.completed_at) %> ago</span>
+
+                </div>
+            </article>
+        </li>
+    <% end %>
+</ul>
+
+<%= link_to :back %>

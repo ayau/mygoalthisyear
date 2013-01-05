@@ -182,4 +182,9 @@ class UsersController < ApplicationController
 
     end
 
+    def achievements
+        @user = User.find(params[:id])
+        @completed = @user.goals.where('completed = ?', 1)
+    end
+
 end

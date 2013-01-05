@@ -28,6 +28,7 @@ Bucketlist::Application.routes.draw do
             get 'timeline'
             put 'add_goal'
             put 'remove_goal'
+            get 'achievements'
         end
 
         collection do

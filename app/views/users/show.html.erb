@@ -25,14 +25,16 @@
     </header>
 
     <section class='achievements'>
-        <h3>Achievements</h3><a class='hide-achievements'>hide</a>
+        <h3><%= link_to 'Achievements', achievements_user_path(@user), :style => 'color: black' %></h3><a class='hide-achievements'>hide</a>
         <div class='slider'>
-           <!--  <% @completed.each do |goal| %>
+
+            <% @completed.limit(8).each do |goal| %>
                 <div style='background: #<%= goal.color %>' class='badge'>
                     <img class='logo' src='<%= goal.badge %>' />
                 </div>
-            <% end %>     -->
+            <% end %>    
 
+            <!-- 
             <% badges = Dir.glob("app/assets/images/badges/*") %>
             <% for i in 1..8 do %>
                 <% badge_url = badges.sample.gsub('app/assets/images/badges/', '') %>
@@ -44,6 +46,7 @@
                 </div>
 
             <% end %>
+            -->
         </div>
     </section>
 
