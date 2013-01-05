@@ -24,31 +24,36 @@
 
     </header>
 
-    <section class='achievements'>
-        <h3><%= link_to 'Achievements', achievements_user_path(@user), :style => 'color: black' %></h3><a class='hide-achievements'>hide</a>
-        <div class='slider'>
+    <% if @completed.length > 0 %>
 
-            <% @completed.limit(8).each do |goal| %>
-                <div style='background: #<%= goal.color %>' class='badge'>
-                    <img class='logo' src='<%= goal.badge %>' />
-                </div>
-            <% end %>    
+        <section class='achievements'>
+            <h3><%= link_to 'Achievements', achievements_user_path(@user), :style => 'color: black' %></h3><a class='hide-achievements'>hide</a>
+            <div class='slider'>
 
-            <!-- 
-            <% badges = Dir.glob("app/assets/images/badges/*") %>
-            <% for i in 1..8 do %>
-                <% badge_url = badges.sample.gsub('app/assets/images/badges/', '') %>
-                <% fg = "%06x" % (rand * 0xffffff) %>
-                <% bg = "%06x" % (rand * 0xffffff) %>
-            
-                <div style='background: #<%= bg %>' class='badge'>
-                    <img class='logo' src='/svg/<%= badge_url %>?color=<%= fg %>' />
-                </div>
+                <% @completed.limit(8).each do |goal| %>
+                    <a href='/goals/<%= goal.id %>'>
+                        <div style='background: #<%= goal.color %>' class='badge'>
+                            <img class='logo' src='<%= goal.badge %>' />
+                        </div>
+                    </a>
+                <% end %>    
 
-            <% end %>
-            -->
-        </div>
-    </section>
+                <!-- 
+                <% badges = Dir.glob("app/assets/images/badges/*") %>
+                <% for i in 1..8 do %>
+                    <% badge_url = badges.sample.gsub('app/assets/images/badges/', '') %>
+                    <% fg = "%06x" % (rand * 0xffffff) %>
+                    <% bg = "%06x" % (rand * 0xffffff) %>
+                
+                    <div style='background: #<%= bg %>' class='badge'>
+                        <img class='logo' src='/svg/<%= badge_url %>?color=<%= fg %>' />
+                    </div>
+
+                <% end %>
+                -->
+            </div>
+        </section>
+    <% end %>
 
     <!-- 
     <p>Large goals vs small(quick) ones?</p>

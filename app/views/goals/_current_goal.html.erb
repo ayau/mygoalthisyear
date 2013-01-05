@@ -8,9 +8,11 @@
             <% goal.color ||= 'fbcc91' %>
             <% goal.badge ||= '/svg/star.svg?color=4d2d74' %>
 
-            <div style='background: #<%= goal.color %>' class='badge'>
-                <img class='logo' src='<%= goal.badge %>' />
-            </div>
+            <a href='/goals/<%= goal.id %>'>          
+                <div style='background: #<%= goal.color %>' class='badge'>
+                    <img class='logo' src='<%= goal.badge %>' />
+                </div>
+            </a>
 
             <p class='points'>+<%= goal.points %></p>
 
