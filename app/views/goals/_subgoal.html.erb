@@ -1,4 +1,4 @@
-<% completed = goal.users.find(@user.id).completed %>
+<% completed = goal.users.find(@user.id).completed.to_i %>
 <% if completed == 1 %>
     <li class='sub goal completed'>
 <% else %>
@@ -17,9 +17,6 @@
             <%= link_to 'Edit', edit_goal_path(goal) %> |
             <%= link_to 'Destroy', goal, method: :delete, data: { confirm: 'Are you sure?' } %> 
         </header>
-        <%= completed == 1 %>
-        <%= completed == '1' %>
-        <%= completed %>
         <% if completed == 0 %>
             <%= render :partial => 'events/form', :locals => {:goal => goal, :again => @events_count[goal.id]} %>
         <% end %>
