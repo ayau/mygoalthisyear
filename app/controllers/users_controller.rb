@@ -37,7 +37,7 @@ class UsersController < ApplicationController
         # @month = @user.get_month
 
         # @current_goals = @month.goals.order('created_at DESC')
-        @current_goals = @user.goals.where('is_current = ?', 1).order('commitments.created_at DESC')
+        @current_goals = @user.goals.where('is_current = 1').order('commitments.created_at DESC')
 
         month_time = Time.now.beginning_of_month()
 

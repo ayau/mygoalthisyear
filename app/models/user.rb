@@ -6,13 +6,13 @@ class User < ActiveRecord::Base
 
     has_many :notifications
 
-    has_many :goals, :through => :commitments, :uniq => true,
+    has_many :goals, :through => :commitments,
              :conditions => {:parent_id => 0},
              :select => 'goals.*, commitments.completed_at as completed_at,
                         commitments.completed as completed,
                         commitments.is_current as is_current'
 
-    has_many :subgoals, :through => :commitments, :uniq => true, :source => :goal,
+    has_many :subgoals, :through => :commitments, :source => :goal,
              :conditions => 'goals.parent_id > 0',
              :select => 'goals.*, commitments.completed_at as completed_at,
                         commitments.completed as completed,

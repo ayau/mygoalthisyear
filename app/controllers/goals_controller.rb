@@ -39,9 +39,9 @@ class GoalsController < ApplicationController
 
         month_time = Time.now.beginning_of_month()
 
-        @completed_total = @goal.events.where("user_id == ?", current_user.id).count
+        @completed_total = @goal.events.where("user_id = ?", current_user.id).count
 
-        @completed_this_month = @goal.events.where("user_id == ? AND created_at > ?", current_user.id, month_time).count
+        @completed_this_month = @goal.events.where("user_id = ? AND created_at > ?", current_user.id, month_time).count
 
         respond_to do |format|
             format.html # show.html.erb
