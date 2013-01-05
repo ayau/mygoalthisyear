@@ -51,7 +51,7 @@ class UsersController < ApplicationController
         @events_count = @user.events.where("created_at > ?", month_time).group(:goal_id).count
 
         # appending subgoals to goals
-        subgoals = @user.subgoals.where('is_current == 1')
+        subgoals = @user.subgoals.where('is_current = 1')
         @subgoals = {}
         subgoals.each do |sg|
             @subgoals[sg.parent_id] ||= []
