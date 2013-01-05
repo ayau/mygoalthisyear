@@ -275,22 +275,19 @@
     box-shadow: -1px 1px 6px 1px rgba(0,0,0,0.2);
 
     li {
-        overflow: auto;
         float: left;
         border: 2px solid white;
         border-radius: 2px;
         cursor: pointer;
+
+        height:50px;
+        padding: 5px;
 
         &.selected {
             border: 2px solid $scolor;
         }
     }
 
-    img {
-        height:50px; 
-        float: left; 
-        padding: 5px;
-    }
 }
 
 .badge-preview {

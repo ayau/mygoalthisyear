@@ -26,7 +26,7 @@ $ ->
         $('.badge-select .selected').removeClass('selected')
         $(this).addClass('selected')
 
-        id = $(this).find('img').attr('src')
+        id = '/svg/' + $(this).attr('badge_id') + '.svg'
         color = $('#goal_badge').attr('badge_color')
         url = id + '?color=' + color
 
@@ -111,4 +111,16 @@ $ ->
             $('.color-picker').fadeOut()
             colorOpened = false
             return
+
+
+    
+    # SVG ---------------------------------
+    $.ajax({
+        type: 'GET',
+        url: '/svg',
+        dataType: 'json',
+        success: (results) ->
+            for r in results
+                $('.badge-select').append('<li badge_id="' + r.id + '">' + r.svg + '</li>')
+    })
 

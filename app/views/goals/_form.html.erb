@@ -53,17 +53,6 @@
         </div>
 
         <ul class='badge-select'>
-            <% badges = Dir.glob("app/assets/images/badges/*") %>
-            <% for b in badges do %>
-                <% url = b.sub('app/assets/images/badges/', '') %>
-                <% if url == 'star.svg' %>
-                    <li class='selected'>
-                <% else %>
-                    <li>
-                <% end %>
-                    <img src='/svg/<%= url %>' />
-                </li>
-            <% end %>
         </ul>
         
         <div style='clear:both'></div>

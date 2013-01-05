@@ -42,7 +42,7 @@ Bucketlist::Application.routes.draw do
         end
     end
 
-    resources :svg, :only => :show
+    resources :svg, :only => [:show, :index]
 
     # The priority is based upon order of creation:
     # first created -> highest priority.
