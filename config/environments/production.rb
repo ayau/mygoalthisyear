@@ -20,6 +20,8 @@ Bucketlist::Application.configure do
   # Generate digests for assets URLs
   config.assets.digest = true
 
+  config.assets.precompile += ['users_show.js', 'goals_show.js', 'goal_form.js', 'event_form.js']
+
   # Defaults to nil and saved in location specified by config.assets.prefix
   # config.assets.manifest = YOUR_PATH
 
