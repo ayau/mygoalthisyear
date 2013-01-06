@@ -1,3 +1,33 @@
 // Place all the styles related to the pages controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+.home {
+    p {
+        font-size: 16px;
+    }
+
+    ol {
+        overflow: auto;
+        float: left;
+    }
+
+    li {
+        font-size: 16px;
+        padding: 10px;
+    }
+
+    .badge {
+        margin-top: 30px;
+    }
+
+    input[type=button]{
+        margin: 20px;
+        font-size: 16px;
+    }
+    span {
+        display:block; 
+        color: #999;
+    }
+}

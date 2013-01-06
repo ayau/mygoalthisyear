@@ -5,7 +5,7 @@ This is a project started by [Alex Yau](https://github.com/ayau) to help you kee
 This project was started in late December 2012 and still in development. However, you can try out a basic, bareboned version of the site [here](http://mygoalthisyear.herokuapp.com/).
 
 ###Overview
-This is an attempt to leverage the power of [gamification](http://www.youtube.com/watch?v=lfBpsV1Hwqs) to help us achieve what we set out to do in the coming year. 
+This is an attempt to leverage the power of [gamification](http://www.youtube.com/watch?v=lfBpsV1Hwqs) to help you achieve what you set out to do in the coming year. 
 
 We all have the experience of setting powerful goals at the beginning of the year only to forget about them a few weeks later. This project attempts to help you __break down your goals__ into achievable targets, __be creative__ by creating your very own unique badge and __monitor your progress__ as you slowly tackle challenges and get points.
 

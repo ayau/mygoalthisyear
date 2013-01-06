@@ -1,7 +1,28 @@
-<section>
-    <h3>Fill up your bucket</h3>
+<section role='main' class='home'>
+
+    <h1>My Goal This Year</h1>
+    
+    <p>Leverage the power of <a href='http://www.youtube.com/watch?v=lfBpsV1Hwqs'>gamification</a> to help you achieve what you set out to do in the coming year!</p>
+    
+    <div style="background: #248b9a" class="badge">
+        <img class="logo" src="/svg/swimming.svg?color=ccc62b">
+    </div>
+    
+    <ol>
+        <li>Select goals for this month
+        </li>
+        <li>Create your very own badge to go along with your goal</li>
+        <li>Achieve goals and monitor your progress</li>
+    </ol>
+
+    <center style='clear: both'>
+        <% if !current_user %>
+            <a href='/auth/facebook'><input type='button' value='Sign in with facebook' /></a>  
+        <% else %>
+            <a href='/users/<%= current_user.id %>'><input type='button' value='Get started!' /></a>
+        <% end %>
+    </center>
     <br />
-    <h3>Pick our goals for this month</h3>
-    <br />
-    <h3>Achieve goals and get points!</h3>
+    <span>P.S. sorry about the design. This is just temporary!</span>
+    <span>Check me out on <a href='https://github.com/ayau/mygoalthisyear'>Github</a></span>
 </section>
