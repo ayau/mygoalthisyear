@@ -9,11 +9,12 @@ This is an attempt to leverage the power of [gamification](http://www.youtube.co
 
 We all have the experience of setting powerful goals at the beginning of the year only to forget about them a few weeks later. This project attempts to help you __break down your goals__ into achievable targets, __be creative__ by creating your very own unique badge and __monitor your progress__ as you slowly tackle challenges and get points.
 
-##Tools
+##Tools and Resources
 * Rails 3.2
 * CoffeeScript
 * Sass
 * [ColourPicker.js](http://safalra.com/web-design/javascript/colour-picker/) -- a simple javascript color picker
+* [omniauth-facebook](https://github.com/mkdynamic/omniauth-facebook)
 * JQuery draggable, droppable
 
 
