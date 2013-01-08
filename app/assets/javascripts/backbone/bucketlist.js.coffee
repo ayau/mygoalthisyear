@@ -13,6 +13,11 @@ window.Bucketlist =
 # App init
 $ ->
     Bucketlist.appView = new Bucketlist.Views.AppView()
-    # Bucketlist.userView = new Bucketlist.Views.Users.ShowView()
-    # Bucketlist.userRouter = new Bucketlist.Routers.UsersRouter()
-    # Bucketlist.userView = new Bucketlist.Views.Users.ShowView()
+
+    pathArray = window.location.pathname.split( '/' )
+    
+    if pathArray.length > 1
+        url = pathArray[1]
+        if url is 'users'
+            Bucketlist.userRouter = new Bucketlist.Routers.UsersRouter()
+    Backbone.history.start()

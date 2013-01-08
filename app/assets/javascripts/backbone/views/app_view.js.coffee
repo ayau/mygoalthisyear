@@ -16,3 +16,4 @@ class Bucketlist.Views.AppView extends Backbone.View
         Bucketlist.me = null
         @UserLoaded()
 
+

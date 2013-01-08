@@ -46,6 +46,12 @@ Bucketlist::Application.routes.draw do
 
     scope '/api', :defaults => { :format => 'json' } do
         get 'me' => 'users#me'
+        resources :users, only: [:goals] do
+            member do
+                get 'goals/current' => 'users#current_goals'
+                get 'goals/bucket' => 'users#bucket_goals'
+            end
+        end
     end
 
     # The priority is based upon order of creation:

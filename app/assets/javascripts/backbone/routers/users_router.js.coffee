@@ -1,22 +1,16 @@
 class Bucketlist.Routers.UsersRouter extends Backbone.Router
     
     initialize: (options) ->
-        @users = new Bucketlist.Collections.UsersCollection()
-        @users.reset options.users
+        # @users = new Bucketlist.Collections.UsersCollection()
+        # @users.reset options.users
 
     routes:
-        "new"      : "newUser"
-        "index"    : "index"
         ":id/edit" : "edit"
         ":id"      : "show"
-        ".*"       : "index"
+        ".*"       : "default"
 
-    newUser: ->
-        @view = new Bucketlist.Views.Users.NewView(collection: @users)
-        $("#users").html(@view.render().el)
-
-    index: ->
-        @view = new Bucketlist.Views.Users.IndexView(users: @users)
+    default: ->
+        @view = new Bucketlist.Views.Users.ShowView(model: Bucketlist.me)
         $("#users").html(@view.render().el)
 
     show: (id) ->

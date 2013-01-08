@@ -198,4 +198,48 @@ class UsersController < ApplicationController
         render json: current_user.as_json(:only => [:id, :name, :avatar, :auto_add])
     end
 
+    def goals
+        user = User.find(params[:id])
+        raise PermissionViolation unless user.viewable_by?(current_user)
+
+        current_goals = user.goals.where('is_current = 1').order('commitments.created_at DESC')
+        # subgoals = user.subgoals.where('is_current = 1')
+
+        # inefficient if user has a lot of current goals + current subgoals
+        # map reduce?
+        # current = current_goals.as_json
+        # subgoals.each do |goal|
+        #     current.each do |goal|
+        # end
+
+        completed = user.goals.where('completed = ?', 1)
+        bucket = user.goals.where('is_current = ?', 0)
+
+        render json: {
+            :current => current_goals,
+            :completed => completed,
+            :bucket => bucket
+        }
+
+    end
+
+    def current_goals
+        user = User.find(params[:id])
+        raise PermissionViolation unless user.viewable_by?(current_user)
+        
+        current_goals = user.goals.where('is_current = 1').order('commitments.created_at DESC')
+        
+        render json: current_goals        
+    end
+
+
+    def bucket_goals
+        user = User.find(params[:id])
+        raise PermissionViolation unless user.viewable_by?(current_user)
+        
+        bucket = user.goals.where('is_current = ?', 0)
+
+        render json: bucket        
+    end
+
 end
