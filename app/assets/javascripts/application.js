@@ -16,4 +16,9 @@
 //= require jquery.ui.droppable
 //= require Colour.compressed.js
 //= require ColorPicker.js
+//= require underscore
+//= require backbone
+//= require backbone_rails_sync
+//= require backbone_datalink
+//= require backbone/bucketlist
 //= require_tree ./global

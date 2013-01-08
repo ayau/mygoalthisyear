@@ -29,6 +29,8 @@ end
 
 gem 'jquery-rails'
 
+gem 'rails-backbone'
+
 gem 'jquery-ui-rails'
 
 gem 'omniauth-facebook'

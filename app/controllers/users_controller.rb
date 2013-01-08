@@ -24,7 +24,6 @@ class UsersController < ApplicationController
 
         raise PermissionViolation unless @user.viewable_by?(current_user)
 
-
         @completed = @user.goals.where('completed = ?', 1)
         @bucket = @user.goals.where('is_current = ?', 0)
 
@@ -32,9 +31,6 @@ class UsersController < ApplicationController
         @points = @user.events.reduce(0) do |sum, event|
             sum + event.goal.points
         end
-
-        # create a new month if current time > last month
-        # @month = @user.get_month
 
         # @current_goals = @month.goals.order('created_at DESC')
         @current_goals = @user.goals.where('is_current = 1').order('commitments.created_at DESC')
@@ -185,6 +181,21 @@ class UsersController < ApplicationController
     def achievements
         @user = User.find(params[:id])
         @completed = @user.goals.where('completed = ?', 1)
+    end
+
+
+    # API
+#     def as_json(options={})
+#       super(:only => [:first_name,:last_name,:city,:state],
+#         :include => {
+#           :employers => {:only => [:title]},
+#           :roles => {:only => [:name]}
+#         }
+#      )
+# end
+    def me
+        raise PermissionViolation unless current_user
+        render json: current_user.as_json(:only => [:id, :name, :avatar, :auto_add])
     end
 
 end

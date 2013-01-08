@@ -25,7 +25,10 @@ class ApplicationController < ActionController::Base
     # end
 
     rescue_from PermissionViolation do |exception|
-        render 'pages/permission_denied'
+        respond_to do |format|
+            format.html {render 'pages/permission_denied'}
+            format.json {render json: forbidden, :status => :forbidden}
+        end
     end
 
     rescue_from ActiveRecord::RecordNotFound do |exception|
@@ -46,6 +49,13 @@ class ApplicationController < ActionController::Base
         yield
     ensure
         Time.zone = old_time_zone
+    end
+
+    def forbidden
+        {
+            :status => 403, 
+            :error => 'forbidden'
+        }
     end
 
 end
