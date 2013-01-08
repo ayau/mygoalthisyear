@@ -1,14 +1,26 @@
-<td><%= name %></td>
-<td><%= created_at %></td>
-<td><%= points %></td>
-<td><%= description %></td>
-<td><%= deadline %></td>
-<td><%= has_deadline %></td>
-<td><%= badge %></td>
-<td><%= color %></td>
-<td><%= owner_id %></td>
-<td><%= parent_id %></td>
 
-<td><a href="#/<%= id %>">Show</td>
-<td><a href="#/<%= id %>/edit">Edit</td>
-<td><a href="#/<%= id %>/destroy" class="destroy">Destroy</a></td>
+<!--  if goal.parent_id == 0  -->
+    
+    <div id='<%= goal.id %>' style='background: #<%= goal.color %>' class='badge draggable'>
+        <img class='logo' src='<%= goal.badge %>' />
+    </div>
+
+<!--  end  -->
+
+<article>
+    <header>
+        <a href='/goals/<%= goal.id %>' class='goal-name'><%= goal.name %></a>
+        <a href='/goals/<%= goal.id %>/edit'>Edit</a>
+    </header>
+
+    <div class='actions'>
+        <span><%= goal.points %> points</span>
+        
+        <!--  if goal.subgoals.count > 0 
+            <span> ·  goal.subgoals.count  subgoal  if goal.subgoals.count > 1 s end </span>
+         end  -->
+
+        <!-- <span> · created  time_ago_in_words(goal.created_at)  ago</span> -->
+
+    </div>
+</article>

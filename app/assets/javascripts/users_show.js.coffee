@@ -2,57 +2,57 @@
 $ ->
 
     # Bucket Helper -----------------------------------------
-    bhelper = $('.bucket-helper')
+    # bhelper = $('.bucket-helper')
 
     # Jquery draggable and droppable
-    $(".draggable").draggable({
-        appendTo: "body"
-        scroll: 'false'
-        helper: "clone"
-        revert: 'invalid'
-    })
+    # $(".draggable").draggable({
+    #     appendTo: "body"
+    #     scroll: 'false'
+    #     helper: "clone"
+    #     revert: 'invalid'
+    # })
 
-    bhelper.droppable({
-        tolerance: 'touch'
-        # hoverClass: "ui-state-hover",
-        over: (e, ui) ->
-            badge = $(ui.draggable)
+    # bhelper.droppable({
+    #     tolerance: 'touch'
+    #     # hoverClass: "ui-state-hover",
+    #     over: (e, ui) ->
+    #         badge = $(ui.draggable)
             
-            $('.snapped-badge').addClass('badge')
-            $('.snapped-badge').css('background', badge.css('background'))
-            $('.snapped-badge').css('opacity', 0.5)
-            $('.snapped-badge').find('img').attr('src', badge.find('img').attr('src'))
-            $('.snapped-badge').find('img').show()
+    #         $('.snapped-badge').addClass('badge')
+    #         $('.snapped-badge').css('background', badge.css('background'))
+    #         $('.snapped-badge').css('opacity', 0.5)
+    #         $('.snapped-badge').find('img').attr('src', badge.find('img').attr('src'))
+    #         $('.snapped-badge').find('img').show()
 
-        out: (e, ui) ->
-            $('.snapped-badge').removeClass('badge')
-            $('.snapped-badge').css('background', '')
-            $('.snapped-badge').find('img').hide()
+    #     out: (e, ui) ->
+    #         $('.snapped-badge').removeClass('badge')
+    #         $('.snapped-badge').css('background', '')
+    #         $('.snapped-badge').find('img').hide()
 
-        drop: (e, ui ) ->
-            goal_id = $(ui.draggable).attr('id')
-            $('#user_goal_id').val(goal_id)
-            $('.edit_user').submit()
-    })
+    #     drop: (e, ui ) ->
+    #         goal_id = $(ui.draggable).attr('id')
+    #         $('#user_goal_id').val(goal_id)
+    #         $('.edit_user').submit()
+    # })
 
-    # Setting up top position of bucket helper
-    bhelper.css('top', $('.bucket').offset().top + 20)
+    # # Setting up top position of bucket helper
+    # bhelper.css('top', $('.bucket').offset().top + 20)
 
-    # If window is resized, need to recalculate
-    bucketLeft = $('.bucket').offset().left + $('.bucket').width() - bhelper.width() + 12
+    # # If window is resized, need to recalculate
+    # bucketLeft = $('.bucket').offset().left + $('.bucket').width() - bhelper.width() + 12
 
-    $(window).scroll (event) ->
-        y = $(window).scrollTop();
+    # $(window).scroll (event) ->
+    #     y = $(window).scrollTop();
         
-        if y > $('.bucket').offset().top + 20
-            bhelper.addClass('fixed')
-            bhelper.css('top', 50)
-            bhelper.css('left', bucketLeft)
+    #     if y > $('.bucket').offset().top + 20
+    #         bhelper.addClass('fixed')
+    #         bhelper.css('top', 50)
+    #         bhelper.css('left', bucketLeft)
 
-        else
-            bhelper.removeClass('fixed')
-            bhelper.css('top', $('.bucket').offset().top + 20)
-            bhelper.css('left', 682);
+    #     else
+    #         bhelper.removeClass('fixed')
+    #         bhelper.css('top', $('.bucket').offset().top + 20)
+    #         bhelper.css('left', 682);
 
     # Quick add form -------------------------------------
     

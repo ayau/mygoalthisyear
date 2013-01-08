@@ -1,19 +1,22 @@
 Bucketlist.Views.Goals ||= {}
 
 class Bucketlist.Views.Goals.GoalView extends Backbone.View
-  template: JST["backbone/templates/goals/goal"]
+    template: JST["backbone/templates/goals/goal"]
 
-  events:
-    "click .destroy" : "destroy"
+    tagName: 'li'
+    className: 'goal'
 
-  tagName: "tr"
+    # events:
+    #     "click .destroy" : "destroy"
 
-  destroy: () ->
-    @model.destroy()
-    this.remove()
+    # tagName: "tr"
 
-    return false
+    # destroy: () ->
+    #     @model.destroy()
+    #     this.remove()
 
-  render: ->
-    @$el.html(@template(@model.toJSON() ))
-    return this
+    #     return false
+
+    render: ->
+        @$el.html(@template({goal: @model.toJSON()}))
+        return this
