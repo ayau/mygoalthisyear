@@ -141,13 +141,16 @@ class UsersController < ApplicationController
         @user = User.find(params[:id])
         raise PermissionViolation unless @user.updatable_by?(current_user)
 
-        goal_id = params[:user][:goal_id]
+        goal_id = params[:goal_id]
         commitment = Commitment.find_by_user_id_and_goal_id(current_user.id, goal_id)
 
         # update created at for ordering
         commitment.update_attributes({:is_current => 1, :created_at => Time.now})
         
-        redirect_to current_user
+        respond_to do |format|
+            format.html { redirect_to current_user }
+            format.json { render json: {:success => 'yay'} }
+        end
     end
 
     def remove_goal

@@ -7,51 +7,74 @@ class Bucketlist.Views.Users.BucketHelperView extends Backbone.View
     className: 'bucket-helper'
 
     initialize: ->
-        $(@el).droppable({
-            tolerance: 'touch'
-            # hoverClass: "ui-state-hover",
-            over: (e, ui) ->
-                badge = $(ui.draggable)
-                
-                $('.snapped-badge').addClass('badge')
-                $('.snapped-badge').css('background', badge.css('background'))
-                $('.snapped-badge').css('opacity', 0.5)
-                $('.snapped-badge').find('img').attr('src', badge.find('img').attr('src'))
-                $('.snapped-badge').find('img').show()
+        @initDroppable()
 
-            out: (e, ui) ->
-                $('.snapped-badge').removeClass('badge')
-                $('.snapped-badge').css('background', '')
-                $('.snapped-badge').find('img').hide()
+        # If window is resized, need to recalculate fixed position
+        # $(window).resize?
+        bucketLeft = $('.bucket').width() + 20
 
-            drop: (e, ui ) ->
-                goal_id = $(ui.draggable).attr('id')
-                $('#user_goal_id').val(goal_id)
-                $('.edit_user').submit()
-        })
-
-        # Setting up top position of bucket helper
-        $(@el).css('top', $('.bucket').offset().top + 20)
-
-        # If window is resized, need to recalculate
-        bucketLeft = $('.bucket').offset().left + $('.bucket').width() - $(@el).width() + 12
-
-        $(window).scroll (event) ->
+        $(window).scroll (event) =>
 
             y = $(window).scrollTop();
-            console.log $('.bucket').offset().top
-            console.log y
-            if y > $('.bucket').offset().top + 20
+
+            if y > $('.bucket').offset().top - 30
                 $(@el).addClass('fixed')
                 $(@el).css('top', 50)
                 $(@el).css('left', bucketLeft)
 
             else
                 $(@el).removeClass('fixed')
-                $(@el).css('top', $('.bucket').offset().top + 20)
-                $(@el).css('left', 682);
+                $(@el).css('top', 20)
+                $(@el).css('left', 35)
 
 
     render: ->
         @$el.html(@template())
         return this
+
+    initDroppable: ->
+                
+        $(@el).droppable({
+            tolerance: 'touch'
+            # hoverClass: "ui-state-hover",
+            over: @showSnappedBadge
+
+            out: @hideSnappedBadge
+
+            drop: @dropHandler
+        })
+
+    dropHandler: (e, ui) =>
+        goal_id = $(ui.draggable).attr('id')
+        
+        $.ajax({
+            type: 'PUT',
+            url: '/users/' + Bucketlist.me.id + '/add_goal',
+            dataType: 'json',
+            data:
+                goal_id: goal_id
+            success: (results) =>
+                @hideSnappedBadge()
+                @trigger 'add_goal:success', goal_id
+        })
+
+    showSnappedBadge: (e, ui) ->
+        badge = $(ui.draggable)
+                
+        snappedBadge = $('.snapped-badge')
+                
+        snappedBadge.addClass('badge')
+        snappedBadge.css('background', badge.css('background'))
+        snappedBadge.css('opacity', 0.5)
+        snappedBadge.find('img').attr('src', badge.find('img').attr('src'))
+        snappedBadge.find('img').show()
+
+    hideSnappedBadge: () ->
+        snappedBadge = $('.snapped-badge')
+                
+        snappedBadge.removeClass('badge')
+        snappedBadge.css('background', '')
+        snappedBadge.find('img').hide()
+
+
+
