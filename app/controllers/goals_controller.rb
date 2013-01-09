@@ -70,7 +70,7 @@ class GoalsController < ApplicationController
     # POST /goals.json
     def create
         # validate that current_user exists
-
+        logger.info current_user.id
         goal = params[:goal]
         goal['owner_id'] = current_user.id
     

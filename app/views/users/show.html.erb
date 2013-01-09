@@ -67,36 +67,11 @@
     <p>Give 3 compliments</p>
     <p>Write 5 papers (divide progress by five? NLP?)</p> -->
 
-    <section style='position: relative' class='current'>
-        <%= render 'goals/quickform' %>
-        <h2>My goals this month</h2>
-        <h3><%= Time.now.strftime("%B %Y") %> (Day <%= Time.now().day %> of <%= Time.now().end_of_month.day%>)</h3>
-        
-        <%= link_to 'Show all months', current_user %> <!-- change this -->
-        
-        <br /><br />
-
-        <ul class='current-goals'>
-            <%= render :partial => 'goals/current_goal', :collection => @current_goals, :as => :goal %>
-        </ul>
-
-        <div style='display: none'>
-            <%= form_for current_user, :url => add_goal_user_path(current_user), :html => { :method => :put} do |f| %>  
-                <%= f.number_field :goal_id, :value => 0 %> 
-                <%= f.submit 'submit' %>
-            <% end %>
-        </div>
-    </section>
+    <section class='current'></section>
 
     <%= render 'events/details_form' %>
 
-    <section class='bucket'>
-        <!-- <h2>In my bucket</h2>
-        <a class='selected'>Details</a> | <a>Badges</a>
-        <ul>
-            <%= render :partial => 'goals/goal', :collection => @bucket, :as => :goal %>
-        </ul> -->
-    </section>
+    <section class='bucket'></section>
 
     <br /><br />
 

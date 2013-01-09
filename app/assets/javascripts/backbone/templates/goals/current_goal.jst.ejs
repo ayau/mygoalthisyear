@@ -1,0 +1,59 @@
+
+    <!--  if (goal.parent_id == 0)  -->
+
+        <!-- % goal.color ||= 'fbcc91' %>
+        % goal.badge ||= '/svg/star.svg?color=4d2d74' %>
+-->
+    <a href='/goals/<%= goal.id %>'>          
+        <div style='background: #<%= goal.color %>' class='badge'>
+            <img class='logo' src='<%= goal.badge %>' />
+        </div>
+    </a>
+
+    <p class='points'>+<%= goal.points %></p>
+
+    <!-- % if @events_count[goal.id] && @events_count[goal.id] > 0 %>
+        <p class='evented'> %= @events_count[goal.id] %></p>
+    % else %>
+        <p class='evented' style='display:none'>0</p>
+    % end %>
+-->
+    <!-- % end %> -->
+
+<article>
+    <header>
+        <a href='/goals/<%= goal.id %>' class='goal-name' title='view goal details'><%= goal.name %></a>
+        <a href='/goals/<%= goal.id %>/edit'>Edit</a>
+    </header>
+
+    <!-- % if goal.subgoals.count == 0 && goal.completed == 0 %>
+        %= render :partial => 'events/form', :locals => {:goal => goal, :again => @events_count[goal.id]} %>
+    % end %>
+-->
+    <div class='actions'>
+        <!-- Can't remove if already completed -->
+        <% if (goal.completed == 1){ %>
+            <!-- <span>completed <%= time_ago_in_words(goal.completed_at) %> ago</span> · -->
+            <span class='achievement-unlocked'>ACHIEVEMENT UNLOCKED</span>
+            <a href='/goals/<%= goal.id %>/make_incomplete' data-method='put' rel='nofollow'>jk I didn't complete this yet</a>
+        <% } else { %>
+        <!-- Logic here -->
+            <!-- % if goal.subgoals.count > 0 %>
+                %= link_to 'Choose subgoals', choose_subgoal_goal_path(goal) %> |
+            % else %>
+
+                % if @events_count[goal.id] && @events_count[goal.id] > 0 %>
+                    %= link_to 'Mark as completed', complete_goal_path(goal), method: :put %> |
+                % end %>
+
+            % end %> -->
+            <a>Give up</a>
+            <!-- %= link_to 'Give up', remove_goal_user_path(current_user, :goal_id => goal.id), method: :put %> -->
+        <% } %>
+    </div>
+</article>
+
+<!-- Showing subgoals -->
+<!-- <ul class='subgoals'> -->
+    <!-- %= render :partial => 'goals/subgoal', :collection => @subgoals[goal.id], :as => :goal %> -->
+<!-- </ul> -->

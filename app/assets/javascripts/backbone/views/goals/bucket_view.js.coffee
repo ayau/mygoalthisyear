@@ -10,6 +10,7 @@ class Bucketlist.Views.Goals.BucketView extends Backbone.View
         @goals = @options.goals
         @goals.bind('reset', @addAll)
         @goals.bind('remove', @removeOne)
+        @goals.bind('add', @addOne)
 
         @bucket_helper_view = new Bucketlist.Views.Users.BucketHelperView()
 
@@ -20,7 +21,7 @@ class Bucketlist.Views.Goals.BucketView extends Backbone.View
 
     addOne: (goal) =>
         view = new Bucketlist.Views.Goals.GoalView({model : goal})
-        @$('ul').append(view.render().el)
+        @$('ul').prepend(view.render().el)
 
     removeOne: (goal) =>
         @$('#' + goal.id).parent().remove()

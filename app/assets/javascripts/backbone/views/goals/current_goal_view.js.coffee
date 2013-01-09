@@ -1,10 +1,16 @@
 Bucketlist.Views.Goals ||= {}
 
-class Bucketlist.Views.Goals.GoalView extends Backbone.View
-    template: JST["backbone/templates/goals/goal"]
+class Bucketlist.Views.Goals.CurrentGoalView extends Backbone.View
+    template: JST["backbone/templates/goals/current_goal"]
 
     tagName: 'li'
     className: 'goal'
+
+    initialize: ->
+        if @completed is 1
+            className: 'goal completed'
+        else
+            className: 'goal'
 
     # events:
     #     "click .destroy" : "destroy"

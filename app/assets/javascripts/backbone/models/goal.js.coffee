@@ -13,6 +13,8 @@ class Bucketlist.Models.Goal extends Backbone.Model
         owner_id: null
         parent_id: null
 
+        # Is current and stuff..
+
     # initialize: ->
     #     console.log @
 

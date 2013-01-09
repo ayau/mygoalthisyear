@@ -230,7 +230,7 @@ class UsersController < ApplicationController
         user = User.find(params[:id])
         raise PermissionViolation unless user.viewable_by?(current_user)
         
-        current_goals = user.goals.where('is_current = 1').order('commitments.created_at DESC')
+        current_goals = user.goals.where('is_current = 1').order('commitments.created_at ASC')
         
         render json: current_goals        
     end

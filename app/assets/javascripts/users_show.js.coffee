@@ -58,40 +58,40 @@ $ ->
     
     optionsExtended = false
 
-    $('.more-options').live 'click', ->
+    # $('.more-options').live 'click', ->
 
-        if not optionsExtended
-            $('.quick_goal_form').addClass('extended')
-            $('.extra-options').fadeIn()
-            $('.more-options').text('- less options')
-            # Description add focus
-        else
-            $('.quick_goal_form').removeClass('extended')
-            $('.extra-options').hide()
-            $('.more-options').text('+ more options')
+    #     if not optionsExtended
+    #         $('.quick_goal_form').addClass('extended')
+    #         $('.extra-options').fadeIn()
+    #         $('.more-options').text('- less options')
+    #         # Description add focus
+    #     else
+    #         $('.quick_goal_form').removeClass('extended')
+    #         $('.extra-options').hide()
+    #         $('.more-options').text('+ more options')
 
-        optionsExtended = !optionsExtended
+    #     optionsExtended = !optionsExtended
 
-    # Intercept click event
-    $('.quick_goal_form').live 'click', (e) ->
-        if !badgeOpened && !colorOpened
-            e.stopPropagation()
+    # # Intercept click event
+    # $('.quick_goal_form').live 'click', (e) ->
+    #     if !badgeOpened && !colorOpened
+    #         e.stopPropagation()
         
-    $('.has-deadline').live 'click', ->
-        if $('#goal_has_deadline').is(':checked')
-            $('.deadline-form').slideDown('fast')
-        else
-            $('.deadline-form').slideUp('fast')
+    # $('.has-deadline').live 'click', ->
+    #     if $('#goal_has_deadline').is(':checked')
+    #         $('.deadline-form').slideDown('fast')
+    #     else
+    #         $('.deadline-form').slideUp('fast')
 
 
-    # repeated code
-    $('#goal_name').focus () ->
-        if not optionsExtended
-            $('.quick_goal_form').addClass('extended')
-            $('.extra-options').fadeIn()
-            $('.more-options').text('- less options')
-            # Description add focus
-            optionsExtended = !optionsExtended
+    # # repeated code
+    # $('#goal_name').live 'focus blur',  (e) ->
+    #     if e.type is 'focusin' and not optionsExtended
+    #         $('.quick_goal_form').addClass('extended')
+    #         $('.extra-options').fadeIn()
+    #         $('.more-options').text('- less options')
+    #         # Description add focus
+    #         optionsExtended = !optionsExtended
 
     # Badge stuff
     badge = $('.badge-preview')
@@ -120,64 +120,64 @@ $ ->
 
     # Color picker ------------------
 
-    colorSelect = 'fg'
+    # colorSelect = 'fg'
 
-    # create a colour picker for the node with the id 'colourPicker'
-    colorPicker = new ColourPicker(document.getElementById('colourPicker'), '/assets/ColorPickerImages/', new RGBColour(255, 0, 255));
+    # # create a colour picker for the node with the id 'colourPicker'
+    # colorPicker = new ColourPicker(document.getElementById('colourPicker'), '/assets/ColorPickerImages/', new RGBColour(255, 0, 255));
 
-    colorPicker.addChangeListener () ->
-        rgb = colorPicker.getColour().getRGB()
-        hex = (Math.round(rgb.r) * 65536 + Math.round(rgb.g) * 256 + Math.round(rgb.b)).toString(16)
+    # colorPicker.addChangeListener () ->
+    #     rgb = colorPicker.getColour().getRGB()
+    #     hex = (Math.round(rgb.r) * 65536 + Math.round(rgb.g) * 256 + Math.round(rgb.b)).toString(16)
         
-        if colorSelect == 'fg'
-            $('.fg-color').css('background', '#' + hex)
-            $('#goal_badge').attr('badge_color', hex)
+    #     if colorSelect == 'fg'
+    #         $('.fg-color').css('background', '#' + hex)
+    #         $('#goal_badge').attr('badge_color', hex)
 
-            id = $('#goal_badge').attr('badge_id')
-            url = id + '?color=' + hex
+    #         id = $('#goal_badge').attr('badge_id')
+    #         url = id + '?color=' + hex
 
-            $('#goal_badge').val(url)
+    #         $('#goal_badge').val(url)
 
-            badgeLogo.attr('src', url)
-        else
-            $('.bg-color').css('background', '#' + hex)
-            $('#goal_color').val(hex)
+    #         badgeLogo.attr('src', url)
+    #     else
+    #         $('.bg-color').css('background', '#' + hex)
+    #         $('#goal_color').val(hex)
 
-            badge.css('background', '#' + hex)
+    #         badge.css('background', '#' + hex)
 
-    colorOpened = false
+    # colorOpened = false
 
-    $('.cp-icon').live 'click', (e) ->
-        if colorOpened
-            e.stopPropagation()
+    # $('.cp-icon').live 'click', (e) ->
+    #     if colorOpened
+    #         e.stopPropagation()
 
-        $('.color-picker').fadeIn 'slow', () ->
-            colorOpened = true
+    #     $('.color-picker').fadeIn 'slow', () ->
+    #         colorOpened = true
 
-        if $(this).hasClass('bg-color')
-            colorSelect = 'bg'
-            rgb = hexToRgb($('#goal_color').val())
-        else
-            colorSelect = 'fg'
-            rgb = hexToRgb($('#goal_badge').attr('badge_color'))
+    #     if $(this).hasClass('bg-color')
+    #         colorSelect = 'bg'
+    #         rgb = hexToRgb($('#goal_color').val())
+    #     else
+    #         colorSelect = 'fg'
+    #         rgb = hexToRgb($('#goal_badge').attr('badge_color'))
 
-        colorPicker.setColour(new RGBColour(rgb.r, rgb.g, rgb.b))
+    #     colorPicker.setColour(new RGBColour(rgb.r, rgb.g, rgb.b))
 
-    hexToRgb = (hex) ->
-        result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    # hexToRgb = (hex) ->
+    #     result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
         
-        if !result
-            return null
+    #     if !result
+    #         return null
 
-        return {
-            r: parseInt(result[1], 16)
-            g: parseInt(result[2], 16)
-            b: parseInt(result[3], 16)
-        }
+    #     return {
+    #         r: parseInt(result[1], 16)
+    #         g: parseInt(result[2], 16)
+    #         b: parseInt(result[3], 16)
+    #     }
 
 
-    $('.color-picker').live 'click', (e) ->
-        e.stopPropagation()
+    # $('.color-picker').live 'click', (e) ->
+    #     e.stopPropagation()
 
 
     # Achievements ---------------------------------------
