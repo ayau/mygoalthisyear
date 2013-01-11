@@ -20,11 +20,11 @@ class Bucketlist.Views.Goals.BucketView extends Backbone.View
         @initDraggable()
 
     addOne: (goal) =>
-        view = new Bucketlist.Views.Goals.GoalView({model : goal})
+        view = new Bucketlist.Views.Goals.GoalView({id: goal.id, model : goal})
         @$('ul').prepend(view.render().el)
 
     removeOne: (goal) =>
-        @$('#' + goal.id).parent().remove()
+        @$('#' + goal.id).remove()
 
     render: =>
         @$el.html(@template())

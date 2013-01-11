@@ -19,11 +19,11 @@ class Bucketlist.Views.Goals.CurrentView extends Backbone.View
         @goals.each(@addOne)
 
     addOne: (goal) =>
-        view = new Bucketlist.Views.Goals.CurrentGoalView({model : goal})
+        view = new Bucketlist.Views.Goals.CurrentGoalView({id: goal.id, model : goal})
         @$('.current-goals').prepend(view.render().el)
 
     removeOne: (goal) =>
-        @$('#' + goal.id).parent().remove()
+        @$('#' + goal.id).remove()
 
     render: =>
         @$el.html(@template())
@@ -34,4 +34,5 @@ class Bucketlist.Views.Goals.CurrentView extends Backbone.View
         @addAll()
 
         return this
+
 

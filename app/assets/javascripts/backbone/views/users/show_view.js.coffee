@@ -21,20 +21,52 @@ class Bucketlist.Views.Users.ShowView extends Backbone.View
 
         @bucket_view.bucket_helper_view.bind('add_goal:success', @addGoal)
         @current_view.goal_form_view.bind('new_goal:success', @newGoal)
+
+        @current_goals.bind('giveup', @giveUp)
+
+        @initDocumentClick()
         
     render: ->
         # @$el.html(@template(@model.toJSON()))
         return this
 
     addGoal: (goal_id) =>
+        goal = @bucket_goals.get(goal_id)
         @bucket_goals.remove(goal_id)
-        # console.log goal_id
+        @current_goals.add(goal)
 
     newGoal: (goal, is_current) =>
-        console.log 'here'
-        console.log goal
-
         if is_current
             @current_goals.add(goal)
         else
             @bucket_goals.add(goal)
+
+    giveUp: (goal_id) =>
+        goal = @current_goals.get(goal_id)        
+        @current_goals.remove(goal_id)
+        @bucket_goals.add(goal)
+
+    initDocumentClick: ->
+        $(document).live 'click', =>
+            if @current_view.goal_form_view.badgeOpened
+                $('.badge-select').fadeOut()
+                @current_view.goal_form_view.badgeOpened = false
+                return
+
+            if @current_view.goal_form_view.colorOpened
+                $('.color-picker').fadeOut()
+                @current_view.goal_form_view.colorOpened = false
+                return
+
+            # Automatically hides more options of add a goal
+        # Don't hide if stuff's been filled in?
+            if @current_view.goal_form_view.optionsExtended
+                $('.more-options').click()
+            
+        # # Don't hide if form filled in
+            # if @current_view.goal_form_view.eventExtended
+            #     $('.close').click()
+
+
+
+

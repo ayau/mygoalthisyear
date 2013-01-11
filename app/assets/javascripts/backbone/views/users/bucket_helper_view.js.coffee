@@ -45,7 +45,7 @@ class Bucketlist.Views.Users.BucketHelperView extends Backbone.View
         })
 
     dropHandler: (e, ui) =>
-        goal_id = $(ui.draggable).attr('id')
+        goal_id = $(ui.draggable).attr('goal_id')
         
         $.ajax({
             type: 'PUT',
