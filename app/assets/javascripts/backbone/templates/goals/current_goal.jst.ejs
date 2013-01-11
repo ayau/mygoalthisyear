@@ -1,24 +1,21 @@
 
-    <!--  if (goal.parent_id == 0)  -->
 
         <!-- % goal.color ||= 'fbcc91' %>
         % goal.badge ||= '/svg/star.svg?color=4d2d74' %>
 -->
-    <a id='<%= goal.id %>' href='/goals/<%= goal.id %>'>          
-        <div style='background: #<%= goal.color %>' class='badge'>
-            <img class='logo' src='<%= goal.badge %>' />
-        </div>
-    </a>
+<a id='<%= goal.id %>' href='/goals/<%= goal.id %>'>          
+    <div style='background: #<%= goal.color %>' class='badge'>
+        <img class='logo' src='<%= goal.badge %>' />
+    </div>
+</a>
 
-    <p class='points'>+<%= goal.points %></p>
+<p class='points'>+<%= goal.points %></p>
 
-    <!-- % if @events_count[goal.id] && @events_count[goal.id] > 0 %>
-        <p class='evented'> %= @events_count[goal.id] %></p>
-    % else %>
-        <p class='evented' style='display:none'>0</p>
-    % end %>
--->
-    <!-- % end %> -->
+<% if (goal.events_in_month > 0){ %>
+    <p class='evented'><%= goal.events_in_month %></p>
+<% } else { %>
+    <p class='evented' style='display:none'>0</p>
+<% } %>
 
 <article>
     <header>
@@ -26,10 +23,14 @@
         <a href='/goals/<%= goal.id %>/edit'>Edit</a>
     </header>
 
-    <!-- % if goal.subgoals.count == 0 && goal.completed == 0 %>
-        %= render :partial => 'events/form', :locals => {:goal => goal, :again => @events_count[goal.id]} %>
-    % end %>
--->
+    <% if (goal.completed == 0){ %>
+        <% if (goal.events_in_month == 0){ %>
+            <input class='new_event' type="submit" value="I did it!">
+        <% } else { %>
+            <input class='new_event' type="submit" value="I did it again!">
+        <% } %>
+    <% } %>
+
     <div class='actions'>
         <!-- Can't remove if already completed -->
         <% if (goal.completed == 1){ %>

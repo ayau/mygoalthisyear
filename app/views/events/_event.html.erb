@@ -1,6 +1,6 @@
 <li class='event'>
     <div class='day'>
-        <%= event.created_at.day %>
+        <%= event.created_at.strftime('%d') %>
     </div>
     <div>
         <span><b><%= event.goal.name %></b> - completed</span>

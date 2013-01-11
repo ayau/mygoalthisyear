@@ -62,10 +62,10 @@ class Bucketlist.Views.Users.ShowView extends Backbone.View
         # Don't hide if stuff's been filled in?
             if @current_view.goal_form_view.optionsExtended
                 $('.more-options').click()
-            
+
         # # Don't hide if form filled in
-            # if @current_view.goal_form_view.eventExtended
-            #     $('.close').click()
+            if @current_view.event_form_view.eventExtended
+                @current_view.event_form_view.closeForm()
 
 
 

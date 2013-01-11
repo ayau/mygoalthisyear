@@ -13,7 +13,9 @@ class Bucketlist.Models.Goal extends Backbone.Model
         owner_id: null
         parent_id: null
 
-        # Is current and stuff..
+        # Is current and stuff.. events_in_month
+        events_in_month: 0
+        completed: 0
 
     # initialize: ->
     #     console.log @

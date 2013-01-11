@@ -33,7 +33,7 @@ class GoalsController < ApplicationController
 
         @shared = @goal.users.where(['user_id <> ?', current_user.id])
 
-        @events = Event.where(:goal_id => @subgoals.group(:id).append(@goal.id))
+        @events = Event.where(:goal_id => @subgoals.group(:id).append(@goal.id)).order('created_at ASC')
 
         @events_count = @events.where(:user_id => current_user.id).group(:goal_id).count 
 

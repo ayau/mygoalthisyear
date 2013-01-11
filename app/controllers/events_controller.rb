@@ -41,10 +41,10 @@ class EventsController < ApplicationController
     # POST /events
     # POST /events.json
     def create
-
-        event = params[:event]
-
-        event['user_id'] = current_user.id
+        event = {
+            :goal_id => params[:goal_id],
+            :user_id => current_user.id
+        }
 
         @event = Event.new(event)
 

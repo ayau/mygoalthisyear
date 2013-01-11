@@ -8,6 +8,7 @@ class Bucketlist.Views.Goals.CurrentGoalView extends Backbone.View
 
     events: ->
         'click .giveup': @giveUp
+        'click .new_event': @newEvent
 
     initialize: ->
 
@@ -31,3 +32,6 @@ class Bucketlist.Views.Goals.CurrentGoalView extends Backbone.View
             success: (results) =>
                 @model.collection.trigger 'giveup', @model.id
         })
+
+    newEvent: ->
+        @model.collection.trigger 'newEvent', @
