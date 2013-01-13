@@ -42,15 +42,17 @@ class Bucketlist.Views.Goals.CurrentView extends Backbone.View
         return this
 
     newEvent: (view) =>
-        # goal_id, offset top, did_it_text, is_subgoal, callback
-        @event_form_view.newEvent view.model.id, view.$el.position().top, view.$('input[type=submit]').val(), false, () ->
-            view.$('.new_event').val('I did it again!')
 
-        # Changing the number on evented
-        evented = view.$('.evented')
-        
-        evented.text(parseInt(evented.text()) + 1)
-        evented.show()
+        if !@event_form_view.eventExtended
+            # goal_id, offset top, did_it_text, is_subgoal, callback
+            @event_form_view.newEvent view.model.id, view.$el.position().top, view.$('input[type=submit]').val(), false, () ->
+                view.$('.new_event').val('I did it again!')
+
+            # Changing the number on evented
+            evented = view.$('.evented')
+            
+            evented.text(parseInt(evented.text()) + 1)
+            evented.show()
 
 
 

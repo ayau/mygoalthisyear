@@ -70,10 +70,15 @@ class Bucketlist.Views.Events.FormView extends Backbone.View
                 # opacity: 'toggle'
                 display: 'none'
             }, 300, 'linear', =>
+                @eventDetails.find('textarea').val('')
                 @eventExtended = false
             )
 
         # easeOutElastic
+
+    isFilledIn: ->
+        @eventDetails ?= @$('.event-details')        
+        return @eventDetails.find('textarea').val().length > 0
 
     submitForm: ->
         # Something to indicate form has been submitted?

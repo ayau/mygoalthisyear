@@ -205,7 +205,6 @@ class GoalsController < ApplicationController
     def set_subgoal
         goal = Goal.find(params[:id])
         raise PermissionViolation unless goal.updatable_by?(current_user)
-        
 
         subgoals = current_user.subgoals.find_all_by_parent_id(goal.id)
 
@@ -225,8 +224,8 @@ class GoalsController < ApplicationController
     def invite
         goal = Goal.find(params[:id])
         raise PermissionViolation unless goal.updatable_by?(current_user)
-
-        if goal.users.where(:user_id => params[:user_id])
+        
+        if goal.users.where(:id => params[:user_id]).length > 0
             return redirect_to :back
         end
         

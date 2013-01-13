@@ -47,7 +47,8 @@ class Bucketlist.Views.Users.ShowView extends Backbone.View
         @bucket_goals.add(goal)
 
     initDocumentClick: ->
-        $(document).live 'click', =>
+
+        $(document).live 'click', (e) =>
             if @current_view.goal_form_view.badgeOpened
                 $('.badge-select').fadeOut()
                 @current_view.goal_form_view.badgeOpened = false
@@ -64,7 +65,7 @@ class Bucketlist.Views.Users.ShowView extends Backbone.View
                 $('.more-options').click()
 
         # # Don't hide if form filled in
-            if @current_view.event_form_view.eventExtended
+            if @current_view.event_form_view.eventExtended && !@current_view.event_form_view.isFilledIn()
                 @current_view.event_form_view.closeForm()
 
 
