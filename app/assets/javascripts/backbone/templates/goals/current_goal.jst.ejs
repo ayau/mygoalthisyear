@@ -1,8 +1,3 @@
-
-
-        <!-- % goal.color ||= 'fbcc91' %>
-        % goal.badge ||= '/svg/star.svg?color=4d2d74' %>
--->
 <a id='<%= goal.id %>' href='/goals/<%= goal.id %>'>          
     <div style='background: #<%= goal.color %>' class='badge'>
         <img class='logo' src='<%= goal.badge %>' />
@@ -32,24 +27,22 @@
     <% } %>
 
     <div class='actions'>
-        <!-- Can't remove if already completed -->
+
         <% if (goal.completed == 1){ %>
             <!-- <span>completed <%= time_ago_in_words(goal.completed_at) %> ago</span> · -->
             <span class='achievement-unlocked'>ACHIEVEMENT UNLOCKED</span>
             <a href='/goals/<%= goal.id %>/make_incomplete' data-method='put' rel='nofollow'>jk I didn't complete this yet</a>
         <% } else { %>
-        <!-- Logic here -->
             <!-- % if goal.subgoals.count > 0 %>
                 %= link_to 'Choose subgoals', choose_subgoal_goal_path(goal) %> |
             % else %>
+            -->
+                <% if (goal.events_in_month > 0){ %>
+                    <a href='/goals/<%= goal.id %>/complete' data-method='put'>Mark as completed</a> |
+                <% } %>
 
-                % if @events_count[goal.id] && @events_count[goal.id] > 0 %>
-                    %= link_to 'Mark as completed', complete_goal_path(goal), method: :put %> |
-                % end %>
-
-            % end %> -->
+            <!-- % end %> -->
             <a class='giveup' >Give up</a>
-            <!-- %= link_to 'Give up', remove_goal_user_path(current_user, :goal_id => goal.id), method: :put %> -->
         <% } %>
     </div>
 </article>

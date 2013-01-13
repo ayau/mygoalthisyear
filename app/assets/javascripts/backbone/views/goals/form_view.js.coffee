@@ -118,6 +118,9 @@ class Bucketlist.Views.Goals.FormView extends Backbone.View
             rgb = @colorPicker.getColour().getRGB()
             hex = (Math.round(rgb.r) * 65536 + Math.round(rgb.g) * 256 + Math.round(rgb.b)).toString(16)
             
+            while hex.length < 6
+                hex = '0' + hex
+
             if @colorSelect is 'fg'
                 $('.fg-color').css('background', '#' + hex)
                 $('#goal_badge').attr('badge_color', hex)
@@ -158,7 +161,7 @@ class Bucketlist.Views.Goals.FormView extends Backbone.View
 
     hexToRgb: (hex) ->
         result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-        
+
         if !result
             return null
 
