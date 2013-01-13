@@ -9,15 +9,15 @@ class Bucketlist.Views.Goals.CurrentGoalView extends Backbone.View
     events: ->
         'click .giveup': @giveUp
         'click .new_event': @newEvent
-
-    initialize: ->
-
-        if @completed is 1
-            className: 'goal completed'
-        else
-            className: 'goal'
+        'click .mark-complete': @markComplete
+        'click .mark-incomplete': @markIncomplete
 
     render: ->
+        if @model.get('completed') is 1
+            @$el.addClass 'completed'
+        else
+            @$el.removeClass 'completed'
+
         @$el.html(@template({goal: @model.toJSON()}))
         return this
 
@@ -35,3 +35,25 @@ class Bucketlist.Views.Goals.CurrentGoalView extends Backbone.View
 
     newEvent: ->
         @model.collection.trigger 'newEvent', @
+
+    markComplete: ->
+        @model.set('completed', 1)
+
+        $.ajax({
+            type: 'PUT',
+            url: '/goals/' + @model.get('id') + '/complete',
+            dataType: 'json'
+        })
+
+        @render()
+
+    markIncomplete: -> 
+        @model.set('completed', 0)
+        
+        $.ajax({
+            type: 'PUT',
+            url: '/goals/' + @model.get('id') + '/make_incomplete',
+            dataType: 'json'
+        })
+
+        @render()

@@ -133,12 +133,10 @@ class GoalsController < ApplicationController
         @goal = Goal.find(goal_id)
         raise PermissionViolation unless @goal.updatable_by?(current_user)
 
-
         commitment = Commitment.find_by_user_id_and_goal_id(current_user.id, goal_id)
         commitment.update_attributes(:completed => true, :completed_at => Time.now)
 
         # incomplete_descendants = @goal.descendants.where(:completed => false)
-
 
         # for d in incomplete_descendants
         #     # logger.debug "Incomplete descendants completed #{d.name}"

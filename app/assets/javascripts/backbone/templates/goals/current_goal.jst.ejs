@@ -29,16 +29,15 @@
     <div class='actions'>
 
         <% if (goal.completed == 1){ %>
-            <!-- <span>completed <%= time_ago_in_words(goal.completed_at) %> ago</span> · -->
             <span class='achievement-unlocked'>ACHIEVEMENT UNLOCKED</span>
-            <a href='/goals/<%= goal.id %>/make_incomplete' data-method='put' rel='nofollow'>jk I didn't complete this yet</a>
+            <a class='mark-incomplete'>jk I didn't complete this yet</a>
         <% } else { %>
             <!-- % if goal.subgoals.count > 0 %>
                 %= link_to 'Choose subgoals', choose_subgoal_goal_path(goal) %> |
             % else %>
             -->
                 <% if (goal.events_in_month > 0){ %>
-                    <a href='/goals/<%= goal.id %>/complete' data-method='put'>Mark as completed</a> |
+                    <a class='mark-complete'>Mark as comleted</a> |
                 <% } %>
 
             <!-- % end %> -->

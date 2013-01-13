@@ -96,8 +96,6 @@ class Bucketlist.Views.Goals.FormView extends Backbone.View
         else
             $('.deadline-form').slideUp('fast')
 
-    # Put in user view and don't use stopPropagation, but just call function in this view
-
     # # Intercept click event
     formClick: (e) ->
         if !@badgeOpened && !@colorOpened
