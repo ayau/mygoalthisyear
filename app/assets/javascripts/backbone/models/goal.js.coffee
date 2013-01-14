@@ -27,6 +27,7 @@ class Bucketlist.Collections.GoalsCollection extends Backbone.Collection
     url: '/goals'
 
     initialize: (models, options) ->
-        @url = '/api/users/' + options.user_id + '/goals/' + options.route 
-        @fetch()
+        if options
+            @url = '/api/users/' + options.user_id + '/goals/' + options.route 
+            @fetch()
 

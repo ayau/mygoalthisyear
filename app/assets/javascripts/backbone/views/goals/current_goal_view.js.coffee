@@ -6,6 +6,16 @@ class Bucketlist.Views.Goals.CurrentGoalView extends Backbone.View
     tagName: 'li'
     className: 'goal'
 
+    initialize: ->
+        if @options.is_subgoal
+            @template = JST["backbone/templates/goals/subgoal"]
+        else
+            @subgoals = new Bucketlist.Collections.GoalsCollection(@model.get('subgoals'))
+
+            @subgoals.bind('reset', @addAll)
+            @subgoals.bind('remove', @removeOne)
+            @subgoals.bind('add', @addOne)
+        
     events: ->
         'click .giveup': @giveUp
         'click .new_event': @newEvent
@@ -20,7 +30,23 @@ class Bucketlist.Views.Goals.CurrentGoalView extends Backbone.View
             @$el.removeClass 'completed'
 
         @$el.html(@template({goal: @model.toJSON()}))
+
+        if @subgoals
+            @addAll()
+
         return this
+
+    addAll: =>
+        @$('.subgoals').empty()
+        @subgoals.each(@addOne)
+
+    addOne: (subgoal) =>
+        if subgoal.get('is_current') is 1
+            view = new Bucketlist.Views.Goals.CurrentGoalView({id: subgoal.id, model : subgoal, className: 'sub goal', is_subgoal: true})
+            @$('.subgoals').prepend(view.render().el)
+
+    removeOne: (subgoal) =>
+        @$('#' + goal.id).remove()
 
     giveUp: (e) ->
 
