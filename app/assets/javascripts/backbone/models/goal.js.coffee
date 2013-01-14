@@ -17,6 +17,8 @@ class Bucketlist.Models.Goal extends Backbone.Model
         events_in_month: 0
         completed: 0
 
+        subgoals: []
+
     # initialize: ->
     #     console.log @
 

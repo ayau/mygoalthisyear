@@ -18,7 +18,7 @@
         <a href='/goals/<%= goal.id %>/edit'>Edit</a>
     </header>
 
-    <% if (goal.completed == 0){ %>
+    <% if (goal.completed == 0 && goal.subgoals.length == 0){ %>
         <% if (goal.events_in_month == 0){ %>
             <input class='new_event' type="submit" value="I did it!">
         <% } else { %>
@@ -32,14 +32,14 @@
             <span class='achievement-unlocked'>ACHIEVEMENT UNLOCKED</span>
             <a class='mark-incomplete'>jk I didn't complete this yet</a>
         <% } else { %>
-            <!-- % if goal.subgoals.count > 0 %>
-                %= link_to 'Choose subgoals', choose_subgoal_goal_path(goal) %> |
-            % else %>
-            -->
+            <% if (goal.subgoals.length > 0){ %>
+                <a class='choose-subgoals'>Choose subgoals</a> |
+            <% } else { %>
+           
                 <% if (goal.events_in_month > 0){ %>
                     <a class='mark-complete'>Mark as comleted</a> |
                 <% } %>
-
+            <% } %>
             <!-- % end %> -->
             <a class='giveup' >Give up</a>
         <% } %>
@@ -47,6 +47,9 @@
 </article>
 
 <!-- Showing subgoals -->
-<!-- <ul class='subgoals'> -->
+<ul class='subgoals'>
+    <% $.each(goal.subgoals, function(i, subgoal){ if (subgoal.is_current == 1){ %>
+    <li><%= subgoal.name %></li>
+    <% }}) %>
     <!-- %= render :partial => 'goals/subgoal', :collection => @subgoals[goal.id], :as => :goal %> -->
-<!-- </ul> -->
+</ul>

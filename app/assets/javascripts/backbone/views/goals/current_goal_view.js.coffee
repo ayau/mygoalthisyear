@@ -11,6 +11,7 @@ class Bucketlist.Views.Goals.CurrentGoalView extends Backbone.View
         'click .new_event': @newEvent
         'click .mark-complete': @markComplete
         'click .mark-incomplete': @markIncomplete
+        'click .choose-subgoals': @chooseSubgoals
 
     render: ->
         if @model.get('completed') is 1
@@ -57,3 +58,6 @@ class Bucketlist.Views.Goals.CurrentGoalView extends Backbone.View
         })
 
         @render()
+
+    chooseSubgoals: ->
+        @model.collection.trigger 'chooseSubgoals', @model

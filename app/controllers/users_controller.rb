@@ -230,7 +230,6 @@ class UsersController < ApplicationController
         user = User.find(params[:id])
         raise PermissionViolation unless user.viewable_by?(current_user)
 
-
         month_time = Time.now.beginning_of_month()
 
 # Refactor to use a join instead
@@ -239,8 +238,13 @@ class UsersController < ApplicationController
         
         current_goals = user.goals.where('is_current = 1').order('commitments.created_at ASC')
 
+        subgoals = user.subgoals.group_by {|d| d[:parent_id]}
+
+        current_goals = current_goals.as_json()
+
         current_goals.each do |goal|
-            goal['events_in_month'] = events_count[goal.id] || 0
+            goal['events_in_month'] = events_count[goal['id']] || 0
+            goal['subgoals'] = subgoals[goal['id']] || []
         end
 
         render json: current_goals        

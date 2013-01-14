@@ -213,10 +213,12 @@ class GoalsController < ApplicationController
             is_current = selected_subgoals.include?(id.to_s) ? 1 : 0
             commitment = Commitment.find_by_user_id_and_goal_id(current_user.id, id)
             commitment.update_attributes(:is_current => is_current)
-            logger.info commitment.is_current
         end
         
-        redirect_to current_user
+        respond_to do |format|
+            format.html { redirect_to current_user }
+            format.json { render json: goal}
+        end
     end
 
     def invite

@@ -14,9 +14,12 @@ class Bucketlist.Views.Goals.CurrentView extends Backbone.View
         
         # should this be binded to view instead? (multiple bindings)
         @goals.bind('newEvent', @newEvent)
+
+        @goals.bind('chooseSubgoals', @chooseSubgoals)
         
         @goal_form_view = new Bucketlist.Views.Goals.FormView()
         @event_form_view = new Bucketlist.Views.Events.FormView()
+        @choose_subgoal_view = new Bucketlist.Views.Goals.ChooseView()
 
     addAll: () =>
         @$('.current-goals').empty()
@@ -36,6 +39,8 @@ class Bucketlist.Views.Goals.CurrentView extends Backbone.View
         @$el.prepend(@goal_form_view.render().el)
 
         @$el.append(@event_form_view.render().el)
+
+        @$el.append(@choose_subgoal_view.render().el)
         
         @addAll()
 
@@ -54,6 +59,8 @@ class Bucketlist.Views.Goals.CurrentView extends Backbone.View
             evented.text(parseInt(evented.text()) + 1)
             evented.show()
 
-
+    chooseSubgoals: (goal) =>
+        @choose_subgoal_view.goal = goal
+        @choose_subgoal_view.render().$el.show()
 
 
