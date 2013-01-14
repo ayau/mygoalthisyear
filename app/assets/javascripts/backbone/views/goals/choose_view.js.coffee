@@ -8,6 +8,7 @@ class Bucketlist.Views.Goals.ChooseView extends Backbone.View
 
     events: ->
         'click .close': @closeForm
+        'submit form': @submitForm
     
     # initialize: () ->
 
@@ -15,6 +16,9 @@ class Bucketlist.Views.Goals.ChooseView extends Backbone.View
         if (@goal)
             @$el.html(@template({goal: @goal.toJSON(), auth_token: $('meta[name="csrf-token"]').attr('content')}))
         return this
+
+    submitForm: ->
+        @$el.hide()
 
     closeForm: ->
         @$el.hide()
