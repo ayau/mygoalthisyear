@@ -9,8 +9,6 @@ class Bucketlist.Views.Goals.ChooseView extends Backbone.View
     events: ->
         'click .close': @closeForm
         'submit form': @submitForm
-    
-    # initialize: () ->
 
     render: ->
         if (@goal)

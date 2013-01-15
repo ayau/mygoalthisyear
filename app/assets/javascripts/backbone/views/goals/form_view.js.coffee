@@ -23,10 +23,12 @@ class Bucketlist.Views.Goals.FormView extends Backbone.View
         'click .badge-select': @badgeContainerClick
 
     initialize: ->
+        color = Math.floor(Math.random()*16777215).toString(16)
+        fg = @generate_color(color)
         @json = {
-            color: 'fbcc91'
-            fg: '4d2d74'
-            badge_url: '/svg/star.svg?color=4d2d74'
+            color: color
+            fg: fg
+            badge_url: '/svg/star.svg?color='+ fg
             auth_token: $('meta[name="csrf-token"]').attr('content')
             auto_add: Bucketlist.me.get('auto_add')
         }
@@ -194,6 +196,101 @@ class Bucketlist.Views.Goals.FormView extends Backbone.View
 
     badgeContainerClick: (e) ->
         e.stopPropagation()
+
+
+    # Color stuff
+    generate_color: (c) ->
+
+        color = Math.floor(Math.random()*16777215).toString(16)
+
+        while @color_distance(c, color) < 180
+            color = Math.floor(Math.random()*16777215).toString(16)
+
+        return color
+    
+    color_distance: (c0, c1) ->
+        rgb0 = @hex_to_rgb(c0)
+        rgb1 = @hex_to_rgb(c1)
+
+        luv0 = @rgb_to_luv(rgb0)
+        luv1 = @rgb_to_luv(rgb1)
+
+        return Math.sqrt(Math.pow(luv0['l'] - luv1['l'], 2) + Math.pow(luv0['u'] - luv1['u'], 2) + Math.pow(luv0['v'] - luv1['v'], 2))
+
+    hex_to_rgb: (h) ->
+        m = /(..)(..)(..)/.exec(h)
+        
+        return {
+            r: parseInt(m[1], 16)
+            g: parseInt(m[2], 16)
+            b: parseInt(m[3], 16)
+        }
+
+    rgb_to_luv: (rgb) ->
+        xyz = @rgb_to_xyz(rgb)
+        return @xyz_to_luv(xyz)
+
+    xyz_to_luv: (xyz) ->
+        x = xyz['x']
+        y = xyz['y']
+        z = xyz['z']
+
+        var_U = ( 4 * x ) / ( x + ( 15 * y ) + ( 3 * z ) )
+        var_V = ( 9 * y ) / ( x + ( 15 * y ) + ( 3 * z ) )
+
+        var_Y = y / 100
+
+        if var_Y > 0.008856 
+            var_Y = Math.pow(var_Y, (1/3))
+        else
+            var_Y = 7.787 * var_Y  +  16 / 116 
+
+        ref_x =  95.047        #Observer= 2°, Illuminant= D65
+        ref_y = 100.000
+        ref_z = 108.883
+
+        ref_U = ( 4 * ref_x ) / ( ref_x + ( 15 * ref_y ) + ( 3 * ref_z ) )
+        ref_V = ( 9 * ref_y ) / ( ref_x + ( 15 * ref_y ) + ( 3 * ref_z ) )
+
+        l = ( 116 * var_Y ) - 16
+        
+        return {
+            l: l
+            u: 13 * l * ( var_U - ref_U )
+            v: 13 * l * ( var_V - ref_V )
+        }
+
+    rgb_to_xyz: (rgb) ->
+        var_R = ( rgb['r'].to_f / 255 )        # R from 0 to 255
+        var_G = ( rgb['g'].to_f / 255 )        # G from 0 to 255
+        var_B = ( rgb['b'].to_f / 255 )        # B from 0 to 255
+        
+        if var_R > 0.04045 
+            var_R = Math.pow((( var_R + 0.055 ) / 1.055 ), 2.4)
+        else                   
+            var_R = var_R / 12.92
+    
+
+        if var_G > 0.04045 
+            var_G = Math.pow((( var_G + 0.055 ) / 1.055 ), 2.4)
+        else                   
+            var_G = var_G / 12.92
+
+        if var_B > 0.04045 
+            var_B = Math.pow((( var_B + 0.055 ) / 1.055 ), 2.4)
+        else                   
+            var_B = var_B / 12.92
+
+        var_R = var_R * 100
+        var_G = var_G * 100
+        var_B = var_B * 100
+
+        # Observer. = 2°, Illuminant = D65
+        return {
+            x: var_R * 0.4124 + var_G * 0.3576 + var_B * 0.1805
+            y: var_R * 0.2126 + var_G * 0.7152 + var_B * 0.0722
+            z: var_R * 0.0193 + var_G * 0.1192 + var_B * 0.9505
+        }
 
 
 
