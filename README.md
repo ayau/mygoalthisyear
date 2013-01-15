@@ -33,6 +33,9 @@ All goals, progress and comments are private by default.
 * Move JS to Backbone for goal page
 * Ordering of bucket goals (order by date given up)
 * Ordering of goals and subgoals
+* Switch colors after badge is submitted
+* Switch to golden ratio color generation
+* Use of svg in badge selection (no need to reload after color selection)
 * Replace Info section
 * Improve subgoal selection and auto choose subgoal
 * Implement month transitions
