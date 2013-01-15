@@ -238,7 +238,13 @@ class UsersController < ApplicationController
         
         current_goals = user.goals.where('is_current = 1').order('commitments.created_at ASC')
 
-        subgoals = user.subgoals.group_by {|d| d[:parent_id]}
+        subgoals = user.subgoals
+
+        subgoals.each do |subgoal|
+            subgoal['events_in_month'] = events_count[subgoal['id']] || 0
+        end
+
+        subgoals = subgoals.group_by {|d| d[:parent_id]}
 
         current_goals = current_goals.as_json()
 

@@ -22,6 +22,14 @@ class Bucketlist.Models.Goal extends Backbone.Model
     # initialize: ->
     #     console.log @
 
+    changeSubgoals: (subgoals) ->
+        for s in @get('subgoals')
+            if subgoals[s.id]
+                s.is_current = 1
+            else
+                s.is_current = 0
+        @trigger 'resetSubgoals'
+
 class Bucketlist.Collections.GoalsCollection extends Backbone.Collection
     model: Bucketlist.Models.Goal
     url: '/goals'
@@ -30,4 +38,6 @@ class Bucketlist.Collections.GoalsCollection extends Backbone.Collection
         if options
             @url = '/api/users/' + options.user_id + '/goals/' + options.route 
             @fetch()
+
+
 

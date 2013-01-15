@@ -18,6 +18,11 @@ class Bucketlist.Views.Goals.ChooseView extends Backbone.View
         return this
 
     submitForm: ->
+        checkboxes = @$("input[type='checkbox']")
+        selection = {}
+        for cb in checkboxes
+            selection[$(cb).attr('id')] = ($(cb).attr('checked') is 'checked')
+        @trigger 'submit', {goal_id: @goal.id, subgoals: selection}
         @$el.hide()
 
     closeForm: ->

@@ -11,7 +11,7 @@ We all have the experience of setting powerful goals at the beginning of the yea
 
 ##Tools and Resources
 * Rails 3.2
-* CoffeeScript
+* Backbone and CoffeeScript
 * Sass
 * [ColourPicker.js](http://safalra.com/web-design/javascript/colour-picker/) -- a simple javascript color picker
 * [omniauth-facebook](https://github.com/mkdynamic/omniauth-facebook)
@@ -26,8 +26,13 @@ Currently, only 22 icons are included but more are coming soon.
 ##Privacy
 All goals, progress and comments are private by default.
 
+##Update (01/14/13)
+    Backbone implemented for user page to increase responsiveness
+
 ##To do
-* Move JS to Backbone and refactor code -- remove spaghetti.js by using MVC approach
+* Move JS to Backbone for goal page
+* Ordering of bucket goals (order by date given up)
+* Ordering of goals and subgoals
 * Replace Info section
 * Improve subgoal selection and auto choose subgoal
 * Implement month transitions

@@ -21,6 +21,8 @@ class Bucketlist.Views.Goals.CurrentView extends Backbone.View
         @event_form_view = new Bucketlist.Views.Events.FormView()
         @choose_subgoal_view = new Bucketlist.Views.Goals.ChooseView()
 
+        @choose_subgoal_view.bind('submit', @chooseSubmit)
+
     addAll: () =>
         @$('.current-goals').empty()
         @goals.each(@addOne)
@@ -46,15 +48,17 @@ class Bucketlist.Views.Goals.CurrentView extends Backbone.View
 
         return this
 
-    newEvent: (view) =>
+    newEvent: (view, top, is_subgoal) =>
 
         if !@event_form_view.eventExtended
             # goal_id, offset top, did_it_text, is_subgoal, callback
-            @event_form_view.newEvent view.model.id, view.$el.position().top, view.$('input[type=submit]').val(), false, () ->
+            @event_form_view.newEvent view.model.id, top, view.$('input[type=submit]').val(), is_subgoal, () ->
                 view.$('.new_event').val('I did it again!')
 
             # Changing the number on evented
             evented = view.$('.evented')
+
+            view.model.set('events_in_month', parseInt(evented.text()) + 1)
             
             evented.text(parseInt(evented.text()) + 1)
             evented.show()
@@ -62,5 +66,8 @@ class Bucketlist.Views.Goals.CurrentView extends Backbone.View
     chooseSubgoals: (goal) =>
         @choose_subgoal_view.goal = goal
         @choose_subgoal_view.render().$el.show()
+
+    chooseSubmit: (data) =>
+        @goals.get(data.goal_id).changeSubgoals(data.subgoals)
 
 

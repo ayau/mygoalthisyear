@@ -17,11 +17,11 @@ class Bucketlist.Views.Goals.BucketView extends Backbone.View
     addAll: () =>
         @$('ul').empty()
         @goals.each(@addOne)
-        @initDraggable()
 
     addOne: (goal) =>
         view = new Bucketlist.Views.Goals.GoalView({id: goal.id, model : goal})
         @$('ul').prepend(view.render().el)
+        @initDraggable(view.$(".draggable"))
 
     removeOne: (goal) =>
         @$('#' + goal.id).remove()
@@ -36,8 +36,8 @@ class Bucketlist.Views.Goals.BucketView extends Backbone.View
 
         return this
 
-    initDraggable: () ->
-        $(".draggable").draggable({
+    initDraggable: (elem) ->
+        elem.draggable({
             appendTo: "body"
             scroll: 'false'
             helper: "clone"

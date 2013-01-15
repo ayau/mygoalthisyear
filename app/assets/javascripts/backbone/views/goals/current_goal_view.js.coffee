@@ -7,6 +7,8 @@ class Bucketlist.Views.Goals.CurrentGoalView extends Backbone.View
     className: 'goal'
 
     initialize: ->
+        @model.bind('resetSubgoals', @resetSubgoals)
+
         if @options.is_subgoal
             @template = JST["backbone/templates/goals/subgoal"]
         else
@@ -15,6 +17,7 @@ class Bucketlist.Views.Goals.CurrentGoalView extends Backbone.View
             @subgoals.bind('reset', @addAll)
             @subgoals.bind('remove', @removeOne)
             @subgoals.bind('add', @addOne)
+            @subgoals.bind('subEvent', @newSubEvent)
         
     events: ->
         'click .giveup': @giveUp
@@ -31,8 +34,7 @@ class Bucketlist.Views.Goals.CurrentGoalView extends Backbone.View
 
         @$el.html(@template({goal: @model.toJSON()}))
 
-        if @subgoals
-            @addAll()
+        @renderSubgoals()
 
         return this
 
@@ -61,7 +63,14 @@ class Bucketlist.Views.Goals.CurrentGoalView extends Backbone.View
         })
 
     newEvent: ->
-        @model.collection.trigger 'newEvent', @
+        if @$el.hasClass('sub')
+            @model.collection.trigger 'subEvent', @
+        else if @model.get('subgoals').length is 0
+            @model.collection.trigger 'newEvent', @, @$el.position().top, false
+
+    # push the event from subgoal to collection
+    newSubEvent: (view) =>
+        @model.collection.trigger 'newEvent', view, view.$el.position().top + @$el.position().top, true
 
     markComplete: ->
         @model.set('completed', 1)
@@ -87,3 +96,20 @@ class Bucketlist.Views.Goals.CurrentGoalView extends Backbone.View
 
     chooseSubgoals: ->
         @model.collection.trigger 'chooseSubgoals', @model
+
+    renderSubgoals: =>
+        if @subgoals
+            @addAll()
+
+    resetSubgoals: =>
+
+        # Edit instead of recreate?
+        @subgoals = new Bucketlist.Collections.GoalsCollection(@model.get('subgoals'))
+
+        @subgoals.bind('reset', @addAll)
+        @subgoals.bind('remove', @removeOne)
+        @subgoals.bind('add', @addOne)
+        @subgoals.bind('subEvent', @newSubEvent)
+
+        @renderSubgoals()
+

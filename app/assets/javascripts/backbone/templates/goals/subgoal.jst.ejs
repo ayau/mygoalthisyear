@@ -6,11 +6,9 @@
 % end %> -->
     
     <p class='points'>+<%= goal.points %></p>
-
-    <% if (goal.events_in_month > 0){ %>
-        <p class='evented'><%= goal.events_in_month %></p>
-    <% } %> 
-            
+ 
+    <p class='evented' <% if (goal.events_in_month == 0){ %>style='display: none'<% } %> ><%= goal.events_in_month %></p>
+    
     <article>
         <header>
             <a href='/goals/<%= goal.parent_id %>' class='goal-name' title='view goal details'><%= goal.name %></a>
