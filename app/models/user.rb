@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
              :conditions => {:parent_id => 0},
              :select => 'goals.*, commitments.completed_at,
                         commitments.completed,
-                        commitments.is_current'
+                        commitments.is_current, commitments.id as cid'
 
     has_many :subgoals, :through => :commitments, :source => :goal,
              :conditions => 'goals.parent_id > 0',
