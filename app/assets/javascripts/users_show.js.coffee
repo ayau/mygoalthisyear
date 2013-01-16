@@ -20,7 +20,6 @@ $ ->
         dataType: 'json',
         success: (results) ->
             for r in results
-                console.log r
                 $('.badge-select').append('<li badge_id="' + r.id + '">' + r.svg + '</li>')
     })
 
