@@ -59,17 +59,6 @@ class Bucketlist.Views.Goals.FormView extends Backbone.View
 
         # Close the form
         @optionsClick()
-
-        # New colors
-        # <div style='background: #<%= color %>' class='badge badge-preview'>
-        #     <img class='logo' src='<%= badge_url %>' />
-        # </div>
-
-        # <input badge_color="fg" badge_id="/svg/star.svg" id="goal_badge" name="goal[badge]" type="hidden" value="<%= badge_url %>">
-        # <input id="goal_color" name="goal[color]" type="hidden" value="<%= color %>">
-        
-        # <div class='cp-icon fg-color' style='background: #<%= fg %>'></div>
-        # <div class='cp-icon bg-color' style='background: #<%= color %>'></div>
     
     optionsClick: ->
         if not @optionsExtended
@@ -81,6 +70,7 @@ class Bucketlist.Views.Goals.FormView extends Backbone.View
             $('.quick_goal_form').removeClass('extended')
             $('.extra-options').hide()
             $('.more-options').text('+ more options')
+            $('#goal_name').blur() # unfocus the form after submission
 
         @optionsExtended = !@optionsExtended
   
@@ -189,14 +179,19 @@ class Bucketlist.Views.Goals.FormView extends Backbone.View
         color = $('#goal_badge').attr('badge_color')
         url = id + '?color=' + color
 
-        # use svg instead and use svg style: color red to change color. Same for color picker
-        $('.badge-preview img').attr('src', url)
+        $('.badge-preview').html(selected.html())
+        svg = $('.badge-preview').find('svg')
+        svg.attr('width', '53px')
+        svg.attr('height', '53px')
+        svg.attr('class', 'logo')
+        svg.attr('fill', '#' + color)
+        svg.find('path').attr('fill', '#' + color)
+
         $('#goal_badge').val(url)
         $('#goal_badge').attr('badge_id', id)
 
     badgeContainerClick: (e) ->
         e.stopPropagation()
-
 
     # Color stuff
     generate_color: (c) ->

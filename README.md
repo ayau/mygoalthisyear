@@ -28,10 +28,10 @@ All goals, progress and comments are private by default.
 
 ##Update (01/14/13)
     Backbone implemented for user page to increase responsiveness
+    Ordering of bucket goals (order by date given up)
 
 ##To do
 * Move JS to Backbone for goal page
-* Ordering of bucket goals (order by date given up)
 * Ordering of goals and subgoals
 * Switch colors after badge is submitted
 * Switch to golden ratio color generation
@@ -51,4 +51,5 @@ All goals, progress and comments are private by default.
 * "Uncompleting" achieved goals
 * Implement notifications
 * Add more functions to the goal page
+* Remove unnecessary views and methods serverside (those handled by backbone)
 

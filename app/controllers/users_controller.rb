@@ -262,7 +262,7 @@ class UsersController < ApplicationController
         raise PermissionViolation unless user.viewable_by?(current_user)
         
         # This needs to be ordered by date added in (even from giveup)
-        bucket = user.goals.where('is_current = ?', 0)
+        bucket = user.goals.where('is_current = ?', 0).order('commitments.updated_at ASC')
 
         render json: bucket        
     end
