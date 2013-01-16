@@ -168,9 +168,10 @@ class UsersController < ApplicationController
 
     def search
         search = params[:search]
+        search = search.downcase
         
         if search
-            results = User.find(:all, :select => 'id, name, avatar', :conditions => ['name LIKE ? AND id != ?', "%#{search}%", current_user.id])
+            results = User.find(:all, :select => 'id, name, avatar', :conditions => ['lower(name) LIKE ? AND id != ?', "%#{search}%", current_user.id])
         else
             results = []
         end
@@ -252,7 +253,7 @@ class UsersController < ApplicationController
             goal['events_in_month'] = events_count[goal['id']] || 0
             goal['subgoals'] = subgoals[goal['id']] || []
         end
-        
+
         render json: current_goals        
     end
 
