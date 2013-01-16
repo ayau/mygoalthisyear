@@ -23,8 +23,9 @@ class Bucketlist.Views.Goals.FormView extends Backbone.View
         'click .badge-select': @badgeContainerClick
 
     initialize: ->
-        color = Math.floor(Math.random()*16777215).toString(16)
+        color = @randHex()
         fg = @generate_color(color)
+
         @json = {
             color: color
             fg: fg
@@ -96,7 +97,7 @@ class Bucketlist.Views.Goals.FormView extends Backbone.View
     initColorPicker: ->
 
         @badge = @$('.badge-preview')
-        @badgeLogo = @badge.find('img')
+        # @badgeLogo = @badge.find('img')
 
         @colorSelect = 'fg'
 
@@ -120,7 +121,10 @@ class Bucketlist.Views.Goals.FormView extends Backbone.View
 
                 $('#goal_badge').val(url)
 
-                @badgeLogo.attr('src', url)
+                # @badgeLogo.attr('src', url)
+                svg = $('.badge-preview').find('svg')
+                svg.attr('fill', '#' + hex)
+                svg.children().attr('fill', '#' + hex)
             else
                 $('.bg-color').css('background', '#' + hex)
                 $('#goal_color').val(hex)
@@ -181,11 +185,9 @@ class Bucketlist.Views.Goals.FormView extends Backbone.View
 
         $('.badge-preview').html(selected.html())
         svg = $('.badge-preview').find('svg')
-        svg.attr('width', '53px')
-        svg.attr('height', '53px')
+        svg.css({'width': '53px', 'height': '53px', 'fill': '#' + color})
+        svg.children().attr('fill', '#' + color)
         svg.attr('class', 'logo')
-        svg.attr('fill', '#' + color)
-        svg.find('path').attr('fill', '#' + color)
 
         $('#goal_badge').val(url)
         $('#goal_badge').attr('badge_id', id)
@@ -193,13 +195,22 @@ class Bucketlist.Views.Goals.FormView extends Backbone.View
     badgeContainerClick: (e) ->
         e.stopPropagation()
 
+    randHex: () ->
+
+        hex = Math.floor(Math.random()*16777215).toString(16)
+    
+        while hex.length < 6
+            hex = '0' + hex
+        
+        return hex
+
     # Color stuff
     generate_color: (c) ->
 
-        color = Math.floor(Math.random()*16777215).toString(16)
+        color = @randHex()
 
-        while @color_distance(c, color) < 180
-            color = Math.floor(Math.random()*16777215).toString(16)
+        while @color_distance(c, color) < 120
+            color = @randHex()
 
         return color
     
@@ -256,9 +267,9 @@ class Bucketlist.Views.Goals.FormView extends Backbone.View
         }
 
     rgb_to_xyz: (rgb) ->
-        var_R = ( rgb['r'].to_f / 255 )        # R from 0 to 255
-        var_G = ( rgb['g'].to_f / 255 )        # G from 0 to 255
-        var_B = ( rgb['b'].to_f / 255 )        # B from 0 to 255
+        var_R = ( rgb['r'] / 255 )        # R from 0 to 255
+        var_G = ( rgb['g'] / 255 )        # G from 0 to 255
+        var_B = ( rgb['b'] / 255 )        # B from 0 to 255
         
         if var_R > 0.04045 
             var_R = Math.pow((( var_R + 0.055 ) / 1.055 ), 2.4)
@@ -286,8 +297,3 @@ class Bucketlist.Views.Goals.FormView extends Backbone.View
             y: var_R * 0.2126 + var_G * 0.7152 + var_B * 0.0722
             z: var_R * 0.0193 + var_G * 0.1192 + var_B * 0.9505
         }
-
-
-
-
-

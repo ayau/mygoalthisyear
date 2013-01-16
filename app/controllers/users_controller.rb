@@ -57,8 +57,8 @@ class UsersController < ApplicationController
         # new goal
         @goal = Goal.new
 
-        @bg_color = "%06x" % (rand * 0xffffff)
-        @fg_color = generate_color(@bg_color)
+        # @bg_color = "%06x" % (rand * 0xffffff)
+        # @fg_color = generate_color(@bg_color)
 
         respond_to do |format|
             format.html # show.html.erb
