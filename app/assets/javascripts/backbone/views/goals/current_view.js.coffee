@@ -58,6 +58,10 @@ class Bucketlist.Views.Goals.CurrentView extends Backbone.View
             # Changing the number on evented
             evented = view.$('.evented')
 
+            # Adds 'completed' when event is created. Use view.render() when the issue of image flashing is fixed 
+            if parseInt(evented.text()) is 0
+                view.$('.giveup').before("<a class='mark-complete'>Mark as comleted</a> | ")
+
             view.model.set('events_in_month', parseInt(evented.text()) + 1)
             
             evented.text(parseInt(evented.text()) + 1)

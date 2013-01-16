@@ -88,7 +88,7 @@ class EventsController < ApplicationController
         raise PermissionViolation unless @event.destroyable_by?(current_user)
 
         respond_to do |format|
-            format.html { redirect_to events_url }
+            format.html { redirect_to :back }
             format.json { head :no_content }
         end
     end
