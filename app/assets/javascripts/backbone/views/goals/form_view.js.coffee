@@ -52,14 +52,19 @@ class Bucketlist.Views.Goals.FormView extends Backbone.View
         @trigger 'new_goal:success', goal, $('#goal_user_auto_add').val()
 
     clearForm: ->
-        @$('#goal_name').val('')
-        @$('#goal_points').val('10')
-        @$('#goal_description').val('')
-        @$('#goal_has_deadline').prop("checked", false)
-        @$('.deadline-form').slideUp()
+        # @$('#goal_name').val('')
+        # @$('#goal_points').val('10')
+        # @$('#goal_description').val('')
+        # @$('#goal_has_deadline').prop("checked", false)
+        # @$('.deadline-form').slideUp()
+
+        @json.color = @randHex()
+        @json.fg = @generate_color(@json.color)
+        @render()
+        @optionsExtended = false
 
         # Close the form
-        @optionsClick()
+        # @optionsClick()
     
     optionsClick: ->
         if not @optionsExtended

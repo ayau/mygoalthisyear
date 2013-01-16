@@ -30,12 +30,13 @@ All goals, progress and comments are private by default.
     Backbone implemented for user page to increase responsiveness
     Ordering of bucket goals (order by date given up)
     Use of svg in badge selection (no need to reload after color selection)
-
+    
 ##To do
 * Switch to golden ratio color generation
 * Move JS to Backbone for goal page
+* Fix day 7 of 31
+* Dynamic points change
 * Ordering of goals and subgoals
-* Switch colors after badge is submitted
 * Replace Info section
 * Improve subgoal selection and auto choose subgoal
 * Implement month transitions
