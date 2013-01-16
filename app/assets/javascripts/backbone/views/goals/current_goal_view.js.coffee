@@ -27,10 +27,7 @@ class Bucketlist.Views.Goals.CurrentGoalView extends Backbone.View
         'click .choose-subgoals': @chooseSubgoals
 
     render: ->
-        console.log @model.get('completed')
-        console.log parseInt(@model.get('completed'))
-        console.log (@model.get('completed') == 1)
-        if @model.get('completed') == 0
+        if parseInt(@model.get('completed')) is 1
             @$el.addClass 'completed'
         else
             @$el.removeClass 'completed'
@@ -46,7 +43,7 @@ class Bucketlist.Views.Goals.CurrentGoalView extends Backbone.View
         @subgoals.each(@addOne)
 
     addOne: (subgoal) =>
-        if subgoal.get('is_current') == 1
+        if parseInt(subgoal.get('is_current')) is 1
             view = new Bucketlist.Views.Goals.CurrentGoalView({id: subgoal.id, model : subgoal, className: 'sub goal', is_subgoal: true})
             @$('.subgoals').prepend(view.render().el)
 
