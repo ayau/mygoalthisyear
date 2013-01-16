@@ -237,7 +237,7 @@ class UsersController < ApplicationController
         events_count = user.events.where("created_at > ?", month_time).group(:goal_id).count
         
         current_goals = user.goals.where('is_current = 1').order('commitments.created_at ASC')
-        
+
         subgoals = user.subgoals
 
         subgoals.each do |subgoal|
@@ -252,7 +252,7 @@ class UsersController < ApplicationController
             goal['events_in_month'] = events_count[goal['id']] || 0
             goal['subgoals'] = subgoals[goal['id']] || []
         end
-        
+        current_goals = Goal.first.users
         render json: current_goals        
     end
 
