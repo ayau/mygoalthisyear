@@ -252,7 +252,7 @@ class UsersController < ApplicationController
             goal['events_in_month'] = events_count[goal['id']] || 0
             goal['subgoals'] = subgoals[goal['id']] || []
         end
-        logger.info current_goals
+        
         render json: current_goals        
     end
 
