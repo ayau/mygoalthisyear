@@ -12,7 +12,7 @@
     <ul>
         <% $.each(goal.subgoals, function(i, subgoal){ %>
             <li>
-                <input id="<%= subgoal.id %>" name="subgoals[]" type="checkbox" value="<%= subgoal.id %>" <% if (subgoal.is_current){ %> checked ='' <% } %>>
+                <input id="<%= subgoal.id %>" name="subgoals[]" type="checkbox" value="<%= subgoal.id %>" <% if (parseInt(subgoal.is_current) == 1){ %> checked ='' <% } %>>
                 <label for="<%= subgoal.id %>"><%= subgoal.name %></label>
             </li>
         <% }) %>
