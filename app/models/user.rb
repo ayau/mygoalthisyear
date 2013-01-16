@@ -9,14 +9,14 @@ class User < ActiveRecord::Base
     has_many :goals, :through => :commitments,
              :conditions => {:parent_id => 0},
              :select => 'goals.*, commitments.completed_at as completed_at,
-                        commitments.completed as completed,
-                        commitments.is_current as is_current'
+                        CAST(commitments.completed as integer) as completed,
+                        CAST(commitments.is_current as integer) as is_current'
 
     has_many :subgoals, :through => :commitments, :source => :goal,
              :conditions => 'goals.parent_id > 0',
              :select => 'goals.*, commitments.completed_at as completed_at,
-                        commitments.completed as completed,
-                        commitments.is_current as is_current'
+                        CAST(commitments.completed as integer) as completed,
+                        CAST(commitments.is_current as integer) as is_current'
 
     has_many :events
 
