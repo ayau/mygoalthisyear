@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
     has_many :goals, :through => :commitments,
              :conditions => {:parent_id => 0},
              :select => 'goals.*, commitments.completed_at,
-                        CAST(commitments.completed as float8),
+                        commitments.completed,
                         commitments.is_current'
 
     has_many :subgoals, :through => :commitments, :source => :goal,
