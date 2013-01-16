@@ -32,10 +32,10 @@ All goals, progress and comments are private by default.
     Use of svg in badge selection (no need to reload after color selection)
 
 ##To do
+* Switch to golden ratio color generation
 * Move JS to Backbone for goal page
 * Ordering of goals and subgoals
 * Switch colors after badge is submitted
-* Switch to golden ratio color generation
 * Replace Info section
 * Improve subgoal selection and auto choose subgoal
 * Implement month transitions
