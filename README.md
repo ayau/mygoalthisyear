@@ -15,6 +15,7 @@ We all have the experience of setting powerful goals at the beginning of the yea
 * Sass
 * [ColourPicker.js](http://safalra.com/web-design/javascript/colour-picker/) -- a simple javascript color picker
 * [omniauth-facebook](https://github.com/mkdynamic/omniauth-facebook)
+* [RYB color generator](http://afriggeri.github.com/RYB/)
 * JQuery draggable, droppable
 
 
@@ -28,11 +29,11 @@ All goals, progress and comments are private by default.
 
 ##Update (01/14/13)
     Backbone implemented for user page to increase responsiveness
-    Ordering of bucket goals (order by date given up)
-    Use of svg in badge selection (no need to reload after color selection)
-    
+    Ordered of bucket goals by date given up
+    SVG used in badge selection (no need to reload after color selection)
+    Switched to golden ratio color generation (a lot nicer)
+
 ##To do
-* Switch to golden ratio color generation
 * Move JS to Backbone for goal page
 * Fix day 7 of 31
 * Dynamic points change
