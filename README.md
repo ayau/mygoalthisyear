@@ -36,7 +36,6 @@ All goals, progress and comments are private by default.
 
 ##To do
 * Move JS to Backbone for goal page
-* Fix date display (day 7 of 31)
 * Dynamic "points" change
 * Ordering of subgoals
 * Replace Info section

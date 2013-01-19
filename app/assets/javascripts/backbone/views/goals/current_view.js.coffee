@@ -35,7 +35,7 @@ class Bucketlist.Views.Goals.CurrentView extends Backbone.View
         @$('#' + goal.id).remove()
 
     render: =>
-        @$el.html(@template())
+        @$el.html(@template({dateString: @getDateString()}))
 
         # rendering form
         @$el.prepend(@goal_form_view.render().el)
@@ -51,7 +51,7 @@ class Bucketlist.Views.Goals.CurrentView extends Backbone.View
     newEvent: (view, top, is_subgoal) =>
 
         if !@event_form_view.eventExtended
-            
+
             # goal_id, offset top, did_it_text, is_subgoal, callback
             @event_form_view.newEvent view.model.id, top, view.$('input[type=submit]').val(), is_subgoal, () ->
                 view.$('.new_event').val('I did it again!')
@@ -75,4 +75,18 @@ class Bucketlist.Views.Goals.CurrentView extends Backbone.View
     chooseSubmit: (data) =>
         @goals.get(data.goal_id).changeSubgoals(data.subgoals)
 
+    getDateString: () ->
+        # January 2013 (Day 7 of 31)
+
+        month = ['January', 'Feburary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+        days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+
+        today = new Date()
+
+        if today.getFullYear() % 4 is 0 and today.getMonth() is 1
+            day = 29
+        else
+            day = days[today.getMonth()]
+
+        return month[today.getMonth()] + ' ' + today.getFullYear() + ' (Day ' + today.getDate() + ' of ' + day + ')'
 
