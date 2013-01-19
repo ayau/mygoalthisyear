@@ -32,14 +32,14 @@ All goals, progress and comments are private by default.
     Ordered of bucket goals by date given up
     SVG used in badge selection (no need to reload after color selection)
     Switched to golden ratio color generation (a lot nicer)
+    Improved subgoal selection.
 
 ##To do
 * Move JS to Backbone for goal page
-* Fix day 7 of 31
-* Dynamic points change
-* Ordering of goals and subgoals
+* Fix date display (day 7 of 31)
+* Dynamic "points" change
+* Ordering of subgoals
 * Replace Info section
-* Improve subgoal selection and auto choose subgoal
 * Implement month transitions
 * Implement Badge view
 * Display achievements dynamically -- scrollable
@@ -53,6 +53,8 @@ All goals, progress and comments are private by default.
 * "Uncompleting" achieved goals
 * Implement notifications
 * Add more functions to the goal page
-* User of svg in all badges
+* Use of svg in all badges
 * Remove unnecessary views and methods serverside (those handled by backbone)
+* Auto choose subgoal
+* Fix random flashing of null goal on reload
 

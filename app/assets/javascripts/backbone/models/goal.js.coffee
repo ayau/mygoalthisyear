@@ -19,9 +19,6 @@ class Bucketlist.Models.Goal extends Backbone.Model
 
         subgoals: []
 
-    # initialize: ->
-    #     console.log @
-
     changeSubgoals: (subgoals) ->
         for s in @get('subgoals')
             if subgoals[s.id]

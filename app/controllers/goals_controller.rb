@@ -51,17 +51,6 @@ class GoalsController < ApplicationController
         end
     end
 
-    # GET /goals/new
-    # GET /goals/new.json
-    # def new
-    #     @goal = Goal.new(:parent_id => params[:parent_id])
-
-    #     respond_to do |format|
-    #         format.html # new.html.erb
-    #         format.json { render json: @goal }
-    #     end
-    # end
-
     # GET /goals/1/edit
     def edit
         @goal = Goal.find(params[:id])

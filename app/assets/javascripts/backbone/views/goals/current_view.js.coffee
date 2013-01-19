@@ -51,6 +51,7 @@ class Bucketlist.Views.Goals.CurrentView extends Backbone.View
     newEvent: (view, top, is_subgoal) =>
 
         if !@event_form_view.eventExtended
+            
             # goal_id, offset top, did_it_text, is_subgoal, callback
             @event_form_view.newEvent view.model.id, top, view.$('input[type=submit]').val(), is_subgoal, () ->
                 view.$('.new_event').val('I did it again!')
