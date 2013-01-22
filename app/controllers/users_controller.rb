@@ -25,41 +25,7 @@ class UsersController < ApplicationController
         raise PermissionViolation unless @user.viewable_by?(current_user)
 
         @completed = @user.goals.where('completed = ?', 1)
-        @bucket = @user.goals.where('is_current = ?', 0)
-
-        # Don't over-count evented + completed goals
-        @points = @user.events.reduce(0) do |sum, event|
-            sum + event.goal.points
-        end
-
-        # @current_goals = @month.goals.order('created_at DESC')
-        @current_goals = @user.goals.where('is_current = 1').order('commitments.created_at DESC')
-
-        month_time = Time.now.beginning_of_month()
-
-        # Calculating points this month
-        events_this_month = @user.events.where("created_at > ?", month_time)
-        @points_this_month = events_this_month.reduce(0) do |sum, event|
-            sum + event.goal.points
-        end
-
-        # hash of goal_id vs number of events in that month
-        @events_count = @user.events.where("created_at > ?", month_time).group(:goal_id).count
-
-        # appending subgoals to goals
-        subgoals = @user.subgoals.where('is_current = 1')
-        @subgoals = {}
-        subgoals.each do |sg|
-            @subgoals[sg.parent_id] ||= []
-            @subgoals[sg.parent_id] << sg
-        end
-
-        # new goal
-        @goal = Goal.new
-
-        # @bg_color = "%06x" % (rand * 0xffffff)
-        # @fg_color = generate_color(@bg_color)
-
+        
         respond_to do |format|
             format.html # show.html.erb
             format.json { render json: @user }
@@ -199,7 +165,25 @@ class UsersController < ApplicationController
 # end
     def me
         raise PermissionViolation unless current_user
-        render json: current_user.as_json(:only => [:id, :name, :avatar, :auto_add])
+        
+        # Don't over-count evented + completed goals
+        points = current_user.events.reduce(0) do |sum, event|
+            sum + event.goal.points
+        end
+
+        month_time = Time.now.beginning_of_month()
+
+        # Calculating points this month
+        events_this_month = current_user.events.where("created_at > ?", month_time)
+        points_this_month = events_this_month.reduce(0) do |sum, event|
+            sum + event.goal.points
+        end
+
+        json = current_user.as_json(:only => [:id, :name, :avatar, :auto_add])
+        json['points'] = points
+        json['points_this_month'] = points_this_month
+
+        render json: json
     end
 
     def goals
