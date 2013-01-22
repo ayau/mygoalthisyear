@@ -36,6 +36,7 @@ All goals, progress and comments are private by default.
 
 ##To do
 * Move JS to Backbone for goal page
+* Backbone view for 'achievements'
 * Dynamic "points" change
 * Ordering of subgoals
 * Replace Info section

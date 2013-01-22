@@ -9,6 +9,9 @@ class Bucketlist.Views.Users.ShowView extends Backbone.View
     # -> 
     UserLoaded: =>
 
+        @user_view = new Bucketlist.Views.Users.UserView(model: Bucketlist.me)
+        $('.user-header').replaceWith(@user_view.render().el)
+
         @current_goals = new Bucketlist.Collections.GoalsCollection({}, {user_id: @model.id, route: 'current'})
         @current_view = new Bucketlist.Views.Goals.CurrentView(goals: @current_goals)
 
