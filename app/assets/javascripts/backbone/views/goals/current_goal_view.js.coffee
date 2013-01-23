@@ -79,6 +79,8 @@ class Bucketlist.Views.Goals.CurrentGoalView extends Backbone.View
             type: 'PUT',
             url: '/goals/' + @model.get('id') + '/complete',
             dataType: 'json'
+            success: (results) =>
+                @model.collection.trigger 'complete', @model
         })
 
         @render()
@@ -90,6 +92,8 @@ class Bucketlist.Views.Goals.CurrentGoalView extends Backbone.View
             type: 'PUT',
             url: '/goals/' + @model.get('id') + '/make_incomplete',
             dataType: 'json'
+            success: (results) =>
+                @model.collection.trigger 'uncomplete', @model.id
         })
 
         @render()

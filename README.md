@@ -37,6 +37,7 @@ All goals, progress and comments are private by default.
 
 ##To do
 * Move JS to Backbone for goal page
+* Make the achievements less jitterish (when mark completed, shouldn't push the page down)
 * Dynamic "points" change
 * Ordering of subgoals
 * Replace Info section

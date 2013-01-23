@@ -31,6 +31,8 @@ class Bucketlist.Views.Users.ShowView extends Backbone.View
         @current_view.goal_form_view.bind('new_goal:success', @newGoal)
 
         @current_goals.bind('giveup', @giveUp)
+        @current_goals.bind('complete', @complete)
+        @current_goals.bind('uncomplete', @uncomplete)
 
         @initDocumentClick()
         
@@ -53,6 +55,12 @@ class Bucketlist.Views.Users.ShowView extends Backbone.View
         goal = @current_goals.get(goal_id)        
         @current_goals.remove(goal_id)
         @bucket_goals.add(goal)
+
+    complete: (goal) =>
+        @achieved_goals.add(goal)
+
+    uncomplete: (goal_id) =>
+        @achieved_goals.remove(goal_id)
 
     initDocumentClick: ->
 

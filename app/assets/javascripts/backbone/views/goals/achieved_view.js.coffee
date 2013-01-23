@@ -18,18 +18,16 @@ class Bucketlist.Views.Goals.AchievedView extends Backbone.View
     addAll: () =>
         @$('.slider').empty()
         @goals.each(@addOne)
-        if @goals.length is 0
-            @$el.hide()
-        else
-            @$el.show()
-
+        @display()
 
     addOne: (goal) =>
         view = new Bucketlist.Views.Goals.AchievedGoalView({id: goal.id, model : goal})
         @$('.slider').prepend(view.render().el)
+        @display()
 
     removeOne: (goal) =>
         @$('#' + goal.id).remove()
+        @display()
 
     render: =>
         @$el.html(@template({user_id: Bucketlist.me.id}))
@@ -37,6 +35,12 @@ class Bucketlist.Views.Goals.AchievedView extends Backbone.View
         @addAll()
         
         return this
+
+    display: ->
+        if @goals.length is 0
+            @$el.hide()
+        else
+            @$el.show()
 
     hideAchievements: () ->
         @$('.slider').slideToggle 'slow', () ->
