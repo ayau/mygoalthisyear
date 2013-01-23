@@ -35,6 +35,3 @@ class Bucketlist.Collections.GoalsCollection extends Backbone.Collection
         if options
             @url = '/api/users/' + options.user_id + '/goals/' + options.route 
             @fetch()
-
-
-

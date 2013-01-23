@@ -41,7 +41,8 @@ class Bucketlist.Views.Goals.FormView extends Backbone.View
 
         # this.$("form").backboneLink(@model)
         @initColorPicker()
-
+        @downloadSVG()
+        
         return this
 
     createGoal: (event, data) ->
@@ -102,6 +103,16 @@ class Bucketlist.Views.Goals.FormView extends Backbone.View
     formClick: (e) ->
         if !@badgeOpened && !@colorOpened
             e.stopPropagation()
+
+    downloadSVG: () ->
+        $.ajax({
+            type: 'GET',
+            url: '/svg',
+            dataType: 'json',
+            success: (results) ->
+                for r in results
+                    $('.badge-select').append('<li badge_id="' + r.id + '">' + r.svg + '</li>')
+        })
 
     initColorPicker: ->
 

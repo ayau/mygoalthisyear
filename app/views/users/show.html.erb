@@ -1,59 +1,9 @@
 <!-- <span id="notice"><%= notice %></span> -->
 <section role='main'>
 
-    <header class='user-header'>
-        <!-- <% avatar = @user.avatar || 'http://www.ohmyhandmade.com/wp-content/uploads/2011/12/twitter-egg.jpg' %>
-        <div class='avatar' style='background-image: url(<%= avatar %>)'></div>
+    <header class='user-header'></header>
 
-        <! Add max width to this guy >
-        <section>
-            <h2><%= @user.name %></h2>
-            <h3>Level 10</h3>
-        </section>
-
-        <ul>
-            <li>
-                <h3><%= @points %></h3>
-                <p>total points</p>
-            </li>
-            <li>
-                <h3><%= @points_this_month %></h3>
-                <p>this month</p>
-            </li>
-        </ul>
-        -->
-    </header>
-
-    <% if @completed.length > 0 %>
-
-        <section class='achievements'>
-            <h3><%= link_to 'Achievements', achievements_user_path(@user), :style => 'color: black' %></h3><a class='hide-achievements'>hide</a>
-            <div class='slider'>
-
-                <% @completed.limit(8).each do |goal| %>
-                    <a href='/goals/<%= goal.id %>'>
-                        <div style='background: #<%= goal.color %>' class='badge'>
-                            <img class='logo' src='<%= goal.badge %>' />
-                        </div>
-                    </a>
-                <% end %>    
-
-                <!-- 
-                <% badges = Dir.glob("app/assets/images/badges/*") %>
-                <% for i in 1..8 do %>
-                    <% badge_url = badges.sample.gsub('app/assets/images/badges/', '') %>
-                    <% fg = "%06x" % (rand * 0xffffff) %>
-                    <% bg = "%06x" % (rand * 0xffffff) %>
-                
-                    <div style='background: #<%= bg %>' class='badge'>
-                        <img class='logo' src='/svg/<%= badge_url %>?color=<%= fg %>' />
-                    </div>
-
-                <% end %>
-                -->
-            </div>
-        </section>
-    <% end %>
+    <section class='achievements'></section>
 
     <!-- 
     <p>Large goals vs small(quick) ones?</p>
@@ -76,5 +26,3 @@
     <br /><br />
 
 </section>
-
-<%= javascript_include_tag 'users_show' %>

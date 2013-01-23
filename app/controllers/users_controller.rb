@@ -252,4 +252,13 @@ class UsersController < ApplicationController
         render json: bucket        
     end
 
+    def achieved_goals
+        user = User.find(params[:id])
+        raise PermissionViolation unless user.viewable_by?(current_user)
+        
+        completed = user.goals.where('completed = ?', 1).limit(8)
+
+        render json: completed
+    end
+
 end

@@ -27,16 +27,16 @@ Currently, only 22 icons are included but more are coming soon.
 ##Privacy
 All goals, progress and comments are private by default.
 
-##Update (01/14/13)
+##Update (01/23/13)
     Backbone implemented for user page to increase responsiveness
     Ordered of bucket goals by date given up
     SVG used in badge selection (no need to reload after color selection)
     Switched to golden ratio color generation (a lot nicer)
-    Improved subgoal selection.
+    Improved subgoal selection
+    Backbone view for 'achievements'
 
 ##To do
 * Move JS to Backbone for goal page
-* Backbone view for 'achievements'
 * Dynamic "points" change
 * Ordering of subgoals
 * Replace Info section

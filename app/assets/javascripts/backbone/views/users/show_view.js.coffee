@@ -12,12 +12,17 @@ class Bucketlist.Views.Users.ShowView extends Backbone.View
         @user_view = new Bucketlist.Views.Users.UserView(model: Bucketlist.me)
         $('.user-header').replaceWith(@user_view.render().el)
 
-        @current_goals = new Bucketlist.Collections.GoalsCollection({}, {user_id: @model.id, route: 'current'})
+        @achieved_goals = new Bucketlist.Collections.GoalsCollection(null, {user_id: @model.id, route: 'achieved'})
+        @achieved_view = new Bucketlist.Views.Goals.AchievedView(goals: @achieved_goals)
+
+        $('.achievements').replaceWith(@achieved_view.render().el)
+
+        @current_goals = new Bucketlist.Collections.GoalsCollection(null, {user_id: @model.id, route: 'current'})
         @current_view = new Bucketlist.Views.Goals.CurrentView(goals: @current_goals)
 
         $('.current').replaceWith(@current_view.render().el)
 
-        @bucket_goals = new Bucketlist.Collections.GoalsCollection({}, {user_id: @model.id, route: 'bucket'})
+        @bucket_goals = new Bucketlist.Collections.GoalsCollection(null, {user_id: @model.id, route: 'bucket'})
         @bucket_view = new Bucketlist.Views.Goals.BucketView(goals: @bucket_goals)
         
         $('.bucket').replaceWith(@bucket_view.render().el)
