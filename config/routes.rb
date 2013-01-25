@@ -5,6 +5,9 @@ Bucketlist::Application.routes.draw do
     match "/auth/:provider/callback" => "sessions#create" 
     match "/signout" => "sessions#destroy", :as => :signout
 
+    # mobile login
+    match "/api/login" => "sessions#mobile_create"
+
     match '/donthackmebro' => 'sessions#hack'
     match '/donthackmebro2' => 'sessions#hack2'
 

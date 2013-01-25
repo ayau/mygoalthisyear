@@ -1,4 +1,5 @@
 class SessionsController < ApplicationController
+require 'net/http'
 
     def create
         auth = request.env["omniauth.auth"]
@@ -20,6 +21,36 @@ class SessionsController < ApplicationController
         session[:user_id] = nil
         sign_out
         redirect_to root_url
+    end
+
+    def mobile_create
+        token = params[:ftoken]
+        fid = params[:fid]
+
+        uri = URI.parse('https://graph.facebook.com/me?access_token=' + token)
+        http = Net::HTTP.new(uri.host, uri.port)
+        http.use_ssl = true
+        http.verify_mode = OpenSSL::SSL::VERIFY_NONE # You should use VERIFY_PEER in production
+        request = Net::HTTP::Get.new(uri.request_uri)
+        response = http.request(request)
+        result = JSON.parse(response.body)
+        
+        if fid == result['id']
+            logger.info 'USER ' + fid + ' logged in with mobile'
+            user = User.find_by_uid(fid)
+
+            token =  SecureRandom.urlsafe_base64
+            logger.info token
+            user.update_attributes({:token => token})
+
+            # Update/create user with mobile
+            
+            render json: user
+            return
+        end
+
+        raise PermissionViolation
+
     end
 
 

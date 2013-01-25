@@ -7,22 +7,17 @@ class ApplicationController < ActionController::Base
 
     around_filter :set_user_time_zone
 
-    # before_filter :authenticate
+    before_filter :authenticate
 
-    # def authenticate
-    #     if(current_user.nil?)
-            # redirect_to root_path 
-
-    #         if(request.env['PATH_INFO'] != loggedout_path && request.env['PATH_INFO'].index('/auth/facebook') != 0 && request.env['PATH_INFO'] != donthackmebro_path)
-            # if(request.env['PATH_INFO'] != root_path && request.env['PATH_INFO'].index('/auth/facebook') != 0 && request.env['PATH_INFO'] != donthackmebro_path)
-            #     redirect_to(root_path)
-            # end
-    #       else
-    #            redirect_to('/401.html')
-    #       end
-    #     end
-    #     end
-    # end
+    # For mobile
+    def authenticate
+        if current_user.nil? && params[:token]
+            user = User.find_by_token(params[:token])
+            if user
+                session[:user_id] = user.id
+            end
+        end
+    end
 
     rescue_from PermissionViolation do |exception|
         respond_to do |format|
