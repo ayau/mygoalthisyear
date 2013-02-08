@@ -56,6 +56,8 @@ Bucketlist::Application.routes.draw do
                 get 'goals/achieved' => 'users#achieved_goals'
             end
         end
+
+        match  '/svg/:id' => 'svg#api'
     end
 
     # The priority is based upon order of creation:

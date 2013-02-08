@@ -36,6 +36,15 @@ class SvgController < ApplicationController
 
     end
 
+    def api
+        badge_name = params[:id]
+        badge_color = params[:color]
+        
+        svg = render_svg_api(badge_name, badge_color)
+        
+        render :inline => svg
+    end
+
     private
 
     def render_svg (name, color, size = 53)
@@ -52,5 +61,24 @@ class SvgController < ApplicationController
 
         return svg
     end
+
+    def render_svg_api (name, color)
+
+        svg = Rails.application.assets['badges/' + name + '.svg'].to_s
+        
+        # # Using regex to replace the width and height
+        viewbox = /viewBox="([0-9.]+) ([0-9.]+) ([0-9.]+) ([0-9.]+)"/.match(svg)
+        
+        x = viewbox[1].to_i
+        y = viewbox[2].to_i
+        x1 = viewbox[3].to_i
+        y1 = viewbox[4].to_i
+        
+        svg = svg.sub(/width="[0-9.]+px"/, 'width="' + (x1 + x).to_s + 'px"')
+        svg = svg.sub(/height="[0-9.]+px"/, 'height="' + (y1 + y).to_s + 'px"')
+        
+        return svg
+    end
+
 
 end
