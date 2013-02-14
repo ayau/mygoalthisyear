@@ -32,17 +32,6 @@ class UsersController < ApplicationController
         end
     end
 
-    # GET /users/new
-    # GET /users/new.json
-    # def new
-    #     @user = User.new
-
-    #     respond_to do |format|
-    #         format.html # new.html.erb
-    #         format.json { render json: @user }
-    #     end
-    # end
-
     # GET /users/1/edit
     def edit
         @user = User.find(params[:id])
@@ -137,7 +126,8 @@ class UsersController < ApplicationController
         search = search.downcase
         
         if search
-            results = User.find(:all, :select => 'id, name, avatar', :conditions => ['lower(name) LIKE ? AND id != ?', "%#{search}%", current_user.id])
+            results = User.find(:all, :select => 'id, name, avatar', 
+                :conditions => ['lower(name) LIKE ? AND id != ?', "%#{search}%", current_user.id])
         else
             results = []
         end
@@ -154,7 +144,7 @@ class UsersController < ApplicationController
     end
 
 
-    # API
+    # API ---------------------------------------------------------
 #     def as_json(options={})
 #       super(:only => [:first_name,:last_name,:city,:state],
 #         :include => {
@@ -184,31 +174,6 @@ class UsersController < ApplicationController
         json['points_this_month'] = points_this_month
 
         render json: json
-    end
-
-    def goals
-        user = User.find(params[:id])
-        raise PermissionViolation unless user.viewable_by?(current_user)
-
-        current_goals = user.goals.where('is_current = 1').order('commitments.created_at DESC')
-        # subgoals = user.subgoals.where('is_current = 1')
-
-        # inefficient if user has a lot of current goals + current subgoals
-        # map reduce?
-        # current = current_goals.as_json
-        # subgoals.each do |goal|
-        #     current.each do |goal|
-        # end
-
-        completed = user.goals.where('completed = ?', 1)
-        bucket = user.goals.where('is_current = ?', 0)
-
-        render json: {
-            :current => current_goals,
-            :completed => completed,
-            :bucket => bucket
-        }
-
     end
 
     def current_goals
@@ -260,6 +225,76 @@ class UsersController < ApplicationController
 
         render json: completed
     end
+
+
+    # For mobile sync
+    def sync
+       user = User.find(params[:id])
+        raise PermissionViolation unless user.viewable_by?(current_user)
+
+        since = params[:since] || 0
+        since = Time.at(since.to_i).to_datetime
+
+        month_time = Time.now.beginning_of_month()
+
+# Refactor to use a join instead
+        # hash of goal_id vs number of events in that month
+        events_count = user.events.where("created_at > ?", month_time).group(:goal_id).count
+        
+        goals = user.goals.where('goals.updated_at > ? or  commitments.updated_at > ?', 
+            since, since).order('commitments.created_at ASC')
+
+        subgoals = user.subgoals
+
+        subgoals.each do |subgoal|
+            subgoal['events_in_month'] = events_count[subgoal['id']] || 0
+        end
+
+        subgoals = subgoals.group_by {|d| d[:parent_id]}
+
+        goals = goals.as_json()
+
+        goals.each do |goal|
+            goal['events_in_month'] = events_count[goal['id']] || 0
+            goal['subgoals'] = subgoals[goal['id']] || []
+            
+            if goal['created_at'] > since
+                goal['status'] = 'created'
+            else
+                goal['status'] = 'updated'
+            end
+
+        end
+
+        render json: goals 
+
+    end
+
+     # def goals
+    #     user = User.find(params[:id])
+    #     raise PermissionViolation unless user.viewable_by?(current_user)
+
+    #     current_goals = user.goals.where('is_current = 1').order('commitments.created_at DESC')
+    #     # subgoals = user.subgoals.where('is_current = 1')
+
+    #     # inefficient if user has a lot of current goals + current subgoals
+    #     # map reduce?
+    #     # current = current_goals.as_json
+    #     # subgoals.each do |goal|
+    #     #     current.each do |goal|
+    #     # end
+
+    #     completed = user.goals.where('completed = ?', 1)
+    #     bucket = user.goals.where('is_current = ?', 0)
+
+    #     render json: {
+    #         :current => current_goals,
+    #         :completed => completed,
+    #         :bucket => bucket
+    #     }
+
+    # end
+
 
 end
 

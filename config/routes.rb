@@ -54,6 +54,7 @@ Bucketlist::Application.routes.draw do
                 get 'goals/current' => 'users#current_goals'
                 get 'goals/bucket' => 'users#bucket_goals'
                 get 'goals/achieved' => 'users#achieved_goals'
+                get 'goals/sync' => 'users#sync' # for mobile sync
             end
         end
 
