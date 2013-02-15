@@ -2,7 +2,7 @@
 
 This is a project started by [Alex Yau](https://github.com/ayau) to help you keep track of and achieve your goals in the coming year.
 
-This project was started in late December 2012 and still in development. However, you can try out a basic, bareboned version of the site [here](http://mygoalthisyear.herokuapp.com/).
+This project was started in late December 2012 and still in development. However, you can try out a basic, bareboned version of the site [here](http://challengecomplete.com/).
 
 ###Overview
 This is an attempt to leverage the power of [gamification](http://www.youtube.com/watch?v=lfBpsV1Hwqs) to help you achieve what you set out to do in the coming year. 
